@@ -14,6 +14,6 @@ class Space extends Model
 
     public function approved_resposnes()
     {
-        return $this->responses()->where('approved', 1);
+        return $this->responses()->whereNotNull('approved_at');
     }
 }
