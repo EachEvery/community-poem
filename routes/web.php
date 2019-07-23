@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/webhook', 'ResponseController@store');
+Route::delete('/moderate/{response}', 'ResponseController@delete');
+Route::get('/moderate/{response}', 'ResponseApprovalController@show');
+Route::post('/moderate/{response}', 'ResponseApprovalController@store');
