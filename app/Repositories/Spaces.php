@@ -3,6 +3,7 @@
 namespace Display\Repositories;
 
 use Display\Space;
+use Display\Response;
 
 class Spaces
 {
@@ -14,5 +15,12 @@ class Spaces
     public function matchingSlug($slug)
     {
         return Space::whereSlug($slug)->firstOrFail();
+    }
+
+    public function whereModerationNeeded()
+    {
+        $ids = Response::whereNull('approved_at')->pluck('space_id')->unique();
+
+        return Space::whereIn('id', $ids)->get();
     }
 }

@@ -4,6 +4,7 @@ namespace Display\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Display\Console\Commands\SendEmailToAdmins;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,25 +14,24 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+      SendEmailToAdmins::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command(SendEmailToAdmins::class)
+                ->weekdays()
+                ->dailyAt('10:30')
+                ->timezone('America/New_York');
     }
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
     protected function commands()
     {

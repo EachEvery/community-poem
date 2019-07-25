@@ -19,7 +19,8 @@ class TypeformWebhookTest extends TestCase
         $response->assertNotFound();
 
         /**
-         * Create space to collect responses from given form id.
+         * Create space to collect responses
+         * from given form id from typeform.
          */
         $space = factory(Space::class)->create([
             'typeform_id' => $typeform['form_response']['form_id'],
