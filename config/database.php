@@ -3,7 +3,6 @@
 use Illuminate\Support\Str;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -34,6 +33,13 @@ return [
     */
 
     'connections' => [
+        'testing' => [
+            'driver' => 'sqlite',
+            'database' => database_path('database.sqlite'),
+            'url' => env('DATABASE_URL'),
+            'prefix' => '',
+            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',
@@ -90,7 +96,6 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-
     ],
 
     /*
@@ -118,7 +123,6 @@ return [
     */
 
     'redis' => [
-
         'client' => env('REDIS_CLIENT', 'predis'),
 
         'options' => [
@@ -141,7 +145,5 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => env('REDIS_CACHE_DB', 1),
         ],
-
     ],
-
 ];

@@ -6,19 +6,18 @@ use Tests\TestCase;
 
 class WebhookTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function testExample()
+    public function test()
     {
-        // mock typeform request structure
-
-        // post to import url
-
-        // check to make sure its added to space
-
-        // make sure email goes out to moderators
-
-        // make sure response is not approved
+        $this->assertTrue(true);
     }
+
+    // mock typeform request structure
+
+    // post to import url
+
+    // check to make sure its added to space
+
+    // make sure email goes out to moderators
+
+    // make sure response is not approved
 }

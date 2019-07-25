@@ -2,6 +2,8 @@
 
 namespace Display\Repositories;
 
+use Display\Space;
+
 class Spaces
 {
     public function matchingTypeformId($id)

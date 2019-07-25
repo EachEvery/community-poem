@@ -26,7 +26,7 @@ class ResponseController
     public function delete(Request $req)
     {
         $response = $this->responses->findOrFail(
-            $req->route('request')
+            $req->route('response')
         );
 
         $this->responses->delete($response);

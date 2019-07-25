@@ -16,7 +16,9 @@ class CreateResponsesTable extends Migration
             $table->string('name');
             $table->string('location');
             $table->string('typeform_id');
+            $table->unsignedInteger('space_id');
             $table->longText('content');
+            $table->string('font_size')->nullable();
             $table->string('email')->nullable();
             $table->dateTime('approved_at')->nullable();
             $table->timestamps();

@@ -24,10 +24,14 @@ class Resposnes
         });
     }
 
-    public function approve($response)
+    public function approve($response, $fillable = [])
     {
-        return tap($response, function ($response) {
-            $response->update(['approved_at' => Carbon::now()]);
+        return tap($response, function ($response) use ($fillable) {
+            $response->update(array_merge(
+                ['approved_at' => Carbon::now()],
+                $fillable
+            ));
+
             $this->dispatcher->dispatch(new ResponseApproved($response));
         });
     }
@@ -44,5 +48,10 @@ class Resposnes
         $response->delete();
 
         $this->dispatcher->dispatch(new ResponseDeleted($response));
+    }
+
+    public function findOrFail($id)
+    {
+        return Response::findOrFail($id);
     }
 }

@@ -3,7 +3,8 @@
 namespace Display;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class Space extends Model
 {
@@ -12,8 +13,28 @@ class Space extends Model
         return $this->hasMany(Response::class);
     }
 
-    public function approved_resposnes()
+    public function unapproved_responses()
+    {
+        return $this->responses()->whereNull('approved_at');
+    }
+
+    public function approved_responses()
     {
         return $this->responses()->whereNotNull('approved_at');
+    }
+
+    public function signedUrl()
+    {
+        return URL::signedRoute('approveResponses',
+            ['space' => $this->slug]);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($space) {
+            $space->slug = Str::slug($space->name);
+        });
     }
 }

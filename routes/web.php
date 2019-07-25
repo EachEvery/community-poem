@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Routing\Middleware\ValidateSignature;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +18,16 @@ Route::get('/', function () {
 });
 
 Route::get('/webhook', 'ResponseController@store');
-Route::delete('/moderate/{response}', 'ResponseController@delete');
-Route::get('/moderate/{response}', 'ResponseApprovalController@show');
-Route::post('/moderate/{response}', 'ResponseApprovalController@store');
+
+Route::prefix('/{space}')->group(function ($router) {
+    /*
+     * Only allow users to access this route
+     * that recieved a signed url from an email
+     * generated from our system.
+     */
+    $router->get('/approve-responses', 'SpaceModerationController@show')
+        ->middleware([ValidateSignature::class])->name('approveResponses');
+
+    $router->post('/responses/{response}/approve', 'ApproveResponseController')->name('approveResponse');
+    $router->delete('/responses/{response}', 'ResponseController@delete')->name('discardResponse');
+});
