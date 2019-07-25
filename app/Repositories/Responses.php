@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Display\Space;
 use Display\Response;
 
-class Resposnes
+class Responses
 {
     public function __construct(Dispatcher $dispatcher)
     {
@@ -19,8 +19,8 @@ class Resposnes
 
     public function addToSpace($fillable, $space)
     {
-        return tap($space->responses()->save($fillable), function ($response) {
-            $this->dispatcher->dispach(new ResponseSaved($response));
+        return tap($space->responses()->create($fillable), function ($response) {
+            $this->dispatcher->dispatch(new ResponseSaved($response));
         });
     }
 

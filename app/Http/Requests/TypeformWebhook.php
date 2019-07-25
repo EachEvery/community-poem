@@ -3,6 +3,7 @@
 namespace Display\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Display\Repositories\Spaces;
 
 class TypeformWebhook extends FormRequest
 {
@@ -18,21 +19,35 @@ class TypeformWebhook extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     public function space()
     {
-        return $this->spaces->matchingTypeformId();
+        $form_id = $this->input('form_response')['form_id'];
+
+        return tap($this->spaces->matchingTypeformId($form_id), function ($space) use ($form_id) {
+            if (empty($space)) {
+                abort(404, 'No space configured to accept responses from from with id '.$form_id);
+            }
+        });
     }
 
-    public function responseFillable() {
-        return [
-            'name' => '',
-            'location' => '',
-            'email' => '',
-            'content' => ''
-        ];
+    public function responseFillable()
+    {
+        $fields = collect($this->input('form_response')['answers'])
+            ->mapWithKeys(function ($field) {
+                return [
+                    $field['field']['ref'] => $field[$field['type']],
+                ];
+            })
+            ->only(['name', 'city', 'email', 'content']);
+
+        if ($fields->count() < 4) {
+            abort(401, 'Form must have field references: name, city, email and content.');
+        }
+
+        return $fields->put('typeform_id', $this->input('event_id'))->toArray();
     }
 
     /**
@@ -43,6 +58,10 @@ class TypeformWebhook extends FormRequest
     public function rules()
     {
         return [
+            'event_id' => 'required',
+            'form_response.form_id' => 'required',
+            'form_response.answers.*.field.ref' => 'required',
+            'form_response.answers.*.field.ref' => 'required',
         ];
     }
 }

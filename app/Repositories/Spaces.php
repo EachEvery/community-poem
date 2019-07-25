@@ -8,7 +8,7 @@ class Spaces
 {
     public function matchingTypeformId($id)
     {
-        return Space::whereTypeformId($id)->firstOrFail();
+        return Space::whereTypeformId($id)->first();
     }
 
     public function matchingSlug($slug)

@@ -2,23 +2,22 @@
 
 namespace Display\Http\Controllers;
 
+use Display\Http\Requests\TypeformWebhook;
 use Display\Repositories\Responses;
-use Illuminate\Http\Request;
 
-class ResponseController
+class ResponseWebhookController extends Controller
 {
     public function __construct(Responses $responses)
     {
         $this->responses = $responses;
     }
 
-    public function delete(Request $req)
+    public function store(TypeformWebhook $req)
     {
-        $response = $this->responses->findOrFail(
-            $req->route('response')
+        $this->responses->addToSpace(
+            $req->responseFillable(),
+            $req->space()
         );
-
-        $this->responses->delete($response);
 
         return response(200);
     }

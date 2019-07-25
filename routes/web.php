@@ -17,8 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/webhook', 'ResponseController@store');
-
 Route::prefix('/{space}')->group(function ($router) {
     /*
      * Only allow users to access this route
@@ -28,6 +26,6 @@ Route::prefix('/{space}')->group(function ($router) {
     $router->get('/approve-responses', 'SpaceModerationController@show')
         ->middleware([ValidateSignature::class])->name('approveResponses');
 
-    $router->post('/responses/{response}/approve', 'ApproveResponseController')->name('approveResponse');
+    $router->post('/responses/{response}/approve', 'ApproveResponseController@store')->name('approveResponse');
     $router->delete('/responses/{response}', 'ResponseController@delete')->name('discardResponse');
 });

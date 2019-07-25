@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\URL;
 
 class Space extends Model
 {
+    protected $guarded = ['id'];
+
     public function responses()
     {
         return $this->hasMany(Response::class);

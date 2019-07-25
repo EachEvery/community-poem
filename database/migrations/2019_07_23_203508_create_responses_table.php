@@ -14,7 +14,7 @@ class CreateResponsesTable extends Migration
         Schema::create('responses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('location');
+            $table->string('city');
             $table->string('typeform_id');
             $table->unsignedInteger('space_id');
             $table->longText('content');

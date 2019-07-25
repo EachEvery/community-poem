@@ -121,7 +121,7 @@ $responses = collect([
 $factory->define(Response::class, function (Faker $faker) use ($responses) {
     return [
         'name' => $faker->name,
-        'location' => sprintf('%s, %s', $faker->city, $faker->state),
+        'city' => sprintf('%s, %s', $faker->city, $faker->state),
         'typeform_id' => str_random(10),
         'content' => $responses->random(),
         'email' => $faker->email,

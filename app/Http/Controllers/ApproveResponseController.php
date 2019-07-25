@@ -2,17 +2,17 @@
 
 namespace Display\Http\Controllers;
 
-use Display\Repositories\Resposnes;
+use Display\Repositories\Responses;
 use Illuminate\Http\Request;
 
 class ApproveResponseController
 {
-    public function __construct(Resposnes $responses)
+    public function __construct(Responses $responses)
     {
         $this->responses = $responses;
     }
 
-    public function __invoke(Request $req)
+    public function store(Request $req)
     {
         $res = $this->responses->findOrFail(
             $req->route('response')
