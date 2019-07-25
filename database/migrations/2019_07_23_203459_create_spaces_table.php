@@ -14,6 +14,7 @@ class CreateSpacesTable extends Migration
         Schema::create('spaces', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('theme')->default('earth');
             $table->string('admin_emails')->nullable();
             $table->string('typeform_id')->nullable();
             $table->string('slug')->nullable();

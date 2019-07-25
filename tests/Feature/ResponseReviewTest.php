@@ -41,7 +41,7 @@ class ResponseReviewTest extends TestCase
 
         $this->assertTrue(null === $space->approved_responses()->find($displayResponse->id));
 
-        $route = route('approveResponse', [
+        $route = route('markResponseApproved', [
             'space' => $space->slug,
             'repsonse' => $displayResponse->id,
         ]);

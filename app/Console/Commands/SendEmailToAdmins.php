@@ -15,7 +15,7 @@ class SendEmailToAdmins extends Command
      *
      * @var string
      */
-    protected $signature = 'email:admins';
+    protected $signature = 'display:emailAdmins';
 
     /**
      * The console command description.

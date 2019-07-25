@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\URL;
 class Space extends Model
 {
     protected $guarded = ['id'];
+    protected $appends = ['theme'];
+
+    public function getThemeAttribute($val)
+    {
+        return empty($val) ? null : app('Display\\Repositories\\Themes')->get($val);
+    }
 
     public function responses()
     {

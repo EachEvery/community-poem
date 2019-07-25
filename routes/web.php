@@ -23,9 +23,9 @@ Route::prefix('/{space}')->group(function ($router) {
      * that recieved a signed url from an email
      * generated from our system.
      */
-    $router->get('/approve-responses', 'SpaceModerationController@show')
+    $router->get('/approve-responses', 'ApproveResponseController@show')
         ->middleware([ValidateSignature::class])->name('approveResponses');
 
-    $router->post('/responses/{response}/approve', 'ApproveResponseController@store')->name('approveResponse');
+    $router->post('/responses/{response}/approve', 'ApproveResponseController@store')->name('markResponseApproved');
     $router->delete('/responses/{response}', 'ResponseController@delete')->name('discardResponse');
 });

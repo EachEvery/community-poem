@@ -41,14 +41,14 @@ class UnapprovedResponsesWaiting extends Notification
     public function toMail($notifiable)
     {
         $count = $this->space->unapproved_responses()->count();
-        $message = sprintf("%s Thread from '%s' responses are awaiting approval", $count, $this->space->name);
+        $message = sprintf('%s submission(s) from %s are awaiting approval', $count, $this->space->name);
 
         return (new MailMessage())
             ->subject($message)
-            ->view('adminEmail', [
-                'message' => $message,
-                'signed_url' => $this->space->signedUrl(),
-            ]);
+            ->greeting('👋 Hi there,')
+            ->line($message)
+            ->line('Please click the button below to approve or discard responses.')
+            ->action('Review Responses', $this->space->signedUrl());
     }
 
     /**
