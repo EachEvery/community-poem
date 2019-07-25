@@ -22,6 +22,7 @@ class ApproveResponseController
 
         return view('reviewResponses', [
             'responses' => $space->unapproved_responses()->get(),
+            'space' => $space,
         ]);
     }
 

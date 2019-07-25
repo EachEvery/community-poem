@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\URL;
 class Space extends Model
 {
     protected $guarded = ['id'];
-    protected $appends = ['theme'];
+    protected $appends = ['theme_array'];
 
-    public function getThemeAttribute($val)
+    public function getThemeArrayAttribute($val)
     {
-        return empty($val) ? null : app('Display\\Repositories\\Themes')->get($val);
+        return empty($this->theme) ? null : app('Display\\Repositories\\Themes')->get($this->theme);
     }
 
     public function responses()
