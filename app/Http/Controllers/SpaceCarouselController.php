@@ -1,14 +1,17 @@
 <?php
 
+namespace Display\Http\Controllers;
+
 use Display\Repositories\Spaces;
 use Illuminate\Http\Request;
+use Display\Repositories\Responses;
 
 class SpaceCarouselController
 {
     public function __construct(Spaces $spaces, Responses $responses)
     {
         $this->spaces = $spaces;
-        $this->repsonses = $responses;
+        $this->responses = $responses;
     }
 
     public function show(Request $req)

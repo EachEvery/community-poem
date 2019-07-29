@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&display=swap" rel="stylesheet">
 
 
-<body>
+<body class="text-gray-600" style="@yield('body_style')">
     <div id="app">
         @yield('page')        
     </div>

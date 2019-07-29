@@ -3,3 +3,7 @@
 .transition {
     transition: 300ms all ease;
 }
+
+.active-shrink:active {
+    transform: scale(0.95);
+}

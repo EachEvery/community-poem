@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Routing\Middleware\ValidateSignature;
+use Illuminate\Support\Facades\URL;
+use Display\Space;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +16,19 @@ use Illuminate\Routing\Middleware\ValidateSignature;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if ('local' !== config('app.env')) {
+        abort(404);
+    }
+
+    return redirect(URL::signedRoute(
+        'approveResponses',
+        ['space' => Space::inRandomOrder()->first()->slug]
+    ));
 });
 
 Route::prefix('/{space}')->group(function ($router) {
+    $router->get('/', 'SpaceCarouselController@show');
+
     /*
      * Only allow users to access this route
      * that recieved a signed url from an email

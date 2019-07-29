@@ -1,6 +1,5 @@
 @extends('master')
 @section('title', 'Review Responses')
 @section('page')
-
-    <review-responses :responses="{{$responses}}" :space="{{$space}}" />
+    <review-responses :init-responses="{{$responses}}" :space="{{$space}}" />
 @endsection
