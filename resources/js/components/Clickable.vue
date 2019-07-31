@@ -1,5 +1,8 @@
 <template>
-  <button class="p-2 text-sm rounded-lg border px-3 no-select active-shrink" @click="emit">
+  <button
+    class="p-1 text-xs rounded-lg border px-2 no-select active-shrink flex-grow-0"
+    @click="emit"
+  >
     <slot />
   </button>
 </template>

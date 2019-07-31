@@ -43,6 +43,11 @@ class Responses
             Response::whereNotNull('approved_at')->get();
     }
 
+    public function forSpace(Space $space)
+    {
+        return $space->responses()->get();
+    }
+
     public function delete($response)
     {
         $response->delete();

@@ -1,6 +1,7 @@
 <template>
   <div
     :style="{'backgroundColor': theme.background_color, '--stroke-color': theme.secondary_text_color}"
+    @click="emit"
   >
     <div class="relative w-full" style="height: 56vw;">
       <img
@@ -26,7 +27,7 @@
       <h3
         class="absolute font-sans font-bold"
         style="bottom: 0; font-size: 2vw; padding: 4vw"
-        :style="{color: theme.secondary_text_color, backgroundColor: theme.background_color}"
+        :style="{color: theme.secondary_text_color}"
       >
         {{response.name}}
         <br />
@@ -47,7 +48,7 @@
   font-size: 3vw;
   font-weight: 800;
   transform-origin: left center;
-  width: 74vh;
+  width: 51vw;
   letter-spacing: 0.375vw;
   text-align: center;
 }
@@ -65,6 +66,9 @@ export default {
     },
     getInnerHtml() {
       return this.$refs.content.innerHTML;
+    },
+    emit(e) {
+      this.$emit("click", e, this.response);
     }
   },
   computed: {
