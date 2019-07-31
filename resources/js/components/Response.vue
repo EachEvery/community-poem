@@ -1,5 +1,6 @@
 <template>
   <div
+    class="transition"
     :style="{'backgroundColor': theme.background_color, '--stroke-color': theme.secondary_text_color}"
     @click="emit"
   >
@@ -8,26 +9,26 @@
         class="inset-0 absolute h-full w-full object-cover"
         :src="theme.photo"
         @load="handleLoad"
-        style="transition: 500ms all ease;"
-        :style="{'transform': `translateY(${isLoading ? '3px': '0'})`}"
-        :class="{'opacity-0': isLoading, 'opacity-100': !isLoading}"
+        style="transition: 300ms all ease;"
+        :style="{'transform': `translateY(${isLoading || switching ? '3px': '0'})`}"
+        :class="{'opacity-0': isLoading || switching}"
       />
 
       <div class="relative">
         <div
           ref="content"
           v-html="response.content"
-          class="font-serif focus:outline-none h-full overflow-auto"
+          class="font-serif focus:outline-none h-full overflow-auto transition"
           :contenteditable="editable"
-          :style="{'color': theme.primary_text_color, 'fontSize': `${fontSize}vw`, }"
+          :style="{'color': theme.primary_text_color, 'fontSize': `${fontSize}vw`, ...switchingStyles}"
           style="width: 50vw; padding:4vw; padding-top: 10vw"
         />
       </div>
 
       <h3
-        class="absolute font-sans font-bold"
-        style="bottom: 0; font-size: 2vw; padding: 4vw"
-        :style="{color: theme.secondary_text_color}"
+        class="absolute font-sans font-bold transition"
+        style="bottom: 0; font-size: 2vw; padding: 4vw; transition-delay: 100ms"
+        :style="{color: theme.secondary_text_color, ...switchingStyles}"
       >
         {{response.name}}
         <br />
@@ -74,6 +75,12 @@ export default {
   computed: {
     isLoading({ state }) {
       return state === "loading";
+    },
+    switchingStyles({ switching }) {
+      return {
+        transform: `translateY(${switching ? 5 : 0}px)`,
+        opacity: switching ? 0 : 1
+      };
     }
   },
   watch: {
@@ -86,7 +93,11 @@ export default {
     theme: Object,
     response: Object,
     space: Object,
-    fontSize: Number
+    fontSize: Number,
+    switching: {
+      type: Boolean,
+      default: false
+    }
   }
 };
 </script>

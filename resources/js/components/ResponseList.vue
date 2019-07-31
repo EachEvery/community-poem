@@ -3,7 +3,12 @@
     <h1 class="text-center font-bold mt-12">
       All Responses for
       <span class="italic">{{space.name}}</span>
-      ({{responses.length}})
+      ({{responses.length}}) -
+      <a
+        class="text-gray-600 underline"
+        :href="`/${space.slug}`"
+        target="_blank"
+      >View Slideshow</a>
     </h1>
 
     <h3 class="text-center mt-12">🛑 Unapproved ({{unapproved.length}})</h3>

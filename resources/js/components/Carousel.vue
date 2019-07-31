@@ -6,6 +6,7 @@
       :font-size="+response.font_size"
       :theme="theme"
       :space="space"
+      :switching="state === 'switching'"
     />
   </div>
 </template>
@@ -34,18 +35,35 @@ export default {
       } else {
         this[prop]++;
       }
+    },
+    sleep(ms = 350) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        }, 350);
+      });
     }
   },
   data() {
     return {
       themeIndex: 0,
-      responseIndex: 0
+      responseIndex: 0,
+      state: "default"
     };
   },
   mounted() {
-    setInterval(() => {
-      this.nextIndex(this.responses, "responseIndex");
+    setInterval(async () => {
+      this.state = "switching";
+
+      await this.sleep(50);
+
       this.nextIndex(this.space.theme_array, "themeIndex");
+
+      await this.sleep();
+
+      this.nextIndex(this.responses, "responseIndex");
+
+      this.state = "default";
     }, 8000);
   },
   computed: {
