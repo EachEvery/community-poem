@@ -18,9 +18,9 @@
         <div
           ref="content"
           v-html="response.content"
-          class="font-serif focus:outline-none h-full overflow-auto transition"
+          class="font-serif focus:outline-none h-full overflow-auto"
           :contenteditable="editable"
-          :style="{'color': theme.primary_text_color, 'fontSize': `${fontSize}vw`, ...switchingStyles}"
+          :style="{'color': theme.primary_text_color, 'fontSize': `${fontSize}vw`, 'transition':'300ms transform ease, 300ms color ease', ...switchingStyles}"
           style="width: 50vw; padding:4vw; padding-top: 10vw"
         />
       </div>
