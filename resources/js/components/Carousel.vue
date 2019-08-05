@@ -19,7 +19,11 @@ export default {
   },
   props: {
     space: Object,
-    responses: Array
+    responses: Array,
+    autoplay: {
+      type: Boolean,
+      default: true
+    }
   },
   methods: {
     prevIndex(arr, prop) {
@@ -52,19 +56,26 @@ export default {
     };
   },
   mounted() {
-    setInterval(async () => {
-      this.state = "switching";
+    if (this.autoplay) {
+      setInterval(async () => {
+        this.state = "switching";
 
-      await this.sleep(50);
+        await this.sleep(50);
 
-      this.nextIndex(this.space.theme_array, "themeIndex");
+        this.nextIndex(this.space.theme_array, "themeIndex");
 
-      await this.sleep();
+        await this.sleep();
 
-      this.nextIndex(this.responses, "responseIndex");
+        this.nextIndex(this.responses, "responseIndex");
 
-      this.state = "default";
-    }, 8000);
+        this.state = "default";
+      }, 8000);
+    } else {
+      this.themeIndex = Math.floor(
+        Math.random() * this.space.theme_array.length
+      );
+      this.responseIndex = Math.floor(Math.random() * this.responses.length);
+    }
   },
   computed: {
     responseId({ responseIndex, responses }) {

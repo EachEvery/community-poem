@@ -6,7 +6,7 @@ use Display\Repositories\Spaces;
 use Illuminate\Http\Request;
 use Display\Repositories\Responses;
 
-class SpaceCarouselController
+class SpaceResponseController
 {
     public function __construct(Spaces $spaces, Responses $responses)
     {
@@ -23,7 +23,7 @@ class SpaceCarouselController
         return view('spaceCarousel', [
             'space' => $space,
             'responses' => $this->responses->approved($space),
-            'autoplay' => 'true',
+            'autoplay' => 'false',
         ]);
     }
 }

@@ -27,7 +27,8 @@ Route::get('/', function () {
 });
 
 Route::prefix('/{space}')->group(function ($router) {
-    $router->get('/', 'SpaceCarouselController@show');
+    $router->get('/', 'SpaceResponseController@show');
+    $router->get('/slideshow', 'SpaceCarouselController@show');
 
     /*
      * Only allow users to access this route
