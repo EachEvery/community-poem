@@ -17,5 +17,6 @@ $factory->define(Space::class, function (Faker $faker) {
         'name' => $name,
         'slug' => Str::slug($name),
         'admin_emails' => $emails->implode(', '),
+        'slideshow_interval' => 8,
     ];
 });

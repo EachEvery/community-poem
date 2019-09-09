@@ -23,6 +23,10 @@ export default {
     autoplay: {
       type: Boolean,
       default: true
+    },
+    interval: {
+      type: Number,
+      default: 8
     }
   },
   methods: {
@@ -56,6 +60,8 @@ export default {
     };
   },
   mounted() {
+    console.log(this.interval);
+
     if (this.autoplay) {
       setInterval(async () => {
         this.state = "switching";
@@ -69,7 +75,7 @@ export default {
         this.nextIndex(this.responses, "responseIndex");
 
         this.state = "default";
-      }, 8000);
+      }, this.interval * 1000);
     } else {
       this.themeIndex = Math.floor(
         Math.random() * this.space.theme_array.length

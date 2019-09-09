@@ -20,7 +20,7 @@ class SpaceResponseController
             $req->route('space')
         );
 
-        return view('spaceCarousel', [
+        return view('spaceSlideshow', [
             'space' => $space,
             'responses' => $this->responses->approved($space),
             'autoplay' => 'false',

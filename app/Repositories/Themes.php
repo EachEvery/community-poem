@@ -12,6 +12,32 @@ class Themes
     public function all()
     {
         return [
+            'hb' => [
+                [
+                    'photo' => 'https://nhmisc.s3.amazonaws.com/hb/hb-1.jpg',
+                    'primary_text_color' => 'rgb(51, 89, 73)',
+                    'secondary_text_color' => 'rgba(51, 89, 73, .8)',
+                    'background_color' => 'rgb(254,246,218)',
+                ],
+                [
+                    'photo' => 'https://nhmisc.s3.amazonaws.com/hb/hb-2.jpg',
+                    'primary_text_color' => 'rgb(51, 89, 73)',
+                    'secondary_text_color' => 'rgba(51, 89, 73, .8)',
+                    'background_color' => 'rgb(230,240,237)',
+                ],
+                [
+                    'photo' => 'https://nhmisc.s3.amazonaws.com/hb/hb-3.jpg',
+                    'primary_text_color' => 'rgb(51, 89, 73)',
+                    'secondary_text_color' => 'rgba(51, 89, 73, .8)',
+                    'background_color' => 'rgb(246,227,218)',
+                ],
+                [
+                    'photo' => 'https://nhmisc.s3.amazonaws.com/hb/hb-4.jpg',
+                    'primary_text_color' => 'rgb(51, 89, 73)',
+                    'secondary_text_color' => 'rgba(51, 89, 73, .8)',
+                    'background_color' => 'rgb(247,229,208)',
+                ],
+            ],
             'earth' => [
                 [
                     'photo' => 'https://nhmisc.s3.amazonaws.com/ts-random/earth-teal1.png',
