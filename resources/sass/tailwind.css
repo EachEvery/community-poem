@@ -3,3 +3,25 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@responsive {
+    .scale-up {
+        transform: scale(1.2);
+    }
+
+    .scale-none {
+        transform: none;
+    }
+
+    .text-outline {
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 0.12rem;
+        -webkit-text-stroke-color: currentColor;
+    }
+
+    .text-outline-thin {
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: 0.08rem;
+        -webkit-text-stroke-color: currentColor;
+    }
+}

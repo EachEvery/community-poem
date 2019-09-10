@@ -1,4 +1,4 @@
-@extends('master')
+@extends('threadDisplay')
 @section('title', 'Review Responses')
 @section('page')
     <review-responses :init-responses="{{$responses}}" :space="{{$space}}" />

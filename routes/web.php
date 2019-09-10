@@ -15,7 +15,10 @@ use Display\Space;
 |
 */
 
-Route::get('/', function () {
+Route::view('/', 'peacePoemHome');
+Route::view('/about', 'peacePoemAbout');
+
+Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {
         abort(404);
     }

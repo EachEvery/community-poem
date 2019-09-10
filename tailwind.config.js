@@ -2,9 +2,32 @@ module.exports = {
     theme: {
         fontFamily: {
             serif: ["calluna", "serif"],
-            sans: ["Work Sans", "sans-serif"]
+            sans: ["Work Sans", "sans-serif"],
+            cursive: ["Homemade Apple", "cursive"],
+            display: ["bureau-grot-condensed", "sans-serif"]
         },
-        extend: {}
+        extend: {
+            colors: {
+                green: {
+                    "100": "#EBFFE6",
+                    "900": "#1E6043"
+                },
+                yellow: {
+                    "900": "#FDDFB4",
+                    "100": "#FFFDD5"
+                },
+                blue: {
+                    "100": "#E0F5FF"
+                }
+            },
+            spacing: {
+                "50vw": "50vw"
+            },
+            fontSize: {
+                "8xl": "6rem",
+                "9xl": "7rem"
+            }
+        }
     },
     variants: {
         opacity: ["responsive", "hover"]
