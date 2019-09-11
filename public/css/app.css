@@ -6889,8 +6889,12 @@ video {
   z-index: auto;
 }
 
+.scale-down {
+  transform: scale(0.9);
+}
+
 .scale-up {
-  transform: scale(1.2);
+  transform: scale(1.4);
 }
 
 .scale-none {
@@ -13172,8 +13176,12 @@ video {
     z-index: auto;
   }
 
+  .sm\:scale-down {
+    transform: scale(0.9);
+  }
+
   .sm\:scale-up {
-    transform: scale(1.2);
+    transform: scale(1.4);
   }
 
   .sm\:scale-none {
@@ -19456,8 +19464,12 @@ video {
     z-index: auto;
   }
 
+  .md\:scale-down {
+    transform: scale(0.9);
+  }
+
   .md\:scale-up {
-    transform: scale(1.2);
+    transform: scale(1.4);
   }
 
   .md\:scale-none {
@@ -25740,8 +25752,12 @@ video {
     z-index: auto;
   }
 
+  .lg\:scale-down {
+    transform: scale(0.9);
+  }
+
   .lg\:scale-up {
-    transform: scale(1.2);
+    transform: scale(1.4);
   }
 
   .lg\:scale-none {
@@ -32024,8 +32040,12 @@ video {
     z-index: auto;
   }
 
+  .xl\:scale-down {
+    transform: scale(0.9);
+  }
+
   .xl\:scale-up {
-    transform: scale(1.2);
+    transform: scale(1.4);
   }
 
   .xl\:scale-none {

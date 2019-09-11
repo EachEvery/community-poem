@@ -17,10 +17,10 @@
 
         <!-- Heading -->
         <div class="text-green-900 px-4 leading-tight flex flex-col">
-            <span class="font-display text-8xl uppercase ">Global</span>
-            <span class="font-display text-8xl uppercase   |  self-end    ">Peace</span>
-            <span class="font-cursive text-center self-end leading-normal my-3 w-48">Contribute a line or stanza to a global peace poem</span>
-            <span class="font-display text-8xl uppercase   |  ml-2">Poem</span>
+            <span class="font-display text-6xl uppercase ">Global</span>
+            <span class="font-display text-6xl uppercase   |  self-end    ">Peace</span>
+            <span class="font-cursive text-center self-end leading-normal my-3 w-32 text-xs">Contribute a line or stanza to a global peace poem</span>
+            <span class="font-display text-6xl uppercase   |  ml-2">Poem</span>
         </div>
 
 

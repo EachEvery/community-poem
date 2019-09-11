@@ -17,6 +17,7 @@ window.Vue = require("vue");
  */
 
 const files = require.context("./", true, /\.vue$/i);
+
 files.keys().map(key =>
     Vue.component(
         key
@@ -26,6 +27,10 @@ files.keys().map(key =>
         files(key).default
     )
 );
+
+import PortalVue from "portal-vue";
+
+Vue.use(PortalVue);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

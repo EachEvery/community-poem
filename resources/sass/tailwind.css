@@ -5,8 +5,12 @@
 @tailwind utilities;
 
 @responsive {
+    .scale-down {
+        transform: scale(0.9);
+    }
+
     .scale-up {
-        transform: scale(1.2);
+        transform: scale(1.4);
     }
 
     .scale-none {

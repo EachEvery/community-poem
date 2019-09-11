@@ -1,7 +1,7 @@
 @extends('peacePoem')
 @section('title', 'About')
 @section('page')
-<div class="bg-blue-100 text-green-900 p-8 pt-24">
+<div class="bg-blue-100 text-green-900 p-8 pt-32">
     <div>
         <h1 class="font-display text-5xl uppercase leading-tight mb-5">Peace Poems<br />Contest</h1>
 

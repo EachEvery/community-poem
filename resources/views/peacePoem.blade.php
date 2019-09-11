@@ -14,7 +14,17 @@
         
         @yield('page')        
 
-        <mobile-header></mobile-header>
+        <footer class="p-8 pt-32 pb-48 bg-green-900 text-white">
+            <h3 class="text-lg uppercase text-3xl block font-display font-bold mb-5">Get in Touch</h3>
+            <p class="mb-10">The goal of our Global Community Poem is to show how creative expression can be used to help communities heal. If you would like us to set up a community poem for your classroom, institution, conference, or other community event, please contact us at wickpoetry@kent.edu</p>
+
+            @component('attribution')
+                @slot('class', 'text-white')
+            @endcomponent
+        </footer>
+
+        <portal-target name="end-of-body"></portal-target>
+        <mobile-header current-route-name="{{Route::currentRouteName()}}"></mobile-header>    
     </div>
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
-</body>
+</body> 
