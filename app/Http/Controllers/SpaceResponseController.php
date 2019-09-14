@@ -1,10 +1,10 @@
 <?php
 
-namespace Display\Http\Controllers;
+namespace CommunityPoem\Http\Controllers;
 
-use Display\Repositories\Spaces;
+use CommunityPoem\Repositories\Spaces;
 use Illuminate\Http\Request;
-use Display\Repositories\Responses;
+use CommunityPoem\Repositories\Responses;
 
 class SpaceResponseController
 {

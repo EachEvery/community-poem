@@ -1,8 +1,8 @@
 <?php
 
-namespace Display\Http\Controllers\Auth;
+namespace CommunityPoem\Http\Controllers\Auth;
 
-use Display\Http\Controllers\Controller;
+use CommunityPoem\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller

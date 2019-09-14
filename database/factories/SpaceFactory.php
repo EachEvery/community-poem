@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Display\Space;
+use CommunityPoem\Space;
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 

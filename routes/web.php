@@ -15,10 +15,16 @@ use Display\Space;
 |
 */
 
+<<<<<<< HEAD
 Route::view('/', 'peacePoemHome')->name('about');
 Route::view('/contest', 'peacePoemContest')->name('contest');
 Route::view('/responses', 'peacePoemResponses')->name('responses');
 
+=======
+Route::view('/', 'peacePoemAbout')->name('about');
+Route::view('/responses', 'peacePoemResponses')->name('responses');
+Route::view('/contest', 'peacePoemContest')->name('contest');
+>>>>>>> 130009befaf0a3774e2d417e88d324c0fef513a9
 
 Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {

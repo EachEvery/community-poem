@@ -40394,7 +40394,7 @@ var render = function() {
                   staticClass:
                     "font-display text-5xl font-semibold uppercase self-center",
                   class: { "text-outline": _vm.currentRouteName !== "about" },
-                  attrs: { href: "/about" }
+                  attrs: { href: "/" }
                 },
                 [_vm._v("About")]
               ),

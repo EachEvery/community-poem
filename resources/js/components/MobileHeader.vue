@@ -26,7 +26,7 @@
       >
         <div class="flex flex-col text-green-900">
           <a
-            href="/about"
+            href="/"
             class="font-display text-5xl font-semibold uppercase self-center"
             :class="{'text-outline': currentRouteName !== 'about'}"
           >About</a>

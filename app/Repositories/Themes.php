@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Repositories;
+namespace CommunityPoem\Repositories;
 
 class Themes
 {

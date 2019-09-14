@@ -1,6 +1,6 @@
 <?php
 
-namespace Display;
+namespace CommunityPoem;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ class Space extends Model
 
     public function getThemeArrayAttribute($val)
     {
-        return empty($this->theme) ? null : app('Display\\Repositories\\Themes')->get($this->theme);
+        return empty($this->theme) ? null : app('CommunityPoem\\Repositories\\Themes')->get($this->theme);
     }
 
     public function responses()
@@ -33,8 +33,12 @@ class Space extends Model
 
     public function signedUrl()
     {
-        return URL::signedRoute('approveResponses',
-            ['space' => $this->slug]);
+        return URL::signedRoute(
+            'approveResponses',
+            [
+                'space' => $this->slug,
+            ]
+        );
     }
 
     protected static function boot()

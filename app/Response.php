@@ -1,6 +1,6 @@
 <?php
 
-namespace Display;
+namespace CommunityPoem;
 
 use Illuminate\Database\Eloquent\Model;
 

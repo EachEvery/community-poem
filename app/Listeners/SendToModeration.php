@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Listeners;
+namespace CommunityPoem\Listeners;
 
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use Display\User;
+use CommunityPoem\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 

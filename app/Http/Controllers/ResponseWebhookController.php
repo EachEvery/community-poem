@@ -1,9 +1,9 @@
 <?php
 
-namespace Display\Http\Controllers;
+namespace CommunityPoem\Http\Controllers;
 
-use Display\Http\Requests\TypeformWebhook;
-use Display\Repositories\Responses;
+use CommunityPoem\Http\Requests\TypeformWebhook;
+use CommunityPoem\Repositories\Responses;
 
 class ResponseWebhookController extends Controller
 {

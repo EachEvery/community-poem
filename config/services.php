@@ -35,7 +35,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => Display\User::class,
+        'model' => CommunityPoem\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook' => [

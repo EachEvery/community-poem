@@ -1,10 +1,10 @@
 <?php
 
-namespace Display\Console;
+namespace CommunityPoem\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Display\Console\Commands\SendEmailToAdmins;
+use CommunityPoem\Console\Commands\SendEmailToAdmins;
 
 class Kernel extends ConsoleKernel
 {
