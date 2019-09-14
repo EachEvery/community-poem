@@ -20,7 +20,7 @@
 
     <portal to="end-of-body">
       <div
-        class="h-screen bg-white transition absolute top-0 inset-x-0 flex flex-col"
+        class="h-screen bg-white transition fixed top-0 inset-x-0 flex flex-col"
         style="padding-top: 18vh"
         :class="menuClass"
       >

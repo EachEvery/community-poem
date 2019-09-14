@@ -40382,7 +40382,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "h-screen bg-white transition absolute top-0 inset-x-0 flex flex-col",
+              "h-screen bg-white transition fixed top-0 inset-x-0 flex flex-col",
             class: _vm.menuClass,
             staticStyle: { "padding-top": "18vh" }
           },
