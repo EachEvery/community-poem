@@ -1,14 +1,14 @@
 <?php
 
-namespace Display\Repositories;
+namespace CommunityPoem\Repositories;
 
-use Display\Events\ResponseSaved;
-use Display\Events\ResponseApproved;
+use CommunityPoem\Events\ResponseSaved;
+use CommunityPoem\Events\ResponseApproved;
 use Illuminate\Events\Dispatcher;
-use Display\Events\ResponseDeleted;
+use CommunityPoem\Events\ResponseDeleted;
 use Carbon\Carbon;
-use Display\Space;
-use Display\Response;
+use CommunityPoem\Space;
+use CommunityPoem\Response;
 
 class Responses
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Display;
+namespace CommunityPoem;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Providers;
+namespace CommunityPoem\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

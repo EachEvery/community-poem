@@ -1,8 +1,8 @@
 <?php
 
-namespace Display\Http\Controllers;
+namespace CommunityPoem\Http\Controllers;
 
-use Display\Repositories\Responses;
+use CommunityPoem\Repositories\Responses;
 use Illuminate\Http\Request;
 
 class ResponseController

@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Events;
+namespace CommunityPoem\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;

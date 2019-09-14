@@ -15,10 +15,9 @@ use Display\Space;
 |
 */
 
-Route::view('/', 'peacePoemHome')->name('home');
-Route::view('/about', 'peacePoemAbout')->name('about');
-Route::view('/responses', 'peacePoemAbout')->name('responses');
-Route::view('/content', 'peacePoemAbout')->name('content');
+Route::view('/', 'peacePoemAbout')->name('about');
+Route::view('/responses', 'peacePoemResponses')->name('responses');
+Route::view('/contest', 'peacePoemContest')->name('contest');
 
 Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {

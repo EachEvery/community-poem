@@ -1,11 +1,11 @@
 <?php
 
-namespace Display\Notifications;
+namespace CommunityPoem\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
-use Display\Space;
+use CommunityPoem\Space;
 
 class UnapprovedResponsesWaiting extends Notification
 {

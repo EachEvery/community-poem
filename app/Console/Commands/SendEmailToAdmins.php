@@ -1,12 +1,12 @@
 <?php
 
-namespace Display\Console\Commands;
+namespace CommunityPoem\Console\Commands;
 
 use Illuminate\Console\Command;
-use Display\Repositories\Spaces;
+use CommunityPoem\Repositories\Spaces;
 use Illuminate\Notifications\ChannelManager;
-use Display\User;
-use Display\Notifications\UnapprovedResponsesWaiting;
+use CommunityPoem\User;
+use CommunityPoem\Notifications\UnapprovedResponsesWaiting;
 
 class SendEmailToAdmins extends Command
 {

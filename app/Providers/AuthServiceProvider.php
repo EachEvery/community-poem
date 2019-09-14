@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Providers;
+namespace CommunityPoem\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'Display\Model' => 'Display\Policies\ModelPolicy',
+        // 'CommunityPoem\Model' => 'CommunityPoem\Policies\ModelPolicy',
     ];
 
     /**

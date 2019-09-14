@@ -1,9 +1,9 @@
 <?php
 
-namespace Display\Repositories;
+namespace CommunityPoem\Repositories;
 
-use Display\Space;
-use Display\Response;
+use CommunityPoem\Space;
+use CommunityPoem\Response;
 
 class Spaces
 {

@@ -68,7 +68,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => Display\User::class,
+            'model' => CommunityPoem\User::class,
         ],
 
         // 'users' => [

@@ -2,7 +2,7 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use Display\Response;
+use CommunityPoem\Response;
 use Faker\Generator as Faker;
 
 $responses = collect([

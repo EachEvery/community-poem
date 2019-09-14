@@ -1,34 +1,112 @@
 @extends('peacePoem')
-@section('title', 'About')
+@section('title', 'Home')
 @section('page')
-<div class="bg-blue-100 text-green-900 p-8 pt-32">
-    <div>
-        <h1 class="font-display text-5xl uppercase leading-tight mb-5">Peace Poems<br />Contest</h1>
-
-        <p>The Wick Poetry Center is now accepting poetry submissions as part of the commemoration of the 50th anniversary of the May 4 shootings. The poems should resonate with the themes of peace, conflict transformation, and student advocacy. Visit the contest submission page for full guidelines.</p>
-
-        <a href="#" class="inline-block font-display bg-white text-lg border-2 border-green-900 px-8 py-3 uppercase font-bold mt-10">Submit</a>
-    </div>
 
 
-    <div class="mt-32">
-        <h3 class="text-lg uppercase text-3xl block font-display font-bold">Categories</h3>
-        <h3 class="text-lg uppercase text-3xl block mt-3 font-display font-bold text-outline-thin">Youth</h3>
-        <h3 class="text-lg uppercase text-3xl block mt-1 font-display font-bold text-outline-thin">Adult Student</h3>
-        <h3 class="text-lg uppercase text-3xl block mt-1 font-display font-bold text-outline-thin">Non-Student</h3>
-    </div>
+<!-- Hero, Green BG -->
+<div class="bg-green-100 text-green-900 p-8 pt-24">
 
-    <div class="mt-12">
-        <div class="flex justify-between mb-10">
-            <h1 class="text-lg uppercase text-3xl block font-display font-bold self-end leading-tight">NAOMI<br />
-            SHIHAB NYE</h1>
+    <div class="max-w-lg mx-auto">
 
-            <img src="/img/naomi@2x.png" alt="Naomi Shihab Nye" class="rounded-full w-32 h-32 border-4 border-green-900" />
+
+        <!-- Logos & Attribution -->
+        <div class="flex flex-row-reverse mb-5">
+            @component('attribution')            
+            @endcomponent
         </div>
 
-        <p>Poet, songwriter, and novelist, Naomi Shihab Nye, will will select one winner from each category who will receive $500 and an all-expenses-paid trip to Kent State University to read their poems during the May 4 Music and Poetry Event on April 21. 
-            <br /><br />
-            Two poets will receive honorable mention prizes for $250 and an all-expenses-paid trip to Kent State to read their poems during the April 21 event. All winners will have their poems set to a musical composition by students in the Kent State University School of Music.</p>        
+        <!-- Heading -->
+        <div class="text-green-900 px-4 leading-tight flex flex-col">
+            <span class="font-display text-6xl uppercase ">Global</span>
+            <span class="font-display text-6xl uppercase   |  self-end    ">Peace</span>
+            <span class="font-cursive text-center self-end leading-normal my-3 w-32 text-xs">Contribute a line or stanza to a global peace poem</span>
+            <span class="font-display text-6xl uppercase   |  ml-2">Poem</span>
+        </div>
+
+
+    </div>
+
+    <scrolly-globe class="w-full -mb-50vw mt-16 scale-up"></scrolly-globe>
+</div>
+
+
+
+<!-- Section, Yellow BG -->
+<div class="bg-yellow-900 p-8 pt-32 pb-48 text-green-900">
+
+    <span class="font-display text-9xl text-center uppercase text-outline leading-none">
+        &ldquo;My<br />Voice&rdquo;
+    </span>
+
+
+    <div class="bg-white  p-10 -mt-10 relative pt-16 pb-32   |  ">
+        <span class="text-lg uppercase text-3xl text-center block mb-3 font-display  |  ">What is it?</span>
+        <p class="text-2xl mt-8 text-center leading-normal font-light">
+            A global community poem in commemoration of the 50th anniversary of Kent State University’s May 4 shootings.
+        </p>
+    </div>
+
+
+
+    <div class="flex flex-col mt-3">        
+        <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end text-lg">
+        My Voice Is
+        I Want
+        My Voice stands for
+        Give & Take
+        Repetition
+        My Voice
+        </span>
+
+        <img src="/img/globe-triangle@2x.png" class="w-1/2 -mt-12" />
+    </div>
+
+    <div class="mt-16">
+        <h5 class="font-display font-bold leading-tight text-lg uppercase text-3xl mb-5">contribute a<br />
+        line or stanza</h5>
+
+        <p class="text-base leading">The Wick Poetry Center invites people from around the world to contribute a line or stanza to a global community peace poem titled “My Voice.” As Kent State University approaches the 50th anniversary of the May 4 shootings, the themes of the poem will reflect peace, conflict transformation, and advocacy. </p>
+    </div>
+
+
+    <div class="flex flex-col mt-32">
+
+        <img src="/img/globe-square@2x.png" class="w-24 self-center -ml-5" />
+
+        <div class="flex justify-between ">
+
+            <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end text-ms">
+            My voice is a two-
+            belled trumpet in 
+            harmony for peace
+            </span>
+
+            <img src="/img/globe-sphere@2x.png" class="w-24 h-24" />
+        </div>
+
+    </div>
+
+    <div class="mt-16">
+        <h5 class="font-display font-bold leading-tight text-lg uppercase text-3xl mb-3">no experience<br />
+            required</h5>
+
+        <p class="text-base leading">The resulting poem will be built line-by-line from the personal experiences, thoughts, and expressions of a global community of writers. You don’t need to have any previous writing experience to participate. Simply select one or more of the prompts below to share your voice.</p>
+    </div>
+
+    <div class="relative  mt-24" style="height: 30rem">
+        <img class="inset-0 absolute w-full h-full object-cover" src="/img/globe-card@2x.png"  style="transform: translate(-1rem, 1rem)" />
+
+        <div class="bg-white inset-0 absolute w-full h-full text-green p-4 pt-16 px-8 flex flex-col">
+           <span class="font-display text-5xl  uppercase text-center  text-outline leading-none text-center block">
+                Respond
+            </span>
+            
+            <p class="text-xl mt-8 text-center leading-normal">The Wick Poetry Center invites people from around the world to contribute a line or stanza to a global community peace poem titled “My Voice.”</p>
+
+            <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center mt-10">RESPOND</a>
+        </div>
     </div>
 </div>
+
+
 @endsection

@@ -1,10 +1,10 @@
 <?php
 
-namespace Display\Http\Controllers;
+namespace CommunityPoem\Http\Controllers;
 
-use Display\Repositories\Responses;
+use CommunityPoem\Repositories\Responses;
 use Illuminate\Http\Request;
-use Display\Repositories\Spaces;
+use CommunityPoem\Repositories\Spaces;
 
 class ApproveResponseController
 {

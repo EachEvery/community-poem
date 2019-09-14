@@ -1,9 +1,9 @@
 <?php
 
-namespace Display\Http\Requests;
+namespace CommunityPoem\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Display\Repositories\Spaces;
+use CommunityPoem\Repositories\Spaces;
 
 class TypeformWebhook extends FormRequest
 {

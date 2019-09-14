@@ -1,14 +1,14 @@
 <?php
 
-namespace Display\Providers;
+namespace CommunityPoem\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Display\Events\ResponseSaved;
-use Display\Listeners\SendToModeration;
-use Display\Events\ResponseApproved;
+use CommunityPoem\Events\ResponseSaved;
+use CommunityPoem\Listeners\SendToModeration;
+use CommunityPoem\Events\ResponseApproved;
 
 class EventServiceProvider extends ServiceProvider
 {
