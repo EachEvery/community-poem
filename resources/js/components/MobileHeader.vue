@@ -20,7 +20,7 @@
 
     <portal to="end-of-body">
       <div
-        class="h-screen bg-white transition fixed top-0 inset-x-0 flex flex-col"
+        class="h-screen bg-white transition absolute top-0 inset-x-0 flex flex-col"
         style="padding-top: 18vh"
         :class="menuClass"
       >
@@ -46,7 +46,7 @@
 
         <div class="absolute inset-x-0 bottom-0 pb-32 flex flex-col text-green-900">
           <a
-            href="#"
+            href="/contest"
             class="font-display text-3xl font-semibold uppercase self-center mb-12"
           >Contest</a>
 

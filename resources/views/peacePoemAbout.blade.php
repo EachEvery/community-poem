@@ -21,7 +21,7 @@
         </div>
 
         <!-- Heading -->
-        <div class="text-green-900 px-4 lg:px-0 leading-tight flex flex-col w-full md:pt-24 lg:pt-32 xl:pt-0 ">
+        <div class="text-green-900 px-4 lg:px-0 leading-tight flex flex-col w-full md:pt-24 lg:pt-32 xl:pt-0 xl:px-24">
             <span class="font-display text-6xl uppercase  order-1   |   md:text-8xl lg:text-10xl   md:-mb-32 ">Global</span>
             <span class="font-display text-6xl uppercase self-end order-3  |    md:text-8xl lg:text-10xl  ">Peace</span>
             <span class="font-cursive text-center self-end leading-normal my-3 w-32 text-xs  order-4  |  md:order-2 md:text-lg lg:text-2xl md:w-1/3 md:leading-loose " >Contribute a line or stanza to a global peace poem</span>
@@ -37,7 +37,7 @@
 
 
 <!-- Section, Yellow BG -->
-<div class="bg-yellow-900 p-8 pt-32 pb-48 text-green-900 ">
+<div class="bg-yellow-900 p-8 pt-32 pb-48 text-green-900 xl:px-32">
 
     <div class="container md:mx-auto relative mt-24 md:mt-24 flex flex-col lg:mt-48">
         <span class="font-display text-9xl text-left uppercase text-outline leading-none    static |    md:text-10xl md:absolute right-0 top-0 md:text-left xl:scale-up md:mt-24">
@@ -96,7 +96,7 @@
             <h5 class="font-display font-bold leading-tight text-lg uppercase text-3xl mb-3">no experience<br />
                 required</h5>
 
-            <p class="text-base leading">The resulting poem will be built line-by-line from the personal experiences, thoughts, and expressions of a global community of writers. You don’t need to have any previous writing experience to participate. Simply select one or more of the prompts below to share your voice.</p>
+            <p class="text-base leading xl:pr-10">The resulting poem will be built line-by-line from the personal experiences, thoughts, and expressions of a global community of writers. You don’t need to have any previous writing experience to participate. Simply select one or more of the prompts below to share your voice.</p>
         </div>
 
         <div class="relative  md:max-w-sm w-full lg:scale-up lg:m-10 lg:self-end lg:mt-48 mt-24 xl:-mt-16" style="height: 30rem">

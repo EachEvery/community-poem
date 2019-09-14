@@ -40382,7 +40382,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "h-screen bg-white transition fixed top-0 inset-x-0 flex flex-col",
+              "h-screen bg-white transition absolute top-0 inset-x-0 flex flex-col",
             class: _vm.menuClass,
             staticStyle: { "padding-top": "18vh" }
           },
@@ -40438,7 +40438,7 @@ var render = function() {
                   {
                     staticClass:
                       "font-display text-3xl font-semibold uppercase self-center mb-12",
-                    attrs: { href: "#" }
+                    attrs: { href: "/contest" }
                   },
                   [_vm._v("Contest")]
                 ),
