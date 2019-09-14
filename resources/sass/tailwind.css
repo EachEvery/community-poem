@@ -5,12 +5,42 @@
 @tailwind utilities;
 
 @responsive {
+    .order-1 {
+        order: 1;
+    }
+    .order-2 {
+        order: 2;
+    }
+    .order-3 {
+        order: 3;
+    }
+    .order-4 {
+        order: 4;
+    }
+    .order-5 {
+        order: 5;
+    }
+    .order-6 {
+        order: 6;
+    }
+
+    .left-full {
+        left: 100%;
+    }
+
     .scale-down {
         transform: scale(0.9);
+        transform-origin: center;
     }
 
     .scale-up {
         transform: scale(1.4);
+        transform-origin: center;
+    }
+
+    .scale-up-2x {
+        transform: scale(2);
+        transform-origin: center;
     }
 
     .scale-none {

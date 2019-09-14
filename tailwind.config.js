@@ -21,11 +21,13 @@ module.exports = {
                 }
             },
             spacing: {
+                "70": "18rem",
                 "50vw": "50vw"
             },
             fontSize: {
                 "8xl": "6rem",
-                "9xl": "7rem"
+                "9xl": "7rem",
+                "10xl": "11rem"
             }
         }
     },
