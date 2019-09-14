@@ -21,8 +21,10 @@ module.exports = {
                 }
             },
             spacing: {
-                "70": "18rem",
-                "50vw": "50vw"
+                "70": "20rem",
+                "50vw": "50vw",
+                "15vh": "15vh",
+                "22vh": "22vh"
             },
             fontSize: {
                 "8xl": "6rem",

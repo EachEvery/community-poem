@@ -38,6 +38,11 @@
         transform-origin: center;
     }
 
+    .scale-up-more {
+        transform: scale(1.6);
+        transform-origin: center;
+    }
+
     .scale-up-2x {
         transform: scale(2);
         transform-origin: center;
