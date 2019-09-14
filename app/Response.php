@@ -14,6 +14,11 @@ class Response extends Model
         return $this->belongsTo(Space::class);
     }
 
+    public function getIsApprovedAttribute()
+    {
+        return filled($this->approved_at);
+    }
+
     public function getStatusAttribute()
     {
         return filled($this->approved_at) ? 'approved' : 'unapproved';

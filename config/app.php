@@ -173,6 +173,7 @@ return [
         CommunityPoem\Providers\AuthServiceProvider::class,
         // CommunityPoem\Providers\BroadcastServiceProvider::class,
         CommunityPoem\Providers\EventServiceProvider::class,
+        CommunityPoem\Providers\NovaServiceProvider::class,
         CommunityPoem\Providers\RouteServiceProvider::class,
 
     ],

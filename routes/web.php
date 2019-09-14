@@ -30,7 +30,9 @@ Route::get('/moderate', function () {
     ));
 });
 
-Route::prefix('/{space}')->group(function ($router) {
+Route::prefix('/{space}')->where([
+    'space' => '^((?!admin|nova-api).)*$',
+])->group(function ($router) {
     $router->get('/', 'SpaceResponseController@show');
     $router->get('/slideshow', 'SpaceSlideshowController@show');
 
