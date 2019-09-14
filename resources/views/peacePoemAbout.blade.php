@@ -6,7 +6,7 @@
 <!-- Hero, Green BG -->
 <div class="bg-green-100 text-green-900 p-8 pt-24 xl:h-screen xl:pt-22vh xl:relative">
 
-    <div class="mx-auto container relative xl:static">
+    <div class="mx-auto container relative xl:static ">
 
         
 
@@ -21,7 +21,7 @@
         </div>
 
         <!-- Heading -->
-        <div class="text-green-900 px-4 lg:px-0 leading-tight flex flex-col w-full md:pt-24 lg:pt-32 xl:pt-0">
+        <div class="text-green-900 px-4 lg:px-0 leading-tight flex flex-col w-full md:pt-24 lg:pt-32 xl:pt-0 ">
             <span class="font-display text-6xl uppercase  order-1   |   md:text-8xl lg:text-10xl   md:-mb-32 ">Global</span>
             <span class="font-display text-6xl uppercase self-end order-3  |    md:text-8xl lg:text-10xl  ">Peace</span>
             <span class="font-cursive text-center self-end leading-normal my-3 w-32 text-xs  order-4  |  md:order-2 md:text-lg lg:text-2xl md:w-1/3 md:leading-loose " >Contribute a line or stanza to a global peace poem</span>

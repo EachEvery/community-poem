@@ -34,8 +34,33 @@
         <mobile-header current-route-name="{{Route::currentRouteName()}}" class="xl:hidden"></mobile-header>    
 
 
-        <div class="hidden xl:block fixed w-24 bg-white h-screen left-0">
+        <div class="hidden xl:flex fixed w-100vh justify-between flex-row text-green-900 left-0 bg-white p-6  top-0 px-8" style="transform-origin: top left; transform: rotate(90deg) translateY(-100%);">
+            <div>
+                    <a
+                    href="/"
+                    class="font-display text-3xl font-semibold uppercase self-center mr-12"                    
+                  >About</a>
+        
+                  <a
+                    href="/responses"
+                    class="font-display text-3xl font-semibold uppercase self-center mr-12"
+                    
+                  >Responses</a>
+        
+                  <a
+                    href="mailto:wickpoetry@kent.edu?subject=Global Peace Poem"
+                    class="font-display text-3xl font-semibold uppercase self-center"
+                    
+                  >Get in Touch</a>
+            </div>
 
+            <a
+                href="#"
+                class="font-display text-3xl font-semibold uppercase self-center"
+            >Contest</a>
+        </div>
+
+            
         </div>
     </div>
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>

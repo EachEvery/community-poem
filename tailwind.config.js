@@ -24,7 +24,8 @@ module.exports = {
                 "70": "20rem",
                 "50vw": "50vw",
                 "15vh": "15vh",
-                "22vh": "22vh"
+                "22vh": "22vh",
+                "100vh": "100vh"
             },
             fontSize: {
                 "8xl": "6rem",
