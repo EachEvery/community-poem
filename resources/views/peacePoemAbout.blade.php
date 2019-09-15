@@ -17,7 +17,7 @@
                 @endcomponent
             </div>
 
-            <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center hidden md:block bg-white">RESPOND</a>
+            <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center hidden md:block bg-white" open-typeform>RESPOND</a>
         </div>
 
         <!-- Heading -->
@@ -109,7 +109,7 @@
                 
                 <p class="text-xl mt-8 text-center leading-normal">The Wick Poetry Center invites people from around the world to contribute a line or stanza to a global community peace poem titled “My Voice.”</p>
 
-                <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center mt-10">RESPOND</a>
+                <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center mt-10" open-typeform>RESPOND</a>
             </div>
         </div>
     </div>

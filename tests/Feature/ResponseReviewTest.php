@@ -15,16 +15,19 @@ class ResponseReviewTest extends TestCase
      */
     public function testResponseReviewPageCanBeViewed()
     {
-        $space = factory('Display\\Space')->create();
+
+        $space = factory('CommunityPoem\\Space')->create();
         $routeData = ['space' => $space->slug];
 
         /**
          * Test non-signed routes won't do it, chief 😩.
          */
         $badResponse = $this->get(route('approveResponses', $routeData));
-        $badResponse->assertForbidden();
+        $badResponse->assertStatus(403);
 
         $signedRoute = URL::signedRoute('approveResponses', $routeData);
+
+
 
         $response = $this->get($signedRoute);
         $response->assertStatus(200);
@@ -33,9 +36,9 @@ class ResponseReviewTest extends TestCase
 
     public function testResponsesCanBeApproved()
     {
-        $space = factory('Display\\Space')->create();
+        $space = factory('CommunityPoem\\Space')->create();
 
-        $displayResponse = factory('Display\\Response')->create([
+        $displayResponse = factory('CommunityPoem\\Response')->create([
             'space_id' => $space->id,
         ]);
 
@@ -75,9 +78,9 @@ class ResponseReviewTest extends TestCase
 
     public function testResponsesCanBeDiscarded()
     {
-        $space = factory('Display\\Space')->create();
+        $space = factory('CommunityPoem\\Space')->create();
 
-        $displayResponse = factory('Display\\Response')->create([
+        $displayResponse = factory('CommunityPoem\\Response')->create([
             'space_id' => $space->id,
         ]);
 

@@ -8,7 +8,7 @@
 
             <p class="xl:text-lg">The Wick Poetry Center is now accepting poetry submissions as part of the commemoration of the 50th anniversary of the May 4 shootings. The poems should resonate with the themes of peace, conflict transformation, and student advocacy. Visit the contest submission page for full guidelines.</p>
 
-            <a href="#" class="inline-block font-display bg-white text-lg border-2 border-green-900 px-8 py-3 uppercase font-bold mt-10">Submit</a>
+            <a href="#" class="inline-block font-display bg-white text-lg border-2 border-green-900 px-8 py-3 uppercase font-bold mt-10" open-typeform>Respond</a>
         </div>
 
         <div class="max-w-md md:mb-24 mt-24 lg:mt-0">

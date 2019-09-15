@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use Tests\Fixtures\TypeformWebhookFixture;
-use Display\Space;
+use CommunityPoem\Space;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class TypeformWebhookTest extends TestCase

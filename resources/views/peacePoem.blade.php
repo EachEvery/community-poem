@@ -33,6 +33,7 @@
         <portal-target name="end-of-body"></portal-target>
         <mobile-header current-route-name="{{Route::currentRouteName()}}" class="xl:hidden"></mobile-header>    
 
+        
 @php
     $path = request()->path();    
     
@@ -65,5 +66,8 @@
             
         </div>
     </div>
+
+    {!!env('PEACEPOEM_EMBED', '')!!}
+    
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 </body> 

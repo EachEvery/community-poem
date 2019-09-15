@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Display\Space;
-use Display\Response;
+use CommunityPoem\Space;
+use CommunityPoem\Response;
 
 class DatabaseSeeder extends Seeder
 {

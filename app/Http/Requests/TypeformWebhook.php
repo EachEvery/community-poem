@@ -28,7 +28,7 @@ class TypeformWebhook extends FormRequest
 
         return tap($this->spaces->matchingTypeformId($form_id), function ($space) use ($form_id) {
             if (empty($space)) {
-                abort(404, 'No space configured to accept responses from from with id '.$form_id);
+                abort(404, 'No space configured to accept responses from from with id ' . $form_id);
             }
         });
     }
@@ -42,10 +42,6 @@ class TypeformWebhook extends FormRequest
                 ];
             })
             ->only(['name', 'city', 'email', 'content']);
-
-        if ($fields->count() < 4) {
-            abort(401, 'Form must have field references: name, city, email and content.');
-        }
 
         return $fields->put('typeform_id', $this->input('event_id'))->toArray();
     }

@@ -32,6 +32,16 @@ import PortalVue from "portal-vue";
 
 Vue.use(PortalVue);
 
+import $ from "jquery";
+
+$(document).ready(() => {
+    $("[open-typeform]").on("click", e => {
+        e.preventDefault();
+
+        $(".typeform-share").trigger("click");
+    });
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

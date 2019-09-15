@@ -16,6 +16,7 @@ class ApproveResponseController
 
     public function show(Request $req)
     {
+
         $space = $this->spaces->matchingSlug(
             $req->route('space')
         );
@@ -33,7 +34,8 @@ class ApproveResponseController
         );
 
         return $this->responses->approve(
-            $res, $req->input('response')
+            $res,
+            $req->input('response')
         );
     }
 }

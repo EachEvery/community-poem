@@ -40518,7 +40518,7 @@ var render = function() {
               ref: "content",
               staticClass: "font-serif focus:outline-none h-full overflow-auto",
               staticStyle: {
-                width: "50vw",
+                width: "75vw",
                 padding: "4vw",
                 "padding-top": "10vw"
               },
@@ -53946,6 +53946,8 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! portal-vue */ "./node_modules/portal-vue/dist/portal-vue.common.js");
 /* harmony import */ var portal_vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(portal_vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -53969,6 +53971,13 @@ files.keys().map(function (key) {
 });
 
 Vue.use(portal_vue__WEBPACK_IMPORTED_MODULE_0___default.a);
+
+jquery__WEBPACK_IMPORTED_MODULE_1___default()(document).ready(function () {
+  jquery__WEBPACK_IMPORTED_MODULE_1___default()("[open-typeform]").on("click", function (e) {
+    e.preventDefault();
+    jquery__WEBPACK_IMPORTED_MODULE_1___default()(".typeform-share").trigger("click");
+  });
+});
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

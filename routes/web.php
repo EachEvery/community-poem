@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Routing\Middleware\ValidateSignature;
+
 use Illuminate\Support\Facades\URL;
-use Display\Space;
+use CommunityPoem\Space;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,8 @@ use Display\Space;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 
 Route::view('/', 'peacePoemAbout')->name('about');
 Route::view('/responses', 'peacePoemResponses')->name('responses');
@@ -30,9 +33,10 @@ Route::get('/moderate', function () {
     ));
 });
 
-Route::prefix('/{space}')->where([
-    'space' => '^((?!admin|nova-api).)*$',
-])->group(function ($router) {
+
+
+
+Route::prefix('/spaces/{space}')->group(function ($router) {
     $router->get('/', 'SpaceResponseController@show');
     $router->get('/slideshow', 'SpaceSlideshowController@show');
 
