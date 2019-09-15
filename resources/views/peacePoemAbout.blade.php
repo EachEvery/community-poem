@@ -1,5 +1,5 @@
 @extends('peacePoem')
-@section('title', 'Home')
+@section('title', 'About')
 @section('page')
 
 
