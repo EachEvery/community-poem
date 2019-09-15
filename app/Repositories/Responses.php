@@ -39,13 +39,17 @@ class Responses
     public function approved(Space $space = null)
     {
         return filled($space) ?
-            $space->approved_responses()->get() :
-            Response::whereNotNull('approved_at')->get();
+            $space->approved_responses()->get() : Response::whereNotNull('approved_at')->get();
     }
 
     public function forSpace(Space $space)
     {
         return $space->responses()->get();
+    }
+
+    public function approvedForSpace(Space $space)
+    {
+        return $space->approved_responses()->get();
     }
 
     public function delete($response)
