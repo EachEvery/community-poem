@@ -8,6 +8,7 @@ class Response extends Model
 {
     protected $guarded = ['id'];
     protected $appends = ['status'];
+    protected $dates = ['approved_at'];
 
     public function space()
     {
