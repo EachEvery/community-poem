@@ -19,8 +19,8 @@ use CommunityPoem\Space;
 
 
 Route::view('/', 'peacePoemAbout')->name('about');
-Route::view('/responses', 'peacePoemResponses')->name('responses');
 Route::view('/contest', 'peacePoemContest')->name('contest');
+Route::get('/responses', 'PeacePoemResponses')->name('responses');
 
 Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {
@@ -32,6 +32,7 @@ Route::get('/moderate', function () {
         ['space' => Space::inRandomOrder()->first()->slug]
     ));
 });
+
 
 
 

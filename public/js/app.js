@@ -40404,19 +40404,6 @@ var render = function() {
                 {
                   staticClass:
                     "font-display text-5xl font-semibold uppercase self-center mt-5",
-                  class: {
-                    "text-outline": _vm.currentRouteName !== "responses"
-                  },
-                  attrs: { href: "/responses" }
-                },
-                [_vm._v("Responses")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "font-display text-5xl font-semibold uppercase self-center mt-5",
                   class: { "text-outline": true },
                   attrs: {
                     href: "mailto:wickpoetry@kent.edu?subject=Global Peace Poem"

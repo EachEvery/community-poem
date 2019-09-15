@@ -31,11 +31,11 @@
             :class="{'text-outline': currentRouteName !== 'about'}"
           >About</a>
 
-          <a
+          <!-- <a
             href="/responses"
             class="font-display text-5xl font-semibold uppercase self-center mt-5"
             :class="{'text-outline': currentRouteName !== 'responses'}"
-          >Responses</a>
+          >Responses</a>-->
 
           <a
             href="mailto:wickpoetry@kent.edu?subject=Global Peace Poem"

@@ -45,10 +45,10 @@
                     class="font-display text-3xl font-semibold uppercase self-center mr-12 {{$path === '/' ? '': 'text-outline'}}"                    
                   >About</a>
         
-                  <a
+                  {{-- <a
                     href="/responses"
                     class="font-display text-3xl font-semibold uppercase self-center mr-12 {{$path === 'responses' ? '': 'text-outline'}}"                    
-                  >Responses</a>
+                  >Responses</a> --}}
         
                   <a
                     href="mailto:wickpoetry@kent.edu?subject=Global Peace Poem"
@@ -70,4 +70,6 @@
     {!!env('PEACEPOEM_EMBED', '')!!}
     
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
+
+    @yield('scripts')
 </body> 
