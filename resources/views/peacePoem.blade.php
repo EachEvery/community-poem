@@ -19,7 +19,7 @@
             <div class="md:flex container mx-auto">
                 <div class="xl:scale-up" style="transform-origin: top left">
                     <h3 class="text-lg uppercase text-3xl block font-display font-bold mb-5">Get in Touch</h3>
-                    <p class="mb-10 max-w-sm">The goal of our Global Community Poem is to show how creative expression can be used to help communities heal. If you would like us to set up a community poem for your classroom, institution, conference, or other community event, please contact us at wickpoetry@kent.edu</p>
+                    <p class="mb-10 max-w-sm">The goal of our Global Peace Poem is to show how creative expression can be used to help communities heal. If you would like us to set up a community poem for your classroom, institution, conference, or other community event, please contact us at wickpoetry@kent.edu</p>
                 </div>
                 
                 <div class="flex flex-grow md:flex-row-reverse self-center xl:scale-up" style="transform-origin: top right">
