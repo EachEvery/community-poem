@@ -15,7 +15,7 @@
         @foreach($responses as $response)
             <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10">
                 <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
-                <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city}}</span>
+                <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
             </div>
         @endforeach
     </div>
