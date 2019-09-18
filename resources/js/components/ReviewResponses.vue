@@ -160,7 +160,7 @@ This action cannot be undone.`);
     },
     async unapprove() {
       let { data } = await axios.post(
-        `/${this.space.slug}/responses/${this.response.id}/approve`,
+        `/spaces/${this.space.slug}/responses/${this.response.id}/approve`,
         {
           response: {
             approved_at: null
