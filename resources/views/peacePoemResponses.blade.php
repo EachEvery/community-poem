@@ -31,12 +31,12 @@
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
 <script type="text/javascript">
-setTimeout(() => {
-    $('.grid').isotope({
+(function() {
+     $('.grid').isotope({
         itemSelector: '.response',
         layoutMode: 'masonry',
-    })
-}, 300);
+    });
+})();
     
 </script>
 @endsection
