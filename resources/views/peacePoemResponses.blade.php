@@ -11,13 +11,13 @@
         writers
     </span>
 
-    <div class="container mx-auto grid mt-24 text-center transition">
+    <div class="container mx-auto grid mt-24 text-center ">
         @foreach($responses as $response)
             @php
-                $dealy = $loop->index * 100; //ms
+                $dealy = $loop->index * 75; //ms
             @endphp
 
-            <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
+            <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10 transition" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
                 <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
                 <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
             </div>
@@ -43,7 +43,7 @@
             });
 
         $('.response').css({'opacity': 1, 'transform': 'none'});
-        
+
      }, 150);
 })();
     
