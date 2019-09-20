@@ -11,7 +11,7 @@
         writers
     </span>
 
-    <div class="container mx-auto grid mt-24 text-center">
+    <div class="container mx-auto grid mt-24 text-center transition" style="opacity: 0; transform: translateY(.5rem)">
         @foreach($responses as $response)
             <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10">
                 <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
@@ -32,10 +32,12 @@
 
 <script type="text/javascript">
 (function() {
-     $('.grid').isotope({
-        itemSelector: '.response',
-        layoutMode: 'masonry',
-    });
+     setTimeout(() => {
+         $('.grid').removeAttr('style').isotope({
+            itemSelector: '.response',
+                layoutMode: 'masonry',
+            });
+     }, 150);
 })();
     
 </script>
