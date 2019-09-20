@@ -16,7 +16,6 @@ class SpaceResponseController
 
     public function show(Request $req)
     {
-        dd($req->route());
         $space = $this->spaces->matchingSlug(
             $req->route('space')
         );
