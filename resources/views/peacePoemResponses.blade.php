@@ -14,7 +14,7 @@
     <div class="container mx-auto grid mt-24 text-center ">
         @foreach($responses as $response)
             @php
-                $dealy = $loop->index * 75; //ms
+                $dealy = $loop->index * 20; //ms
             @endphp
 
             <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10 transition" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
