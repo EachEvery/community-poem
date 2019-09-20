@@ -11,9 +11,13 @@
         writers
     </span>
 
-    <div class="container mx-auto grid mt-24 text-center transition" style="opacity: 0; transform: translateY(.5rem)">
+    <div class="container mx-auto grid mt-24 text-center transition">
         @foreach($responses as $response)
-            <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10">
+            @php
+                $dealy = $loop->index * 100; //ms
+            @endphp
+
+            <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
                 <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
                 <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
             </div>
@@ -33,10 +37,13 @@
 <script type="text/javascript">
 (function() {
      setTimeout(() => {
-         $('.grid').removeAttr('style').isotope({
+         $('.grid').isotope({
             itemSelector: '.response',
                 layoutMode: 'masonry',
             });
+
+        $('.response').css({'opacity': 1, 'transform': 'none'});
+        
      }, 150);
 })();
     
