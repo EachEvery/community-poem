@@ -27,9 +27,9 @@
                     <img src="/img/naomi@2x.png" alt="Naomi Shihab Nye" class="rounded-full w-32 h-32 border-4 border-green-900 xl:-mr-24 lg:w-48 lg:h-48" />
                 </div>
 
-                <p class="xl:text-lg">Poet, songwriter, and novelist, Naomi Shihab Nye, will will select one winner from each category who will receive $500 and an all-expenses-paid trip to Kent State University to read their poems during the May 4 Music and Poetry Event on April 21. 
-                    <br /><br />
-                    Two poets will receive honorable mention prizes for $250 and an all-expenses-paid trip to Kent State to read their poems during the April 21 event. All winners will have their poems set to a musical composition by students in the Kent State University School of Music.</p>        
+                <p class="xl:text-lg">Poet, songwriter, and novelist, Naomi Shihab Nye, will select one winner from each category who will receive $500 and a possibility to read their poems at Kent State during the May 4 Music and Poetry Event on April 21.
+                <br /><br />
+Two poets will receive honorable mention prizes for $250 and a possibility to read their poems at Kent State during the April 21 event. All winners will have their poems set to a musical composition by students in the Kent State University School of Music.</p>        
             </div>
         </div>
     </div>
