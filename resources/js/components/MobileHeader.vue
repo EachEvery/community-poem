@@ -44,10 +44,10 @@
           >Get in Touch</a>
         </div>
 
-        <div class="absolute inset-x-0 bottom-0 pb-32 flex flex-col text-green-900">
+        <div class="absolute inset-x-0 bottom-0 pb-5 flex flex-col text-green-900">
           <a
             href="/contest"
-            class="font-display text-3xl font-semibold uppercase self-center mb-12"
+            class="font-display text-3xl font-semibold uppercase self-center mb-5"
           >Contest</a>
 
           <div class="flex justify-center">
