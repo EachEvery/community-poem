@@ -56,12 +56,10 @@
 
         <div class="flex flex-col mt-3 md:mt-32">        
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end md:self-start lg:self-end text-lg     md:text-2xl  md:mr-56 ">
-            My Voice Is
-            I Want
-            My Voice stands for
-            Give & Take
-            Repetition
-            My Voice
+            my voice is 
+            a fall leaf 
+            changing 
+            colors
             </span>
 
             <img src="/img/globe-triangle@2x.png" class="w-1/2 -mt-12 md:self-center md:max-w-xs" />

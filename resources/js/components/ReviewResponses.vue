@@ -122,7 +122,9 @@ export default {
 This action cannot be undone.`);
 
       if (answer) {
-        await axios.delete(`/${this.space.slug}/responses/${this.response.id}`);
+        await axios.delete(
+          `/spaces/${this.space.slug}/responses/${this.response.id}`
+        );
 
         this.deleteCurrentResponseLocal();
       }
@@ -136,7 +138,7 @@ This action cannot be undone.`);
     },
     async save(e, showConfirm = false) {
       let { data } = await axios.post(
-        `/${this.space.slug}/responses/${this.response.id}/approve`,
+        `/spaces/${this.space.slug}/responses/${this.response.id}/approve`,
         {
           response: {
             content: this.$refs.response.getInnerHtml(),
@@ -158,7 +160,7 @@ This action cannot be undone.`);
     },
     async unapprove() {
       let { data } = await axios.post(
-        `/${this.space.slug}/responses/${this.response.id}/approve`,
+        `/spaces/${this.space.slug}/responses/${this.response.id}/approve`,
         {
           response: {
             approved_at: null
