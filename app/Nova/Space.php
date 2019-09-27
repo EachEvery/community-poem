@@ -2,13 +2,13 @@
 
 namespace CommunityPoem\Nova;
 
+use CommunityPoem\Nova\Actions\RetreiveMissingResponses;
 use CommunityPoem\Repositories\Themes;
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Space extends Resource
 {
@@ -32,19 +32,19 @@ class Space extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'typeform_id', 'slug'
+        'name', 'typeform_id', 'slug',
     ];
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function fields(Request $request)
     {
         $keys = collect(resolve(Themes::class)->all())->keys();
-
 
         $keys = $keys->mapWithKeys(function ($item) {
             return [$item => $item];
@@ -54,16 +54,27 @@ class Space extends Resource
             Text::make('Name'),
             Text::make('Admin Emails'),
             Text::make('Typeform Id'),
+            Text::make('Admin Url', function () {
+                $url = URL::signedRoute(
+                    'approveResponses',
+                    [
+                        'space' => $this->resource->slug,
+                    ]
+                );
+
+                return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">Moderation Screen</a>', $url);
+            })->asHtml(),
             Text::make('Slug'),
             Select::make('Theme')->options($keys),
-            HasMany::make('Responses')
+            HasMany::make('Responses'),
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function cards(Request $request)
@@ -74,7 +85,8 @@ class Space extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function filters(Request $request)
@@ -85,7 +97,8 @@ class Space extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function lenses(Request $request)
@@ -96,11 +109,12 @@ class Space extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function actions(Request $request)
     {
-        return [];
+        return [resolve(RetreiveMissingResponses::class)];
     }
 }

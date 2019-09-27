@@ -18,9 +18,10 @@ class CreateResponsesTable extends Migration
             $table->longText('content');
 
             $table->string('city')->nullable();
+            $table->string('email')->nullable();
             $table->string('typeform_id')->nullable();
             $table->string('font_size')->nullable();
-            $table->string('email')->nullable();
+
             $table->dateTime('approved_at')->nullable();
             $table->timestamps();
         });

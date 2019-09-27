@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use CommunityPoem\Space;
 use CommunityPoem\Response;
+use CommunityPoem\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,12 @@ class DatabaseSeeder extends Seeder
 
         factory(Response::class, 10)->create([
             'space_id' => $space->id,
+        ]);
+
+        User::create([
+            'name' => 'Nate Hobi',
+            'email' => 'hobi@eachevery.com',
+            'password' => Hash::make('password'),
         ]);
     }
 }

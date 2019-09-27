@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -34,6 +33,10 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    'typeform' => [
+        'key' => env('TYPEFORM_KEY'),
+    ],
+
     'stripe' => [
         'model' => CommunityPoem\User::class,
         'key' => env('STRIPE_KEY'),
@@ -43,5 +46,4 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
 ];
