@@ -41,6 +41,10 @@ class RetreiveMissingResponses extends Action
             ]);
 
             collect(json_decode($response->getBody())->items)->map(function ($entry) use ($space) {
+                if (empty($entry->answers)) {
+                    return;
+                }
+
                 $id = $entry->response_id;
 
                 $data = array_merge(['typeform_id' => $id], (array) $this->getFields(['name', 'content', 'city', 'email'], $entry));

@@ -13,7 +13,7 @@ class CreateResponsesTable extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->unsignedInteger('space_id');
             $table->longText('content');
 
