@@ -58,6 +58,7 @@ class Themes
                     'background_color' => '#044d6f',
                 ],
             ],
+
             'maps' => [
                 [
                     'photo' => 'https://nhmisc.s3.amazonaws.com/ts-random/maps-lavendar1.png',
@@ -73,6 +74,56 @@ class Themes
                 ],
                 [
                     'photo' => 'https://nhmisc.s3.amazonaws.com/ts-random/maps-salmon3.png',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+            ],
+
+            'river' => [
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x9.jpg',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x92.jpg',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x93.jpg',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x94.jpg',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x95.jpg',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x96.jpg',
+                    'primary_text_color' => '#044d6f',
+                    'secondary_text_color' => '#044d6f',
+                    'background_color' => '',
+                ],
+
+                [
+                    'photo' => 'https://eachevery.s3.us-east-1.amazonaws.com/ts-thread/TS-RSThreadResponseDisplay_BG-16x97.jpg',
                     'primary_text_color' => '#044d6f',
                     'secondary_text_color' => '#044d6f',
                     'background_color' => '',
