@@ -107,6 +107,15 @@ export default {
     };
   },
   methods: {
+    handleKeyDown({ keyCode }) {
+      if (keyCode === 39) {
+        this.nextIndex(this.responses, "responseIndex");
+      }
+
+      if (keyCode === 37) {
+        this.prevIndex(this.responses, "responseIndex");
+      }
+    },
     selectResponse(e, response) {
       this.selectedStatus = response.status;
 
@@ -223,8 +232,13 @@ This action cannot be undone.`);
       return this.space.theme_array[themeIndex];
     }
   },
+  destroyed() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  },
+
   mounted() {
     this.ensureFontSize();
+    document.addEventListener("keydown", this.handleKeyDown);
   }
 };
 </script>
