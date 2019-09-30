@@ -49,7 +49,7 @@ class Responses
 
     public function approvedForSpace(Space $space)
     {
-        return $space->approved_responses()->inRandomOrder()->get();
+        return $space->approved_responses()->latest()->get();
     }
 
     public function delete($response)
