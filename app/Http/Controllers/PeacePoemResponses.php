@@ -15,11 +15,10 @@ class PeacePoemResponses
 
     public function __invoke()
     {
-
         $space = $this->spaces->matchingTypeformId(env('PEACEPOEM_TYPEFORM_ID', '0'));
 
         return view('peacePoemResponses', [
-            'responses' => filled($space) ? $this->responses->approvedForSpace($space) : collect()
+            'responses' => filled($space) ? $this->responses->approvedForSpace($space) : collect(),
         ]);
     }
 }

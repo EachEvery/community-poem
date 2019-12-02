@@ -24,4 +24,14 @@ class Response extends Model
     {
         return filled($this->approved_at) ? 'approved' : 'unapproved';
     }
+
+    public function getMatchOnAttribute()
+    {
+        return static::matchBase64String($this->name, $this->city, $this->created_at);
+    }
+
+    public static function matchBase64String($name, $city, $carbon)
+    {
+        return base64_encode(sprintf('%s.%s.%s', strtolower(trim($name ?? 'empty')), strtolower(trim($city ?? 'empty')), $carbon->format('Y-m-d-H')));
+    }
 }

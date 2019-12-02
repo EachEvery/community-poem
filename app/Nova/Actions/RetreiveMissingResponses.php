@@ -2,13 +2,13 @@
 
 namespace CommunityPoem\Nova\Actions;
 
+use CommunityPoem\Repositories\TypeformSubmissions;
 use Illuminate\Bus\Queueable;
-use Laravel\Nova\Actions\Action;
-use Illuminate\Support\Collection;
-use Laravel\Nova\Fields\ActionFields;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use GuzzleHttp\Client as Guzzle;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
+use Laravel\Nova\Actions\Action;
+use Laravel\Nova\Fields\ActionFields;
 
 class RetreiveMissingResponses extends Action
 {
@@ -16,60 +16,40 @@ class RetreiveMissingResponses extends Action
     use Queueable;
     use SerializesModels;
 
-    public function __construct(Guzzle $guzzle)
+    public function __construct(TypeformSubmissions $submissions)
     {
-        $this->guzzle = $guzzle;
+        $this->submissions = $submissions;
     }
 
     /**
      * Perform the action on the given models.
-     *
-     * @param \Laravel\Nova\Fields\ActionFields $fields
-     * @param \Illuminate\Support\Collection    $models
      *
      * @return mixed
      */
     public function handle(ActionFields $fields, Collection $models)
     {
         $models->each(function ($space) {
-            $url = sprintf('https://api.typeform.com/forms/%s/responses?page_size=1000', $space->typeform_id);
+            $items = $this->submissions->formSubmissions($space->typeform_id);
 
-            $response = $this->guzzle->get($url, [
-                'headers' => [
-                    'Authorization' => sprintf('Bearer %s', config('services.typeform.key')),
-                ],
-            ]);
-
-            collect(json_decode($response->getBody())->items)->map(function ($entry) use ($space) {
+            collect($items)->map(function ($entry) use ($space) {
                 if (empty($entry->answers)) {
                     return;
                 }
 
-                $id = $entry->response_id;
+                $fields = $this->submissions->fieldsToCollect();
+                $typeformIdFillable = ['typeform_id' => $entry->token];
 
-                $data = array_merge(['typeform_id' => $id], (array) $this->getFields(['name', 'content', 'city', 'email'], $entry));
+                $data = array_merge(
+                    $typeformIdFillable,
+                    $this->submissions->getFields($fields, $entry)->toArray()
+                );
 
                 return $space->responses()->firstOrCreate(
-                    ['typeform_id' => $id],
+                    $typeformIdFillable,
                     $data
                 );
             });
         });
-    }
-
-    public function getFields($fields, $entry)
-    {
-        return collect($entry->answers)
-                ->mapWithKeys(function ($answer) {
-                    $field = $answer->field;
-                    $type = $answer->type;
-
-                    return [
-                        $field->ref => $answer->$type,
-                    ];
-                })
-                ->only($fields)
-                ->toArray();
     }
 
     /**

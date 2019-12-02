@@ -2,14 +2,16 @@
 
 namespace CommunityPoem\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use CommunityPoem\Repositories\Spaces;
+use CommunityPoem\Repositories\TypeformSubmissions;
+use Illuminate\Foundation\Http\FormRequest;
 
 class TypeformWebhook extends FormRequest
 {
-    public function __construct(Spaces $spaces)
+    public function __construct(Spaces $spaces, TypeformSubmissions $submissions)
     {
         $this->spaces = $spaces;
+        $this->submissions = $submissions;
     }
 
     /**
@@ -28,22 +30,18 @@ class TypeformWebhook extends FormRequest
 
         return tap($this->spaces->matchingTypeformId($form_id), function ($space) use ($form_id) {
             if (empty($space)) {
-                abort(404, 'No space configured to accept responses from from with id ' . $form_id);
+                abort(404, 'No space configured to accept responses from from with id '.$form_id);
             }
         });
     }
 
     public function responseFillable()
     {
-        $fields = collect($this->input('form_response')['answers'])
-            ->mapWithKeys(function ($field) {
-                return [
-                    $field['field']['ref'] => $field[$field['type']],
-                ];
-            })
-            ->only(['name', 'city', 'email', 'content']);
+        $fieldsToCollect = $this->submissions->fieldsToCollect();
 
-        return $fields->put('typeform_id', $this->input('event_id'))->toArray();
+        $fields = $this->submissions->getFields($fieldsToCollect, (object) $this->input('form_response'));
+
+        return $fields->put('typeform_id', $this->input('form_response.token'))->toArray();
     }
 
     /**
