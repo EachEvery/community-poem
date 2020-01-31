@@ -3,8 +3,8 @@
 namespace CommunityPoem;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class Space extends Model
 {

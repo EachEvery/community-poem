@@ -4,6 +4,7 @@ let colors = {
     white: 'var(--white)',
     'white-50%': 'var(--white-50)',
     primary: 'var(--primary)',
+    secondary: 'var(--secondary)',
     'primary-dark': 'var(--primary-dark)',
     'primary-70%': 'var(--primary-70)',
     'primary-50%': 'var(--primary-50)',

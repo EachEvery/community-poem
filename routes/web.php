@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Routing\Middleware\ValidateSignature;
-
-use Illuminate\Support\Facades\URL;
 use CommunityPoem\Space;
+use Illuminate\Routing\Middleware\ValidateSignature;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +15,20 @@ use CommunityPoem\Space;
 |
 */
 
-
-
 Route::view('/', 'peacePoemAbout')->name('about');
+
+Route::get('/', function () {
+    $space = Space::where('list_domain', trim(request()->getHttpHost()))->first();
+
+    if (empty($space)) {
+        return view('peacePoemAbout');
+    } else {
+        return view('webResponses', [
+            'space' => $space,
+        ]);
+    }
+});
+
 Route::view('/contest', 'peacePoemContest')->name('contest');
 Route::get('/responses', 'PeacePoemResponses')->name('responses');
 
@@ -32,10 +42,6 @@ Route::get('/moderate', function () {
         ['space' => Space::inRandomOrder()->first()->slug]
     ));
 });
-
-
-
-
 
 Route::prefix('/spaces/{space}')->group(function ($router) {
     $router->get('/', 'SpaceResponseController@show');
