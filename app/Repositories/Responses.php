@@ -2,13 +2,13 @@
 
 namespace CommunityPoem\Repositories;
 
-use CommunityPoem\Events\ResponseSaved;
-use CommunityPoem\Events\ResponseApproved;
-use Illuminate\Events\Dispatcher;
-use CommunityPoem\Events\ResponseDeleted;
 use Carbon\Carbon;
-use CommunityPoem\Space;
+use CommunityPoem\Events\ResponseApproved;
+use CommunityPoem\Events\ResponseDeleted;
+use CommunityPoem\Events\ResponseSaved;
 use CommunityPoem\Response;
+use CommunityPoem\Space;
+use Illuminate\Events\Dispatcher;
 
 class Responses
 {
