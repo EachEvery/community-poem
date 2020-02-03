@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Work+Sans:300,400,500,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://use.typekit.net/gow0spk.css">
 
-<body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->sedonary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
+<body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
     <div id="app" class="overflow-x-hidden max-w-full">    
         <div class="bg-secondary text-primary p-8 pt-32 flex flex-col">
 
@@ -74,7 +74,6 @@
         </div>
     </div>
 
-    {!!$space->embed_code!!}
     
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
