@@ -15,7 +15,7 @@
     <div id="app" class="overflow-x-hidden max-w-full">    
         <div class="bg-secondary text-primary p-8 pt-32 flex flex-col">
 
-        <div class="flex    xl:scale-up md:absolute top-0 right-0 xl:mt-24 xl:mr-56 justify-end" style="transform-origin: left">
+        <div class="flex    xl:scale-up md:absolute top-0 right-0 p-4 xl:p-0 xl:mt-24 xl:mr-56 justify-end" style="transform-origin: left">
             <div class="flex flex-row-reverse md:mr-12 opacity-50">
                 @component('attribution')            
                 @endcomponent
