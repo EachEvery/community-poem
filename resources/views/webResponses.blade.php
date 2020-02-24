@@ -21,7 +21,7 @@
                 @endcomponent
             </div>
 
-            <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center hidden md:block bg-white" open-typeform>RESPOND</a>
+            <a href="#" class="font-display text-lg border-2 px-10 py-3 uppercase font-bold self-center border-primary hidden md:block bg-white"  open-typeform>RESPOND</a>
         </div>
 
             <h1 class="uppercase font-display text-center text-5xl text-outline md:text-6xl mt-24">{{$space->name}}</h1>            
