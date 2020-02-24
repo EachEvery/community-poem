@@ -129,6 +129,32 @@ class Themes
                     'background_color' => '',
                 ],
             ],
+            'nais' => [
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/NAIS-Thread-bg_A.jpg',
+                    'primary_text_color' => '#722F6B',
+                    'secondary_text_color' => '#722F6B',
+                    'background_color' => '',
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/NAIS-Thread-bg_B.jpg',
+                    'primary_text_color' => '#722F6B',
+                    'secondary_text_color' => '#722F6B',
+                    'background_color' => '',
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/NAIS-Thread-bg_C.jpg',
+                    'primary_text_color' => '#722F6B',
+                    'secondary_text_color' => '#722F6B',
+                    'background_color' => '',
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/NAIS-Thread-bg_D.jpg',
+                    'primary_text_color' => '#722F6B',
+                    'secondary_text_color' => '#722F6B',
+                    'background_color' => '',
+                ],
+            ],
         ];
     }
 }
