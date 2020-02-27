@@ -6,7 +6,7 @@
       ({{responses.length}}) -
       <a
         class="text-gray-600 underline"
-        :href="`/${space.slug}`"
+        :href="`/spaces/${space.slug}/slideshow`"
         target="_blank"
       >View Slideshow</a>
     </h1>

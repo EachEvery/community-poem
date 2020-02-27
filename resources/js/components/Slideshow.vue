@@ -1,5 +1,9 @@
 <template>
-  <div class="h-screen w-full" :style="{backgroundColor: theme.background_color}">
+  <div
+    class="h-screen w-full"
+    :style="{backgroundColor: theme.background_color}"
+    @click="handleClick"
+  >
     <response
       :response="response"
       :editable="false"
@@ -50,6 +54,23 @@ export default {
           resolve();
         }, 350);
       });
+    },
+    handleClick() {
+      clearInterval(this.slideshowInterval);
+      this.next();
+    },
+    async next() {
+      this.state = "switching";
+
+      await this.sleep(50);
+
+      this.nextIndex(this.space.theme_array, "themeIndex");
+
+      await this.sleep();
+
+      this.nextIndex(this.responses, "responseIndex");
+
+      this.state = "default";
     }
   },
   data() {
@@ -60,26 +81,15 @@ export default {
     };
   },
   mounted() {
-    console.log(this.interval);
-
     if (this.autoplay) {
-      setInterval(async () => {
-        this.state = "switching";
-
-        await this.sleep(50);
-
-        this.nextIndex(this.space.theme_array, "themeIndex");
-
-        await this.sleep();
-
-        this.nextIndex(this.responses, "responseIndex");
-
-        this.state = "default";
+      this.slideshowInterval = setInterval(async () => {
+        this.next();
       }, this.interval * 1000);
     } else {
       this.themeIndex = Math.floor(
         Math.random() * this.space.theme_array.length
       );
+
       this.responseIndex = Math.floor(Math.random() * this.responses.length);
     }
   },
