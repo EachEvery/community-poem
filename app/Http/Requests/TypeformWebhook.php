@@ -41,7 +41,11 @@ class TypeformWebhook extends FormRequest
 
         $fields = $this->submissions->getFields($fieldsToCollect, (object) $this->input('form_response'));
 
-        $fields->put('approved_at', now());
+        if ($this->space()->auto_approve_responses) {
+            $fields->put('approved_at', now());
+        }
+
+        $fields->put('font_size', '4');
 
         $fields->put('typeform_id', $this->input('form_response.token'));
 

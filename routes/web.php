@@ -45,7 +45,7 @@ Route::get('/moderate', function () {
 
 Route::prefix('/spaces/{space}')->group(function ($router) {
     $router->get('/', 'SpaceResponseController@show');
-    $router->get('/slideshow', 'SpaceSlideshowController@show');
+    $router->get('/slideshow', 'SpaceSlideshowController@show')->name('slideshow');
 
     /*
      * Only allow users to access this route

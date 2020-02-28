@@ -6,6 +6,7 @@ use CommunityPoem\Nova\Actions\RetreiveMissingResponses;
 use CommunityPoem\Repositories\Themes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Select;
@@ -52,10 +53,10 @@ class Space extends Resource
 
         return [
             Text::make('Name'),
-            Text::make('Admin Emails'),
-            Text::make('Typeform Id'),
-            Text::make('List Domain')->help('Domain to automatically launch the response list. Do not include propocol or forward slashes (e.g. https://).'),
-            Text::make('Admin Url', function () {
+            Text::make('Admin Emails')->hideFromIndex(),
+            Text::make('Typeform Id')->hideFromIndex(),
+            Text::make('List Domain')->help('Domain to automatically launch the response list. Do not include propocol or forward slashes (e.g. https://).')->hideFromIndex(),
+            Text::make('Moderate', function () {
                 $url = URL::signedRoute(
                     'approveResponses',
                     [
@@ -63,13 +64,19 @@ class Space extends Resource
                     ]
                 );
 
-                return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">Moderation Screen</a>', $url);
+                return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">Moderate</a>', $url);
             })->asHtml(),
-            Text::make('Slug'),
-            Color::make('Primary Color'),
-            Color::make('Secondary Color'),
+            Text::make('Slideshow', function () {
+                $url = route('slideshow', ['space' => $this->resource->slug]);
+
+                return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">Slideshow</a>', $url);
+            })->asHtml()->exceptOnForms(),
+            Text::make('Slug')->hideFromIndex(),
+            Color::make('Primary Color')->hideFromIndex(),
+            Color::make('Secondary Color')->hideFromIndex(),
             Code::make('Embed Code')->language('html'),
-            Select::make('Theme')->options($keys),
+            Boolean::make('Auto Approve Responses')->help('If this box is checked, typeform responses will automatically show up in the web view and the slideshow view without the opportunity for moderation.'),
+            Select::make('Theme')->options($keys)->hideFromIndex(),
             HasMany::make('Responses'),
         ];
     }
