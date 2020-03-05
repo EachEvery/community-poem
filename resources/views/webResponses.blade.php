@@ -29,7 +29,7 @@
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-center md:text-2xl text-center text-sm">responses</span>
 
             <div class="container mx-auto grid mt-24 text-center ">
-                @foreach($space->responses()->latest()->get() as $response)
+                @foreach($space->approved_responses()->latest()->get() as $response)
                     @php
                         $dealy = $loop->index * 40; //ms
                     @endphp
