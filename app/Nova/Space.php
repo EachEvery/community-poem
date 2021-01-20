@@ -77,7 +77,7 @@ class Space extends Resource
 
                 return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">Slideshow</a>', $url);
             })->asHtml()->exceptOnForms(),
-            Text::make('Slug')->hideFromIndex(),
+            Text::make('Slug')->readonly(true)->hideFromIndex(),
             Color::make('Primary Color')->hideFromIndex(),
             Color::make('Secondary Color')->hideFromIndex(),
             Code::make('Embed Code')->language('html'),
