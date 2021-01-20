@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
+
+Route::redirect('/admin', '/admin/dashboards/main');
 Route::view('/', 'peacePoemAbout')->name('about');
 
 Route::get('/', function () {
@@ -29,7 +31,11 @@ Route::get('/', function () {
     }
 });
 
+
+
+
 Route::view('/contest', 'peacePoemContest')->name('contest');
+
 Route::get('/responses', 'PeacePoemResponses')->name('responses');
 
 Route::get('/moderate', function () {
@@ -58,3 +64,9 @@ Route::prefix('/spaces/{space}')->group(function ($router) {
     $router->post('/responses/{response}/approve', 'ApproveResponseController@store')->name('markResponseApproved');
     $router->delete('/responses/{response}', 'ResponseController@delete')->name('discardResponse');
 });
+
+Route::get('/{slug}', function($slug) {
+    return view('webResponses', [
+        'space' => Space::where('slug', $slug)->firstOrFail()
+    ]);
+})->name('thread');

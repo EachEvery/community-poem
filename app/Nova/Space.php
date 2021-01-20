@@ -55,8 +55,14 @@ class Space extends Resource
             Text::make('Name'),
             Text::make('Admin Emails')->hideFromIndex(),
             Text::make('Typeform Id')->hideFromIndex(),
-            Text::make('List Domain')->help('Domain to automatically launch the response list. Do not include propocol or forward slashes (e.g. https://).')->hideFromIndex(),
-            Text::make('Moderate', function () {
+            // Text::make('List Domain')->help('Domain to automatically launch the response list. Do not include propocol or forward slashes (e.g. https://).')->hideFromIndex(),
+            Text::make('View Responses', function () {
+                $url = route('thread', ['slug' => $this->resource->slug]);
+
+
+                return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">View Responses</a>', $url);
+            })->asHtml(),
+                Text::make('Moderate', function () {
                 $url = URL::signedRoute(
                     'approveResponses',
                     [
