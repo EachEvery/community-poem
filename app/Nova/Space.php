@@ -80,6 +80,7 @@ class Space extends Resource
             Text::make('Slug')->readonly(true)->hideFromIndex(),
             Color::make('Primary Color')->hideFromIndex(),
             Color::make('Secondary Color')->hideFromIndex(),
+            Boolean::make('Show Header/Footer', 'show_header_footer')->hideFromIndex(),
             Code::make('Embed Code')->language('html'),
             Boolean::make('Auto Approve Responses')->help('If this box is checked, typeform responses will automatically show up in the web view and the slideshow view without the opportunity for moderation.'),
             Select::make('Theme')->options($keys)->hideFromIndex(),

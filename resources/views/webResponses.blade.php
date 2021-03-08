@@ -13,20 +13,22 @@
 
 <body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
     <div id="app" class="overflow-x-hidden max-w-full">    
-        <div class="bg-secondary text-primary p-8 md:pt-32 flex flex-col">
+        <div class="bg-secondary text-primary p-8  @if($space->show_header_footer) md:pt-32 @endif flex flex-col">
 
-        <div class="flex xl:scale-up md:absolute top-0 right-0 md:p-4 xl:p-0 xl:mt-24 xl:mr-56 justify-between md:justify-end" style="transform-origin: left">
-            <div class="flex flex-row-reverse md:mr-12 opacity-50">
-                @component('attribution')            
-                @endcomponent
-            </div>
+        @if($space->show_header_footer)
+            <div class="flex xl:scale-up md:absolute top-0 right-0 md:p-4 xl:p-0 xl:mt-24 xl:mr-56 justify-between md:justify-end" style="transform-origin: left">
+                <div class="flex flex-row-reverse md:mr-12 opacity-50">
+                    @component('attribution')            
+                    @endcomponent
+                </div>
 
-            <a href="#" class="font-display text-lg border-2 px-10 py-3 uppercase font-bold self-center border-primary  bg-white"  open-typeform>RESPOND</a>
-        </div>
+                <a href="#" class="font-display text-lg border-2 px-10 py-3 uppercase font-bold self-center border-primary  bg-white"  open-typeform>RESPOND</a>
+            </div>    
 
             <h1 class="uppercase font-display text-center text-4xl text-outline md:text-6xl mt-24">{{$space->name}}</h1>            
 
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-center md:text-2xl text-center text-sm">responses</span>
+        @endif      
 
             <div class="container mx-auto grid mt-24 text-center ">
                 @foreach($space->approved_responses()->latest()->get() as $response)
@@ -49,7 +51,7 @@
         </div>
 
 
-
+        @if($space->show_header_footer)
         <footer class="p-8 pt-32 pb-48 bg-primary text-white xl:px-32">
             <div class="md:flex container mx-auto">                            
                 <div class="flex flex-grow md:flex-row-reverse self-center xl:scale-up" style="transform-origin: top right">
@@ -59,6 +61,7 @@
                 </div>
             </div>
         </footer>
+        @endif
 
 
 
