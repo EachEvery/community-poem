@@ -5,6 +5,7 @@
  */
 
 require("./bootstrap");
+window.Shepherd = require("shepherd.js").default;
 
 window.Vue = require("vue");
 

@@ -9,6 +9,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use CommunityPoem\Events\ResponseSaved;
 use CommunityPoem\Listeners\SendToModeration;
 use CommunityPoem\Events\ResponseApproved;
+use CommunityPoem\Listeners\SendPublishedNotification;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
             SendToModeration::class,
         ],
         ResponseApproved::class => [
+            SendPublishedNotification::class
         ],
     ];
 

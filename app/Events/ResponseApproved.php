@@ -2,6 +2,7 @@
 
 namespace CommunityPoem\Events;
 
+use CommunityPoem\Response;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,14 +15,17 @@ class ResponseApproved
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+
+    public Response $response;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Response $response)
     {
-        //
+        $this->response = $response;
     }
 
     /**

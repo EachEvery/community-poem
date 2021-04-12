@@ -24,7 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "add": "^2.0.6",
         "portal-vue": "^2.1.6",
-        "tailwindcss": "^1.0.5"
+        "shepherd.js": "^8.3.0",
+        "tailwindcss": "^1.0.5",
+        "yarn": "^1.22.10"
     }
 }
