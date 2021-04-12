@@ -31,7 +31,7 @@ class SendPublishedNotification
             $subject = 'Your poem has been published!';
 
             $content = sprintf(
-                "%s You can view it using this link:\n%s",
+                "%s You can view it using this link:\n\n%s\n\nYou are receiving this email because you submitted a poem via a Traveling Stanzas experience.",
                 $subject,
                 $event->response->getUrl()
             );
