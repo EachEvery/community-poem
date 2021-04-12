@@ -37,6 +37,12 @@ class Response extends Model
 
     public function getUrl()
     {
+        $space = $this->space;
+
+        if (filled($space->embedded_url)) {
+            return $space->embedded_url . '?highlight=' . $this->id;
+        }
+
         return route('thread', ['slug' => $this->space->slug]) . '?highlight=' . $this->id;
     }
 }
