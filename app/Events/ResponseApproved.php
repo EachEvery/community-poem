@@ -16,7 +16,7 @@ class ResponseApproved
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
 
-    public Response $response;
+    public $response;
 
     /**
      * Create a new event instance.
