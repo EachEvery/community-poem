@@ -62,7 +62,7 @@ class Space extends Resource
 
                 return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">View Responses</a>', $url);
             })->asHtml(),
-                Text::make('Moderate', function () {
+            Text::make('Moderate', function () {
                 $url = URL::signedRoute(
                     'approveResponses',
                     [
@@ -77,6 +77,9 @@ class Space extends Resource
 
                 return sprintf('<a href="%s" target="_blank" class="no-underline dim text-primary font-bold">Slideshow</a>', $url);
             })->asHtml()->exceptOnForms(),
+            Code::make('iFrame Code', function () {
+                return view('spaceEmbed', ['space' => $this->resource])->render();
+            })->exceptOnForms()->hideFromIndex()->language('html'),
             Text::make('Slug')->readonly(true)->hideFromIndex(),
             Color::make('Primary Color')->hideFromIndex(),
             Color::make('Secondary Color')->hideFromIndex(),
@@ -85,6 +88,7 @@ class Space extends Resource
             Boolean::make('Auto Approve Responses')->help('If this box is checked, typeform responses will automatically show up in the web view and the slideshow view without the opportunity for moderation.'),
             Select::make('Theme')->options($keys)->hideFromIndex(),
             HasMany::make('Responses'),
+            Text::make('Embedded Url')->help('If you are embedding the web responses page in an iframe, enter the URL of the iframe page here so that share links will have the proper URL.'),
         ];
     }
 

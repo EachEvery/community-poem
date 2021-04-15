@@ -32,7 +32,9 @@ class Responses
                 $fillable
             ));
 
-            $this->dispatcher->dispatch(new ResponseApproved($response));
+            if ($response->fresh()->is_approved) {
+                $this->dispatcher->dispatch(new ResponseApproved($response));
+            }
         });
     }
 

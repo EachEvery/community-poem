@@ -30,7 +30,7 @@ class TypeformWebhook extends FormRequest
 
         return tap($this->spaces->matchingTypeformId($form_id), function ($space) use ($form_id) {
             if (empty($space)) {
-                abort(404, 'No space configured to accept responses from from with id '.$form_id);
+                abort(404, 'No space configured to accept responses from from with id ' . $form_id);
             }
         });
     }

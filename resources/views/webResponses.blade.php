@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Work+Sans:300,400,500,600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="https://use.typekit.net/gow0spk.css">
 
 <body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
@@ -22,7 +23,7 @@
                     @endcomponent
                 </div>
 
-                <a href="#" class="font-display text-lg border-2 px-10 py-3 uppercase font-bold self-center border-primary  bg-white"  open-typeform>RESPOND</a>
+                <a href="#" class="font-display text-lg border-2 px-10 py-3 uppercase font-bold self-center border-primary  bg-white" open-typeform>RESPOND</a>
             </div>    
 
             <h1 class="uppercase font-display text-center text-4xl text-outline md:text-6xl mt-24">{{$space->name}}</h1>            
@@ -31,12 +32,14 @@
         @endif      
 
             <div class="container mx-auto grid mt-24 text-center ">
-                @foreach($space->approved_responses()->latest()->get() as $response)
+            
+                @foreach($space->approved_responses()->latest()->get() as $index => $response)
                     @php
-                        $dealy = $loop->index * 40; //ms
+                        $isHighlighted = request('highlight') == strval($response->id);
+                        $dealy = $index > 15 ? 0 : $loop->index * 40; //ms
                     @endphp
 
-                    <div class="response text-primary md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10 transition" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
+                    <div class="response text-primary md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10 {{$isHighlighted ? 'highlight' : 'transition'}}" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms" id="{{$response->id}}">
                         @unless(empty($response->prompt))
                             <div class="flex justify-center mb-3">
                                 <h3 class="bg-white p-3 font-display text-base uppercase font-semibold leading-none">{{$response->prompt}}</h3>
@@ -83,6 +86,9 @@
 
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
+
+
+
 <script type="text/javascript">
 (function() {
      setTimeout(() => {
@@ -93,6 +99,44 @@
 
         $('.response').css({'opacity': 1, 'transform': 'none'});
 
+        if(!$('.highlight').length) return;
+        
+        const tour = new Shepherd.Tour({
+                useModalOverlay: true,
+                
+                defaultStepOptions: {
+                    classes: ['font-display'],
+                    modalOverlayOpeningPadding: 20,
+                    modalOverlayOpeningRadius: 5,
+                    cancelIcon: {
+                        enabled: true
+                    },
+                    classes: 'class-1 class-2',
+                    scrollTo: { behavior: 'smooth', block: 'center' }
+                }
+            });
+
+            tour.addStep({
+                title: 'Here\'s Your Poem!',
+                text: `Thanks for creating a poem for {{$space->name}}.`,
+                attachTo: {
+                    element: '.highlight',
+                    on: 'bottom'
+                },
+                buttons: [
+                    {
+                    action() {
+                        tour.cancel();
+                    },
+                    classes: 'shepherd-button-secondary',
+                    text: 'Dismiss'
+                    },
+                    
+                ],
+                id: 'creating'
+            });
+
+            tour.start();
      }, 150);
 })();
     

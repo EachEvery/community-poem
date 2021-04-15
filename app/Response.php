@@ -34,4 +34,15 @@ class Response extends Model
     {
         return base64_encode(sprintf('%s.%s.%s', strtolower(trim($name ?? 'empty')), strtolower(trim($city ?? 'empty')), $carbon->format('Y-m-d-H')));
     }
+
+    public function getUrl()
+    {
+        $space = $this->space;
+
+        if (filled($space->embedded_url)) {
+            return $space->embedded_url . '?highlight=' . $this->id;
+        }
+
+        return route('thread', ['slug' => $this->space->slug]) . '?highlight=' . $this->id;
+    }
 }

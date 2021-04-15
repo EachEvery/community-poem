@@ -1,0 +1,1 @@
+<div id="space-{{$space->id}}"></div><script> (function() { var f = document.createElement('iframe'); f.src = '{{route('thread', ['slug' => $space->slug])}}' + window.location.search; var script = document.getElementById('space-{{$space->id}}').insertBefore(f, null); })(); </script>
