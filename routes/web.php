@@ -36,7 +36,7 @@ Route::get('/', function () {
 
 Route::view('/contest', 'peacePoemContest')->name('contest');
 
-Route::get('/responses', 'PeacePoemResponses')->name('responses');
+Route::get('/responses/{page?}', 'PeacePoemResponses')->name('responses');
 
 Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {

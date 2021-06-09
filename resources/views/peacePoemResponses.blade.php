@@ -39,14 +39,28 @@
 
 @section('scripts')
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
+
 
 <script type="text/javascript">
 (function() {
      setTimeout(() => {
-         $('.grid').isotope({
+        var $grid = $('.grid').isotope({
             itemSelector: '.response',
                 layoutMode: 'masonry',
             });
+        
+        $grid.infiniteScroll({
+            path: function() {
+                return `/responses/${this.loadCount + 1}`
+            },
+        });
+
+        $grid.on( 'load.infiniteScroll', function( event, response, path ) {
+            var $items = $( response ).find('.response');
+            $grid.append( $items );
+            $grid.isotope( 'insert', $items );
+        });
 
         $('.response').css({'opacity': 1, 'transform': 'none'});
 
