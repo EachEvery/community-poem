@@ -14,19 +14,10 @@
     <div class="container mx-auto grid mt-24 text-center ">
         @foreach($responses as $response)
             @php
-                $dealy = $loop->index * 40; //ms
+                $delay = $loop->index * 40; //ms
             @endphp
 
-            <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10 transition" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
-                @unless(empty($response->prompt))
-                    <div class="flex justify-center mb-3">
-                        <h3 class="bg-white p-3 font-display text-base uppercase font-semibold leading-none">{{$response->prompt}}</h3>
-                    </div>
-                @endunless
-                
-                <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
-                <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
-            </div>
+            @include('partials.responseCard', ['response' => $response, 'delay' => $delay])
         @endforeach
     </div>
 
@@ -34,13 +25,12 @@
 </div>
 
 
+<div class="hidden space-id">{{ $spaceId }}</div>
 @endsection
 
 
 @section('scripts')
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
-<script src="https://unpkg.com/infinite-scroll@4/dist/infinite-scroll.pkgd.min.js"></script>
-
 
 <script type="text/javascript">
 (function() {
@@ -49,17 +39,18 @@
             itemSelector: '.response',
                 layoutMode: 'masonry',
             });
-        
-        $grid.infiniteScroll({
-            path: function() {
-                return `/responses/${this.loadCount + 1}`
-            },
-        });
 
-        $grid.on( 'load.infiniteScroll', function( event, response, path ) {
-            var $items = $( response ).find('.response');
-            $grid.append( $items );
-            $grid.isotope( 'insert', $items );
+        $(window).on('scroll', function() {
+            var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
+            if(isAtBottom) {
+                clearTimeout(window.infiniteScrollTimeout);
+                window.infiniteScrollTimeout = setTimeout(function() {
+                    $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
+                        var $offsetResults = $(res);
+                        $grid.append( $offsetResults ).isotope( 'appended', $offsetResults )
+                    });
+                }, 500);   
+            }
         });
 
         $('.response').css({'opacity': 1, 'transform': 'none'});

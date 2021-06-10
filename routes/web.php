@@ -3,6 +3,7 @@
 use CommunityPoem\Space;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,23 @@ Route::get('/', function () {
 
 Route::view('/contest', 'peacePoemContest')->name('contest');
 
-Route::get('/responses/{page?}', 'PeacePoemResponses')->name('responses');
+Route::get('/responses', 'PeacePoemResponses')->name('responses');
+
+Route::get('/paged/responses', function(Request $request) {
+    if($request->has(['offset','spaceId'])){
+        $offset = $request->input('offset');
+        $space_id = $request->input('spaceId');
+
+        $space = Space::where('id', $space_id)->firstOrFail();
+        $responses = $space->approved_responses()->offset($offset)->limit(100)->get();
+        $htmlList = $responses->map(function($r) {
+            return view('partials.responseCard', ['response' => $r, 'delay' => 40])->render();
+        });
+        return $htmlList->join(' ');
+    }
+    return '';
+    
+});
 
 Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {
