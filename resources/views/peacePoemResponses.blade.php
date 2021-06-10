@@ -14,26 +14,19 @@
     <div class="container mx-auto grid mt-24 text-center ">
         @foreach($responses as $response)
             @php
-                $dealy = $loop->index * 40; //ms
+                $delay = $loop->index * 40; //ms
             @endphp
 
-            <div class="response text-green-900 md:w-1/2 lg:w-1/3 mb-12 px-8 xl:px-10 transition" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$dealy}}ms">
-                @unless(empty($response->prompt))
-                    <div class="flex justify-center mb-3">
-                        <h3 class="bg-white p-3 font-display text-base uppercase font-semibold leading-none">{{$response->prompt}}</h3>
-                    </div>
-                @endunless
-                
-                <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
-                <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
-            </div>
+            @include('partials.responseCard', ['response' => $response, 'delay' => $delay])
         @endforeach
     </div>
 
+    <div class="loading-indicator w-full text-center opacity-0 py-8" style="transition: opacity .35s ease-in-out;">Loading more responses...</div>
 
 </div>
 
 
+<div class="hidden space-id">{{ $spaceId }}</div>
 @endsection
 
 
@@ -43,10 +36,25 @@
 <script type="text/javascript">
 (function() {
      setTimeout(() => {
-         $('.grid').isotope({
+        var $grid = $('.grid').isotope({
             itemSelector: '.response',
                 layoutMode: 'masonry',
             });
+
+        $(window).on('scroll', function() {
+            var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
+            if(isAtBottom) {
+                $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
+                clearTimeout(window.infiniteScrollTimeout);
+                window.infiniteScrollTimeout = setTimeout(function() {
+                    $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
+                        var $offsetResults = $(res);
+                        $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
+                        $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
+                    });
+                }, 500);   
+            }
+        });
 
         $('.response').css({'opacity': 1, 'transform': 'none'});
 
