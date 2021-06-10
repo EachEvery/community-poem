@@ -21,6 +21,7 @@
         @endforeach
     </div>
 
+    <div class="loading-indicator w-full text-center opacity-0 py-8" style="transition: opacity .35s ease-in-out;">Fetching more results...</div>
 
 </div>
 
@@ -43,11 +44,13 @@
         $(window).on('scroll', function() {
             var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
             if(isAtBottom) {
+                $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
                 clearTimeout(window.infiniteScrollTimeout);
                 window.infiniteScrollTimeout = setTimeout(function() {
                     $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
                         var $offsetResults = $(res);
-                        $grid.append( $offsetResults ).isotope( 'appended', $offsetResults )
+                        $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
+                        $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
                     });
                 }, 500);   
             }
