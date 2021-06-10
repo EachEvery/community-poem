@@ -49,9 +49,15 @@ class Responses
         return $space->responses()->get();
     }
 
-    public function approvedForSpace(Space $space)
+    public function approvedForSpace(Space $space, $limit = null, $offset = 0)
     {
-        return $space->approved_responses()->latest()->get();
+        $q = $space->approved_responses()->latest();
+
+        if ($limit != null) {
+            $q->limit($limit);
+        }
+
+        return $q->offset($offset)->get();
     }
 
     public function delete($response)
