@@ -19,7 +19,7 @@ class PeacePoemResponses
 
         return view('peacePoemResponses', [
             'responses' => filled($space) ? $this->responses->approvedForSpace($space)->take(100) : collect(),
-            'spaceId' => filled($space) ? $space['id'] : '',
+            'spaceId' => optional($space)->id,
         ]);
     }
 }
