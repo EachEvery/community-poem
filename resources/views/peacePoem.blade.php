@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <title>@yield('title') | Global Peace Poem</title>
 
 <link type="text/css" href="{{mix('css/app.css')}}" rel="stylesheet">

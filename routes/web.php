@@ -1,8 +1,10 @@
 <?php
 
+use CommunityPoem\Repositories\Responses;
 use CommunityPoem\Space;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,28 @@ Route::view('/contest', 'peacePoemContest')->name('contest');
 
 Route::get('/responses', 'PeacePoemResponses')->name('responses');
 
+Route::get('/paged/responses', function (Request $request, Responses $responses) {
+
+    abort_unless($request->has(['offset', 'spaceId']), 403);
+
+
+    $offset = $request->input('offset');
+    $space_id = $request->input('spaceId');
+
+    $space = Space::where('id', $space_id)->firstOrFail();
+
+
+    $responses = $responses->approvedForSpace($space, 100, $offset);
+
+
+
+    $htmlList = $responses->map(function ($r) {
+        return view('partials.responseCard', ['response' => $r, 'delay' => 40])->render();
+    });
+
+    return $htmlList->join(' ');
+});
+
 Route::get('/moderate', function () {
     if ('local' !== config('app.env')) {
         abort(404);
@@ -65,7 +89,7 @@ Route::prefix('/spaces/{space}')->group(function ($router) {
     $router->delete('/responses/{response}', 'ResponseController@delete')->name('discardResponse');
 });
 
-Route::get('/{slug}', function($slug) {
+Route::get('/{slug}', function ($slug) {
     return view('webResponses', [
         'space' => Space::where('slug', $slug)->firstOrFail()
     ]);
