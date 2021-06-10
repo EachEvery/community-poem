@@ -21,7 +21,7 @@
         @endforeach
     </div>
 
-    <div class="loading-indicator w-full text-center opacity-0 py-8" style="transition: opacity .35s ease-in-out;">Fetching more results...</div>
+    <div class="loading-indicator w-full text-center opacity-0 py-8" style="transition: opacity .35s ease-in-out;">Loading more responses...</div>
 
 </div>
 
