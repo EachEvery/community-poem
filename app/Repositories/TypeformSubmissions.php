@@ -3,6 +3,7 @@
 namespace CommunityPoem\Repositories;
 
 use GuzzleHttp\Client as Guzzle;
+use Illuminate\Support\Str;
 
 class TypeformSubmissions
 {
@@ -34,6 +35,12 @@ class TypeformSubmissions
 
                     if ('choice' === $type) {
                         $choice = (object) $answer->choice;
+
+                        if (Str::contains($field->ref, 'prompt-')){
+                            return [
+                                'prompt' => $choice->label,
+                            ];
+                        }
 
                         return [
                             $field->ref => $choice->label,
