@@ -12,3 +12,20 @@
 .typeform-share {
     display: none !important;
 }
+
+/* 
+    Fixes issue with input fields "locking up"
+    https://stackoverflow.com/questions/10819565/user-selectnone-causes-input-field-to-be-inaccessible-on-safari
+*/
+*:not(input, textarea) {
+    /* 
+        Disables all text selection
+        Stops user from using copy/paste/lookup specifically on iOS (allowing a user to leave guided access)
+        https://www.arungudelli.com/tutorial/css/disable-text-selection-in-html-using-user-select-css-property/#using-user-select-none
+    */
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none;
+}
