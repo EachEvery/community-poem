@@ -2107,6 +2107,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2219,8 +2234,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      size: 250,
+      approvedIndex: 25,
+      unapprovedIndex: 25
+    };
+  },
   components: {
     response: _Response__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2241,6 +2283,12 @@ __webpack_require__.r(__webpack_exports__);
       return responses.filter(function (item) {
         return item.status === "unapproved";
       });
+    },
+    hideApprovedShowMore: function hideApprovedShowMore() {
+      return this.approvedIndex >= this.approved.length;
+    },
+    hideUnapprovedShowMore: function hideUnapprovedShowMore() {
+      return this.unapprovedIndex >= this.unapproved.length;
     }
   },
   methods: {
@@ -2250,6 +2298,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleItemClick: function handleItemClick(e, item) {
       this.$emit("item-clicked", e, item);
+    },
+    incUnapprovedIndex: function incUnapprovedIndex() {
+      if (this.unapproved.length > this.unapprovedIndex + 1) this.unapprovedIndex += this.size;
+    },
+    incApprovedIndex: function incApprovedIndex() {
+      if (this.approved.length > this.approvedIndex + 1) this.approvedIndex += this.size;
     }
   }
 });
@@ -46830,7 +46884,8 @@ var render = function() {
                 bottom: "0",
                 "font-size": "2vw",
                 padding: "4vw",
-                "transition-delay": "100ms"
+                "transition-delay": "100ms",
+                "overflow-wrap": "anywhere"
               },
               style: Object.assign(
                 {},
@@ -46839,9 +46894,13 @@ var render = function() {
               )
             },
             [
-              _vm._v("\n      " + _vm._s(_vm.response.name) + "\n      "),
+              _vm._v(
+                "\n            " + _vm._s(_vm.response.name) + "\n            "
+              ),
               _c("br"),
-              _vm._v("\n      " + _vm._s(_vm.response.city) + "\n    ")
+              _vm._v(
+                "\n            " + _vm._s(_vm.response.city) + "\n        "
+              )
             ]
           ),
           _vm._v(" "),
@@ -46877,9 +46936,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("h1", { staticClass: "text-center font-bold mt-12" }, [
-      _vm._v("\n    All Responses for\n    "),
+      _vm._v("\n        All Responses for\n        "),
       _c("span", { staticClass: "italic" }, [_vm._v(_vm._s(_vm.space.name))]),
-      _vm._v("\n    (" + _vm._s(_vm.responses.length) + ") -\n    "),
+      _vm._v("\n        (" + _vm._s(_vm.responses.length) + ") -\n        "),
       _c(
         "a",
         {
@@ -46894,28 +46953,52 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("h3", { staticClass: "text-center mt-12" }, [
-      _vm._v("🛑 Unapproved (" + _vm._s(_vm.unapproved.length) + ")")
+      _vm._v(
+        "\n        🛑 Unapproved (" + _vm._s(_vm.unapproved.length) + ")\n    "
+      )
     ]),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "px-24 mt-12" },
-      _vm._l(_vm.unapproved, function(response) {
-        return _c("response", {
-          key: response.id,
-          staticClass: "-mt-24 cursor-pointer",
-          staticStyle: { transform: "scale(0.8)" },
-          attrs: {
-            theme: _vm.randomTheme(),
-            response: response,
-            "font-size": +response.font_size,
-            editable: false,
-            space: _vm.space
+      [
+        _vm._l(_vm.unapproved.slice(0, _vm.unapprovedIndex), function(
+          response
+        ) {
+          return _c("response", {
+            key: response.id,
+            staticClass: "-mt-24 cursor-pointer",
+            staticStyle: { transform: "scale(0.8)" },
+            attrs: {
+              theme: _vm.randomTheme(),
+              response: response,
+              "font-size": +response.font_size,
+              editable: false,
+              space: _vm.space
+            },
+            on: { click: _vm.handleItemClick }
+          })
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "w-full text-center",
+            class: { hidden: _vm.hideUnapprovedShowMore }
           },
-          on: { click: _vm.handleItemClick }
-        })
-      }),
-      1
+          [
+            _c(
+              "button",
+              {
+                staticClass: "underline",
+                on: { click: _vm.incUnapprovedIndex }
+              },
+              [_vm._v("\n                Show More\n            ")]
+            )
+          ]
+        )
+      ],
+      2
     ),
     _vm._v(" "),
     _c("h3", { staticClass: "text-center mt-24" }, [
@@ -46925,22 +47008,39 @@ var render = function() {
     _c(
       "div",
       { staticClass: "px-24 mt-12 mb-24" },
-      _vm._l(_vm.approved, function(response) {
-        return _c("response", {
-          key: response.id,
-          staticClass: "-mt-24 cursor-pointer",
-          staticStyle: { transform: "scale(0.8)" },
-          attrs: {
-            theme: _vm.randomTheme(),
-            response: response,
-            "font-size": +response.font_size,
-            editable: false,
-            space: _vm.space
+      [
+        _vm._l(_vm.approved.slice(0, _vm.approvedIndex), function(response) {
+          return _c("response", {
+            key: response.id,
+            staticClass: "-mt-24 cursor-pointer",
+            staticStyle: { transform: "scale(0.8)" },
+            attrs: {
+              theme: _vm.randomTheme(),
+              response: response,
+              "font-size": +response.font_size,
+              editable: false,
+              space: _vm.space
+            },
+            on: { click: _vm.handleItemClick }
+          })
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "w-full text-center",
+            class: { hidden: _vm.hideApprovedShowMore }
           },
-          on: { click: _vm.handleItemClick }
-        })
-      }),
-      1
+          [
+            _c(
+              "button",
+              { staticClass: "underline", on: { click: _vm.incApprovedIndex } },
+              [_vm._v("\n                Show More\n            ")]
+            )
+          ]
+        )
+      ],
+      2
     )
   ])
 }
