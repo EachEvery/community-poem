@@ -2,14 +2,13 @@
 
 namespace CommunityPoem\Nova;
 
-use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Boolean;
+use Illuminate\Support\Str;
 
 class Response extends Resource
 {
@@ -33,7 +32,7 @@ class Response extends Resource
      * @var array
      */
     public static $search = [
-        'name', 'city', 'event', 'content'
+        'name', 'city', 'content', 'email', 'prompt'
     ];
 
     /**
@@ -45,13 +44,19 @@ class Response extends Resource
     public function fields(Request $request)
     {
         return [
+            BelongsTo::make('Space')->sortable(),
             Text::make('Name'),
-            Text::make('City'),
-            BelongsTo::make('Space'),
-            Textarea::make('Content'),
-            Text::make('Typeform Id'),
-            Text::make('Font Size'),
-            Text::make('Email'),
+            Text::make('Email')->hideFromIndex(),
+            Text::make('City')->hideFromIndex(),
+            Text::make('Prompt')->sortable(),
+            Textarea::make('Content')->alwaysShow()->showOnIndex()->displayUsing(function ($value) use ($request) {
+                if ($request instanceof \Laravel\Nova\Http\Requests\ResourceIndexRequest) {
+                    return Str::limit($value, 40, '...');
+                }
+                return $value;
+            }),
+            Text::make('Typeform Id')->hideFromIndex(),
+            Text::make('Font Size')->hideFromIndex(),
             Boolean::make('Is Approved')->readonly()->onlyOnIndex(),
             DateTime::make('Approved At')->onlyOnForms()
         ];
