@@ -29,3 +29,40 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none;
 }
+
+.response.selected {
+    .controls {
+        display: block;
+        transform-origin: center;
+        transition: 150ms ease-out all;
+    }
+
+    .controls.rotate {
+        transform: rotate(0deg) !important;
+    }
+}
+
+.response-print {
+    display: none;
+
+    &.show {
+        display: block;
+    }
+}
+
+.controls .copy,
+.controls .share {
+    .success-icon {
+        display: none;
+    }
+
+    &.success {
+        .primary-icon {
+            display: none !important;
+        }
+
+        .success-icon {
+            display: block !important;
+        }
+    }
+}

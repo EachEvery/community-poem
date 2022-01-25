@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Textarea;
 use Timothyasp\Color\Color;
 
 class Space extends Resource
@@ -88,7 +89,9 @@ class Space extends Resource
             Boolean::make('Auto Approve Responses')->help('If this box is checked, typeform responses will automatically show up in the web view and the slideshow view without the opportunity for moderation.'),
             Select::make('Theme')->options($keys)->hideFromIndex(),
             HasMany::make('Responses'),
-            Text::make('Embedded Url')->help('If you are embedding the web responses page in an iframe, enter the URL of the iframe page here so that share links will have the proper URL.'),
+            Text::make('Embedded Url')->help('If you are embedding the web responses page in an iframe, enter the URL of the iframe page here so that share links will have the proper URL.')->hideFromIndex(),
+            Boolean::make('Allow Printing'),
+            Textarea::make('Print Footer')
         ];
     }
 
