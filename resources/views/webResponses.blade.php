@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <title>{{$space->name}} | Community Poem</title>
 
 <link type="text/css" href="{{mix('css/app.css')}}" rel="stylesheet">
@@ -94,7 +95,7 @@
             });
 
             $(window).on('scroll', function() {
-            var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
+            var isAtBottom = $(window).scrollTop() + $(window).height() >= $(document).height();
             if(isAtBottom) {
                 $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
                 clearTimeout(window.infiniteScrollTimeout);
