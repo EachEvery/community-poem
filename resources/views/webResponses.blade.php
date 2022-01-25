@@ -33,7 +33,8 @@
 
             <div class="container mx-auto grid mt-24 text-center ">
             
-                @foreach($space->approved_responses()->latest()->limit(100)->get(); as $index => $response)
+                {{-- @foreach($space->approved_responses()->latest()->limit(100)->get() as $index => $response) --}}
+                @foreach($space->approved_responses as $index => $response)
                     @php
                         $isHighlighted = request('highlight') == strval($response->id);
                         $delay = $index > 15 ? 0 : $loop->index * 40; //ms
@@ -92,20 +93,20 @@
                 layoutMode: 'masonry',
             });
 
-        $(window).on('scroll', function() {
-            var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
-            if(isAtBottom) {
-                $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
-                clearTimeout(window.infiniteScrollTimeout);
-                window.infiniteScrollTimeout = setTimeout(function() {
-                    $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
-                        var $offsetResults = $(res);
-                        $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
-                        $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
-                    });
-                }, 500);   
-            }
-        });
+        // $(window).on('scroll', function() {
+        //     var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
+        //     if(isAtBottom) {
+        //         $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
+        //         clearTimeout(window.infiniteScrollTimeout);
+        //         window.infiniteScrollTimeout = setTimeout(function() {
+        //             $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
+        //                 var $offsetResults = $(res);)
+        //                 $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
+        //                 $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
+        //             });
+        //         }, 500);   
+        //     }
+        // });
 
         $('.response').css({'opacity': 1, 'transform': 'none'});
 
@@ -148,7 +149,9 @@
 
             tour.start();
      }, 150);
+})();
 
+(function() {
      function resetSelected(parent, event) {
         event.stopPropagation();
         $(".response.selected").removeClass("selected");
@@ -190,7 +193,7 @@
         event.stopPropagation();
         var responseId = $(this).closest('.response').attr('id');
         var responseToPrint = $('#print-'+responseId);
-        responseToPrint.addClass('show');
+        responseToPrint.show();
         html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
             var imageToPrint = canvas.toDataURL("image/png", 1.0);
             var inputCode = window.prompt("Enter Print Code");
@@ -199,10 +202,12 @@
                 code: inputCode,
                 origin: window.location.origin,
             })
-                .then(() => window.alert("Success! Printing Now..."))
+                .then(() => {
+                    window.alert("Success! Printing Now...");
+                    responseToPrint.hide();
+                })
                 .catch((error) => window.alert(error.response.data));
         });
-        responseToPrint.removeClass('show');
     });
 
     const copyToClipboard = (textToCopy) => {

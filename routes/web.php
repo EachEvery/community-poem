@@ -54,9 +54,9 @@ Route::get('/paged/responses', function (Request $request, Responses $responses)
     $responses = $responses->approvedForSpace($space, 100, $offset);
 
 
-
-    $htmlList = $responses->map(function ($r) {
-        return view('partials.responseCard', ['response' => $r, 'delay' => 40])->render();
+    $htmlList = $responses->map(function ($r) use ($space, $request) {
+        $isHighlighted = $request->input('highlight') == strval($r->id);
+        return view('partials.responseCard', ['response' => $r, 'delay' => 40, 'space' => $space, 'isHighlighted' => $isHighlighted])->render(). view('partials.responsePrint', ['response' => $r])->render();
     });
 
     return $htmlList->join(' ');

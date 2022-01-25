@@ -18,7 +18,8 @@ class PeacePoemResponses
         $space = $this->spaces->matchingTypeformId(env('PEACEPOEM_TYPEFORM_ID', '0'));
 
         return view('peacePoemResponses', [
-            'responses' => filled($space) ? $this->responses->approvedForSpace($space, 100) : collect(),
+            // 'responses' => filled($space) ? $this->responses->approvedForSpace($space, 100) : collect(),
+            'responses' => filled($space) ? $this->responses->approved($space) : collect(),
             'space' => optional($space),
         ]);
     }
