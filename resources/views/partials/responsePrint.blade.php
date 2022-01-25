@@ -9,13 +9,13 @@
         <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
         <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
     </div>
-    <div class="mx-auto w-1/4 px-4 flex justify-center items-center mt-8 mb-4">
+    {{-- <div class="mx-auto w-1/4 px-4 flex justify-center items-center mt-8 mb-4">
         <img
             src="https://api.qrserver.com/v1/create-qr-code/?data={{ $response->getUrl() }}&amp;size=100x100"
             alt=""
             title=""
         />
-    </div>
+    </div> --}}
     <p class="mx-auto w-full text-center text-sm px-4 mb-8 text-black font-mono">
         @if($response->space->print_footer)
         {!! nl2br($response->space->print_footer) !!}

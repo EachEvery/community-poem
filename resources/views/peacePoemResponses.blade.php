@@ -44,20 +44,20 @@
                 layoutMode: 'masonry',
             });
 
-        // $(window).on('scroll', function() {
-        //     var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
-        //     if(isAtBottom) {
-        //         $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
-        //         clearTimeout(window.infiniteScrollTimeout);
-        //         window.infiniteScrollTimeout = setTimeout(function() {
-        //             $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
-        //                 var $offsetResults = $(res);
-        //                 $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
-        //                 $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
-        //             });
-        //         }, 500);   
-        //     }
-        // });
+        $(window).on('scroll', function() {
+            var isAtBottom = $(window).scrollTop() + $(window).height() > $(document).height() - $('footer').outerHeight();
+            if(isAtBottom) {
+                $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
+                clearTimeout(window.infiniteScrollTimeout);
+                window.infiniteScrollTimeout = setTimeout(function() {
+                    $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
+                        var $offsetResults = $(res);
+                        $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
+                        $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
+                    });
+                }, 500);   
+            }
+        });
 
         $('.response').css({'opacity': 1, 'transform': 'none'});
 
@@ -102,83 +102,83 @@
      }, 150);
 })();
 
-(function() {
-     function resetSelected(parent, event) {
-        event.stopPropagation();
-        $(".response.selected").removeClass("selected");
-        $('.controls', parent).removeClass('rotate');
-        $('.controls .copy.success').removeClass("success");
-        $('.controls .share.success').removeClass("success");
-        $('.content.border-primary').removeClass('border-primary')
-    }
+// (function() {
+//      function resetSelected(parent, event) {
+//         event.stopPropagation();
+//         $(".response.selected").removeClass("selected");
+//         $('.controls', parent).removeClass('rotate');
+//         $('.controls .copy.success').removeClass("success");
+//         $('.controls .share.success').removeClass("success");
+//         $('.content.border-primary').removeClass('border-primary')
+//     }
 
-    $(window).click(function(event) {
-        resetSelected(this, event)
-    });
+//     $(window).click(function(event) {
+//         resetSelected(this, event)
+//     });
 
-    $('.response').click(function(event){
-        resetSelected(this, event);
-        event.stopPropagation();
+//     $('.response').click(function(event){
+//         resetSelected(this, event);
+//         event.stopPropagation();
         
-        $('.content', this).css('transition', '125ms ease-in all 0ms')
+//         $('.content', this).css('transition', '125ms ease-in all 0ms')
 
-        var offset = $(this).offset(); 
-        var responseControls = $('.controls', this);
-        var relX = event.pageX - offset.left - (responseControls.width() / 2);
-        var relY = event.pageY - offset.top - (responseControls.height() / 2);
-        responseControls.css({"top": relY, "left": relX})
+//         var offset = $(this).offset(); 
+//         var responseControls = $('.controls', this);
+//         var relX = event.pageX - offset.left - (responseControls.width() / 2);
+//         var relY = event.pageY - offset.top - (responseControls.height() / 2);
+//         responseControls.css({"top": relY, "left": relX})
 
-        setTimeout(() => {
-            $('.controls', this).addClass('rotate')
-        }, 50);
+//         setTimeout(() => {
+//             $('.controls', this).addClass('rotate')
+//         }, 50);
 
-        $(this).addClass('selected');
-        $('.content', this).addClass('border-primary')
-    });
+//         $(this).addClass('selected');
+//         $('.content', this).addClass('border-primary')
+//     });
 
-    $('.controls .close').click(function(event) {
-        resetSelected(this, event)
-    });
+//     $('.controls .close').click(function(event) {
+//         resetSelected(this, event)
+//     });
 
-    $('.controls .print').click(function(event) {
-        event.stopPropagation();
-        var responseId = $(this).closest('.response').attr('id');
-        var responseToPrint = $('#print-'+responseId);
-        responseToPrint.addClass('show');
-        html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
-            var imageToPrint = canvas.toDataURL("image/png", 1.0);
-            var inputCode = window.prompt("Enter Print Code");
-            axios.post("https://ts-print.eachevery.dev/job", {
-                content: imageToPrint,
-                code: inputCode,
-                origin: window.location.origin,
-            })
-                .then(() => window.alert("Success! Printing Now..."))
-                .catch((error) => window.alert(error.response.data));
-        });
-        responseToPrint.removeClass('show');
-    });
+//     $('.controls .print').click(function(event) {
+//         event.stopPropagation();
+//         var responseId = $(this).closest('.response').attr('id');
+//         var responseToPrint = $('#print-'+responseId);
+//         responseToPrint.addClass('show');
+//         html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
+//             var imageToPrint = canvas.toDataURL("image/png", 1.0);
+//             var inputCode = window.prompt("Enter Print Code");
+//             axios.post("https://ts-print.eachevery.dev/job", {
+//                 content: imageToPrint,
+//                 code: inputCode,
+//                 origin: window.location.origin,
+//             })
+//                 .then(() => window.alert("Success! Printing Now..."))
+//                 .catch((error) => window.alert(error.response.data));
+//         });
+//         responseToPrint.removeClass('show');
+//     });
 
-    const copyToClipboard = (textToCopy) => {
-        var $temp = $("<input>");
-        $("body").append($temp);
-        $temp.val(textToCopy).select();
-        document.execCommand("copy");
-        $temp.remove();
-    };
+//     const copyToClipboard = (textToCopy) => {
+//         var $temp = $("<input>");
+//         $("body").append($temp);
+//         $temp.val(textToCopy).select();
+//         document.execCommand("copy");
+//         $temp.remove();
+//     };
     
-    $('.controls .copy').click(function(event) {
-        event.stopPropagation();
-        copyToClipboard($(this).closest('.response').find('.content .content-text').text());
-        $(this).addClass('success');
-    });
+//     $('.controls .copy').click(function(event) {
+//         event.stopPropagation();
+//         copyToClipboard($(this).closest('.response').find('.content .content-text').text());
+//         $(this).addClass('success');
+//     });
 
-    $('.controls .share').click(function(event) {
-        event.stopPropagation();
-        copyToClipboard($(this).attr('data-share-link'));
-        $(this).addClass('success');
-    });
-})();
+//     $('.controls .share').click(function(event) {
+//         event.stopPropagation();
+//         copyToClipboard($(this).attr('data-share-link'));
+//         $(this).addClass('success');
+//     });
+// })();
     
 </script>
 @endsection

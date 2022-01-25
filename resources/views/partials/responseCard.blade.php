@@ -1,4 +1,4 @@
-<div id="{{ $response->id }}" class="response cursor-pointer text-primary w-full md:w-1/2 lg:w-1/3 {{$isHighlighted ? 'highlight' : 'transition'}} md:p-4 mb-8" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$delay ?? 40}}ms">
+<div id="{{ $response->id }}" class="response text-primary w-full md:w-1/2 lg:w-1/3 {{$isHighlighted ? 'highlight' : 'transition'}} md:p-4 mb-8" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$delay ?? 40}}ms">
     <div class="content border-2 border-transparent p-4 xl:px-6">
         @unless(empty($response->prompt))
             <div class="flex justify-center mb-3">
