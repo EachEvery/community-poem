@@ -178,12 +178,16 @@
         };
         
         $('.container').on('click', '.controls .copy', function(event){
+            // if a check is displayed on the other copy option, clear it
+            $('.controls .share.success').removeClass("success");
             event.stopPropagation();
             copyToClipboard($(this).closest('.response').find('.content .content-text').text());
             $(this).addClass('success');
         });
     
         $('.container').on('click', '.controls .share', function(event){
+            // if a check is displayed on the other copy option, clear it
+            $('.controls .copy.success').removeClass("success");
             event.stopPropagation();
             copyToClipboard($(this).attr('data-share-link'));
             $(this).addClass('success');
