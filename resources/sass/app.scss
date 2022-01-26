@@ -66,3 +66,32 @@
         }
     }
 }
+
+.controls .print {
+    .loading-icon {
+        display: none;
+    }
+
+    &.loading {
+        .primary-icon {
+            display: none !important;
+        }
+
+        .loading-icon {
+            display: block !important;
+        }
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

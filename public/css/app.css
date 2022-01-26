@@ -43894,3 +43894,40 @@ video {
 .controls .share.success .success-icon {
   display: block !important;
 }
+
+.controls .print .loading-icon {
+  display: none;
+}
+
+.controls .print.loading .primary-icon {
+  display: none !important;
+}
+
+.controls .print.loading .loading-icon {
+  display: block !important;
+}
+
+.animate-spin {
+  -webkit-animation: spin 1s linear infinite;
+          animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
