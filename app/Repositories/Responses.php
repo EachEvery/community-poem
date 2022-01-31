@@ -44,6 +44,23 @@ class Responses
             $space->approved_responses()->get() : Response::whereNotNull('approved_at')->get();
     }
 
+    public function approvedForSlideshow(Space $space = null)
+    {
+        return $space->approved_responses_for_slideshow->isEmpty() ? null : $space->approved_responses_for_slideshow()->get();
+    }
+
+    public function displayOnSlideshow($response)
+    {
+        $response->update(['display_on_slideshow' => 1]);
+        return $response;
+    }
+
+    public function removeFromSlideshow($response)
+    {
+        $response->update(['display_on_slideshow' => 0]);
+        return $response;
+    }
+
     public function forSpace(Space $space)
     {
         return $space->responses()->get();

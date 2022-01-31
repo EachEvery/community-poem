@@ -87,6 +87,8 @@ Route::prefix('/spaces/{space}')->group(function ($router) {
 
     $router->post('/responses/{response}/approve', 'ApproveResponseController@store')->name('markResponseApproved');
     $router->delete('/responses/{response}', 'ResponseController@delete')->name('discardResponse');
+
+    $router->patch('/responses/{response}/slideshow', 'ApproveResponseController@update');
 });
 
 Route::get('/{slug}', function ($slug) {

@@ -19,7 +19,7 @@
         <div class="px-24 mt-12">
             <response
                 class="-mt-24 cursor-pointer"
-                style="transform: scale(0.8);"
+                style="transform: scale(0.8)"
                 v-for="response in unapproved.slice(0, unapprovedIndex)"
                 :key="response.id"
                 :theme="randomTheme()"
@@ -40,12 +40,40 @@
             </div>
         </div>
 
+        <h3 class="text-center mt-24">
+            🖥️ Displayed On Slideshow ({{ slideshow.length }})
+        </h3>
+
+        <div class="px-24 mt-12 mb-24">
+            <response
+                class="-mt-24 cursor-pointer"
+                style="transform: scale(0.8)"
+                v-for="response in slideshow.slice(0, slideshowIndex)"
+                :key="response.id"
+                :theme="randomTheme()"
+                :response="response"
+                :font-size="+response.font_size"
+                :editable="false"
+                :space="space"
+                @click="handleItemClick"
+            />
+
+            <div
+                class="w-full text-center"
+                v-bind:class="{ hidden: hideSlideshowShowMore }"
+            >
+                <button class="underline" v-on:click="incSlideshowIndex">
+                    Show More
+                </button>
+            </div>
+        </div>
+
         <h3 class="text-center mt-24">✅ Approved ({{ approved.length }})</h3>
 
         <div class="px-24 mt-12 mb-24">
             <response
                 class="-mt-24 cursor-pointer"
-                style="transform: scale(0.8);"
+                style="transform: scale(0.8)"
                 v-for="response in approved.slice(0, approvedIndex)"
                 :key="response.id"
                 :theme="randomTheme()"
@@ -78,30 +106,37 @@ export default {
         return {
             size: 250,
             approvedIndex: 25,
-            unapprovedIndex: 25
+            unapprovedIndex: 25,
+            slideshowIndex: 25,
         };
     },
     components: {
-        response
+        response,
     },
     props: {
         responses: Array,
         activeResponse: Object,
-        space: Object
+        space: Object,
     },
     computed: {
         approved({ responses }) {
-            return responses.filter(item => item.status === "approved");
+            return responses.filter((item) => item.status === "approved");
         },
         unapproved({ responses }) {
-            return responses.filter(item => item.status === "unapproved");
+            return responses.filter((item) => item.status === "unapproved");
+        },
+        slideshow({ responses }) {
+            return responses.filter((item) => item.display_on_slideshow === 1);
         },
         hideApprovedShowMore() {
             return this.approvedIndex >= this.approved.length;
         },
         hideUnapprovedShowMore() {
             return this.unapprovedIndex >= this.unapproved.length;
-        }
+        },
+        hideSlideshowShowMore() {
+            return this.slideshowIndex >= this.slideshow.length;
+        },
     },
     methods: {
         randomTheme() {
@@ -119,7 +154,11 @@ export default {
         incApprovedIndex() {
             if (this.approved.length > this.approvedIndex + 1)
                 this.approvedIndex += this.size;
-        }
-    }
+        },
+        incSlideshowIndex() {
+            if (this.slideshow.length > this.slideshowIndex + 1)
+                this.slideshowIndex += this.size;
+        },
+    },
 };
 </script>

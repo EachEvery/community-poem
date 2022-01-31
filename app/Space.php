@@ -31,6 +31,11 @@ class Space extends Model
         return $this->responses()->whereNotNull('approved_at');
     }
 
+    public function approved_responses_for_slideshow()
+    {
+        return $this->approved_responses()->where('display_on_slideshow', '=', 1);
+    }
+
     public function signedUrl()
     {
         return URL::signedRoute(

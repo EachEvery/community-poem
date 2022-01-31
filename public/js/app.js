@@ -2122,6 +2122,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2254,13 +2260,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       size: 250,
       approvedIndex: 25,
-      unapprovedIndex: 25
+      unapprovedIndex: 25,
+      slideshowIndex: 25
     };
   },
   components: {
@@ -2284,11 +2319,20 @@ __webpack_require__.r(__webpack_exports__);
         return item.status === "unapproved";
       });
     },
+    slideshow: function slideshow(_ref3) {
+      var responses = _ref3.responses;
+      return responses.filter(function (item) {
+        return item.display_on_slideshow === 1;
+      });
+    },
     hideApprovedShowMore: function hideApprovedShowMore() {
       return this.approvedIndex >= this.approved.length;
     },
     hideUnapprovedShowMore: function hideUnapprovedShowMore() {
       return this.unapprovedIndex >= this.unapproved.length;
+    },
+    hideSlideshowShowMore: function hideSlideshowShowMore() {
+      return this.slideshowIndex >= this.slideshow.length;
     }
   },
   methods: {
@@ -2304,6 +2348,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     incApprovedIndex: function incApprovedIndex() {
       if (this.approved.length > this.approvedIndex + 1) this.approvedIndex += this.size;
+    },
+    incSlideshowIndex: function incSlideshowIndex() {
+      if (this.slideshow.length > this.slideshowIndex + 1) this.slideshowIndex += this.size;
     }
   }
 });
@@ -2328,12 +2375,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2483,7 +2580,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _context.stop();
           }
         }
-      }, null, this);
+      }, null, this, null, Promise);
     },
     deleteCurrentResponseLocal: function deleteCurrentResponseLocal() {
       this.responses.splice(this.responseIndex, 1);
@@ -2494,7 +2591,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     save: function save(e) {
       var showConfirm,
-          _ref2,
+          _await$axios$post,
           data,
           response,
           index,
@@ -2514,8 +2611,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               }));
 
             case 3:
-              _ref2 = _context2.sent;
-              data = _ref2.data;
+              _await$axios$post = _context2.sent;
+              data = _await$axios$post.data;
               response = data;
               index = this.responses.findIndex(function (r) {
                 return +r.id === +response.id;
@@ -2533,10 +2630,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _context2.stop();
           }
         }
-      }, null, this);
+      }, null, this, null, Promise);
     },
     unapprove: function unapprove() {
-      var _ref3, data, response, index;
+      var _await$axios$post2, data, response, index;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function unapprove$(_context3) {
         while (1) {
@@ -2550,8 +2647,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               }));
 
             case 2:
-              _ref3 = _context3.sent;
-              data = _ref3.data;
+              _await$axios$post2 = _context3.sent;
+              data = _await$axios$post2.data;
               response = data;
               index = this.responses.findIndex(function (r) {
                 return +r.id === +response.id;
@@ -2563,7 +2660,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return _context3.stop();
           }
         }
-      }, null, this);
+      }, null, this, null, Promise);
+    },
+    displayOnSlideshow: function displayOnSlideshow(shouldDisplayOnSlideshow) {
+      var _await$axios$patch$ca, data, response, index;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.async(function displayOnSlideshow$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.awrap(axios__WEBPACK_IMPORTED_MODULE_4___default.a.patch("/spaces/".concat(this.space.slug, "/responses/").concat(this.response.id, "/slideshow"), {
+                displayOnSlideshow: shouldDisplayOnSlideshow
+              })["catch"](function (err) {
+                return console.error(err);
+              }));
+
+            case 2:
+              _await$axios$patch$ca = _context4.sent;
+              data = _await$axios$patch$ca.data;
+              response = data;
+              index = this.responses.findIndex(function (r) {
+                return +r.id === +response.id;
+              });
+              this.responses.splice(index, 1, response);
+
+            case 7:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, null, this, null, Promise);
     },
     decreaseFont: function decreaseFont() {
       this.fontSize = +(this.fontSize - 0.26).toFixed(2);
@@ -2604,19 +2731,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   computed: {
-    responseId: function responseId(_ref4) {
-      var responseIndex = _ref4.responseIndex,
-          responses = _ref4.responses;
+    responseId: function responseId(_ref2) {
+      var responseIndex = _ref2.responseIndex,
+          responses = _ref2.responses;
       return responses[responseIndex].id;
     },
-    response: function response(_ref5) {
-      var responseId = _ref5.responseId;
+    response: function response(_ref3) {
+      var responseId = _ref3.responseId;
       return this.responses.find(function (r) {
         return r.id === responseId;
       });
     },
-    theme: function theme(_ref6) {
-      var themeIndex = _ref6.themeIndex;
+    theme: function theme(_ref4) {
+      var themeIndex = _ref4.themeIndex;
       return this.space.theme_array[themeIndex];
     }
   },
@@ -2767,7 +2894,7 @@ __webpack_require__.r(__webpack_exports__);
               return _context.stop();
           }
         }
-      }, null, this);
+      }, null, this, null, Promise);
     }
   },
   data: function data() {
@@ -2793,7 +2920,7 @@ __webpack_require__.r(__webpack_exports__);
                 return _context2.stop();
             }
           }
-        });
+        }, null, null, null, Promise);
       }, this.interval * 1000);
     } else {
       this.themeIndex = Math.floor(Math.random() * this.space.theme_array.length);
@@ -7383,7 +7510,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".space__name {\n  transform: rotate(-90deg);\n  position: absolute;\n  left: 96%;\n  bottom: 0;\n  -webkit-text-stroke: 0.15vw var(--stroke-color);\n  color: transparent;\n  font-size: 3vw;\n  font-weight: 800;\n  transform-origin: left center;\n  width: 51vw;\n  letter-spacing: 0.375vw;\n  text-align: center;\n}\n", ""]);
+exports.push([module.i, ".space__name {\n  transform: rotate(-90deg);\n  position: absolute;\n  left: 96%;\n  bottom: 0;\n  -webkit-text-stroke: 0.1vw var(--stroke-color);\n  color: var(--stroke-color);\n  font-size: 3vw;\n  font-weight: 800;\n  transform-origin: left center;\n  width: 51vw;\n  letter-spacing: 0.375vw;\n  text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -54867,6 +54994,55 @@ var render = function () {
     ),
     _vm._v(" "),
     _c("h3", { staticClass: "text-center mt-24" }, [
+      _vm._v(
+        "\n        🖥️ Displayed On Slideshow (" +
+          _vm._s(_vm.slideshow.length) +
+          ")\n    "
+      ),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "px-24 mt-12 mb-24" },
+      [
+        _vm._l(_vm.slideshow.slice(0, _vm.slideshowIndex), function (response) {
+          return _c("response", {
+            key: response.id,
+            staticClass: "-mt-24 cursor-pointer",
+            staticStyle: { transform: "scale(0.8)" },
+            attrs: {
+              theme: _vm.randomTheme(),
+              response: response,
+              "font-size": +response.font_size,
+              editable: false,
+              space: _vm.space,
+            },
+            on: { click: _vm.handleItemClick },
+          })
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "w-full text-center",
+            class: { hidden: _vm.hideSlideshowShowMore },
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "underline",
+                on: { click: _vm.incSlideshowIndex },
+              },
+              [_vm._v("\n                Show More\n            ")]
+            ),
+          ]
+        ),
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("h3", { staticClass: "text-center mt-24" }, [
       _vm._v("✅ Approved (" + _vm._s(_vm.approved.length) + ")"),
     ]),
     _vm._v(" "),
@@ -54953,7 +55129,7 @@ var render = function () {
           staticClass:
             "w-full bg-white hover:opacity-100 flex justify-between p-5 border-b border-grey-300",
           staticStyle: {
-            top: "calc(56vw - 4.5rem + )",
+            top: "calc(56vw - 4.5rem +)",
             transition: "300ms opacity-ease",
             "min-width": "1200px",
           },
@@ -54965,7 +55141,7 @@ var render = function () {
                   "div",
                   {
                     staticClass: "flex",
-                    staticStyle: { transform: "scale(.7)" },
+                    staticStyle: { transform: "scale(0.7)" },
                   },
                   [
                     _c(
@@ -54988,9 +55164,11 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          _vm._s(_vm.responseIndex + 1) +
+                          "\n                    " +
+                            _vm._s(_vm.responseIndex + 1) +
                             "/" +
-                            _vm._s(_vm.responses.length)
+                            _vm._s(_vm.responses.length) +
+                            "\n                "
                         ),
                       ]
                     ),
@@ -55019,14 +55197,24 @@ var render = function () {
                     },
                     staticStyle: { width: "10rem" },
                   },
-                  [_vm._v("Status: " + _vm._s(_vm.response.status))]
+                  [
+                    _vm._v(
+                      "\n                Status: " +
+                        _vm._s(_vm.response.status) +
+                        "\n            "
+                    ),
+                  ]
                 ),
               ])
             : _vm._e(),
           _vm._v(" "),
           _vm.responses.length === 0
             ? _c("h3", { staticClass: "self-center uppercase" }, [
-                _vm._v("No " + _vm._s(_vm.selectedStatus) + " Responses"),
+                _vm._v(
+                  "\n            No " +
+                    _vm._s(_vm.selectedStatus) +
+                    " Responses\n        "
+                ),
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -55038,7 +55226,7 @@ var render = function () {
                 staticStyle: { width: "5rem" },
               },
               [
-                _vm._v("\n        🔎\n        "),
+                _vm._v("\n                🔎\n                "),
                 _c(
                   "span",
                   { staticClass: "ml-2 text-sm font-light tracking-wider" },
@@ -55049,7 +55237,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "flex", staticStyle: { transform: "scale(.7)" } },
+              { staticClass: "flex", staticStyle: { transform: "scale(0.7)" } },
               [
                 _c(
                   "clickable",
@@ -55125,6 +55313,7 @@ var render = function () {
                 ? _c(
                     "clickable",
                     {
+                      staticClass: "mr-3",
                       on: {
                         click: function (e) {
                           return _vm.save(e, false)
@@ -55132,6 +55321,37 @@ var render = function () {
                       },
                     },
                     [_vm._v("✅ Approve")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.response.display_on_slideshow &&
+              _vm.response.status === "approved"
+                ? _c(
+                    "clickable",
+                    {
+                      staticClass: "mr-3",
+                      on: {
+                        click: function () {
+                          return _vm.displayOnSlideshow(true)
+                        },
+                      },
+                    },
+                    [_vm._v("🖥️ Display On Slideshow")]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.response.display_on_slideshow
+                ? _c(
+                    "clickable",
+                    {
+                      staticClass: "mr-3",
+                      on: {
+                        click: function () {
+                          return _vm.displayOnSlideshow(false)
+                        },
+                      },
+                    },
+                    [_vm._v("❌ Hide From Slideshow")]
                   )
                 : _vm._e(),
             ],

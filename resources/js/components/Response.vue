@@ -3,20 +3,20 @@
         class="transition"
         :style="{
             backgroundColor: theme.background_color,
-            '--stroke-color': theme.secondary_text_color
+            '--stroke-color': theme.secondary_text_color,
         }"
         @click="emit"
     >
-        <div class="relative w-full" style="height: 56vw;">
+        <div class="relative w-full" style="height: 56vw">
             <img
                 class="inset-0 absolute h-full w-full object-cover"
                 :src="theme.photo"
                 @load="handleLoad"
-                style="transition: 300ms all ease;"
+                style="transition: 300ms all ease"
                 :style="{
                     transform: `translateY(${
                         isLoading || switching ? '3px' : '0'
-                    })`
+                    })`,
                 }"
                 :class="{ 'opacity-0': isLoading || switching }"
             />
@@ -31,18 +31,24 @@
                         color: theme.primary_text_color,
                         fontSize: `${fontSize}vw`,
                         transition: '300ms transform ease, 300ms color ease',
-                        ...switchingStyles
+                        ...switchingStyles,
                     }"
-                    style="width: 75vw; padding:4vw; padding-top: 10vw"
+                    style="width: 75vw; padding: 4vw; padding-top: 10vw"
                 />
             </div>
 
             <h3
                 class="absolute font-sans font-bold transition"
-                style="bottom: 0; font-size: 2vw; padding: 4vw; transition-delay: 100ms; overflow-wrap: anywhere"
+                style="
+                    bottom: 0;
+                    font-size: 2vw;
+                    padding: 4vw;
+                    transition-delay: 100ms;
+                    overflow-wrap: anywhere;
+                "
                 :style="{
                     color: theme.secondary_text_color,
-                    ...switchingStyles
+                    ...switchingStyles,
                 }"
             >
                 {{ response.name }}
@@ -59,8 +65,8 @@
     position: absolute;
     left: 96%;
     bottom: 0;
-    -webkit-text-stroke: 0.15vw var(--stroke-color);
-    color: transparent;
+    -webkit-text-stroke: 0.1vw var(--stroke-color);
+    color: var(--stroke-color);
     font-size: 3vw;
     font-weight: 800;
     transform-origin: left center;
@@ -73,7 +79,7 @@
 export default {
     data() {
         return {
-            state: "loading"
+            state: "loading",
         };
     },
     methods: {
@@ -85,7 +91,7 @@ export default {
         },
         emit(e) {
             this.$emit("click", e, this.response);
-        }
+        },
     },
     computed: {
         isLoading({ state }) {
@@ -94,14 +100,14 @@ export default {
         switchingStyles({ switching }) {
             return {
                 transform: `translateY(${switching ? 5 : 0}px)`,
-                opacity: switching ? 0 : 1
+                opacity: switching ? 0 : 1,
             };
-        }
+        },
     },
     watch: {
-        theme: function() {
+        theme: function () {
             this.state = "loading";
-        }
+        },
     },
     props: {
         editable: Boolean,
@@ -111,8 +117,8 @@ export default {
         fontSize: Number,
         switching: {
             type: Boolean,
-            default: false
-        }
-    }
+            default: false,
+        },
+    },
 };
 </script>

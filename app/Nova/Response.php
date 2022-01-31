@@ -58,7 +58,8 @@ class Response extends Resource
             Text::make('Typeform Id')->hideFromIndex(),
             Text::make('Font Size')->hideFromIndex(),
             Boolean::make('Is Approved')->readonly()->onlyOnIndex(),
-            DateTime::make('Approved At')->onlyOnForms()
+            DateTime::make('Approved At')->onlyOnForms(),
+            Boolean::make('Display On Slideshow')
         ];
     }
 

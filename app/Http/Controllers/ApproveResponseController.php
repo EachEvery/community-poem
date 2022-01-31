@@ -38,4 +38,17 @@ class ApproveResponseController
             $req->input('response')
         );
     }
+
+    public function update(Request $req)
+    {
+        $response = $this->responses->findOrFail(
+            $req->route('response')
+        );
+
+        if($req->input('displayOnSlideshow')) {
+            return $this->responses->displayOnSlideshow($response);
+        } else {
+            return $this->responses->removeFromSlideshow($response);
+        }
+    }
 }

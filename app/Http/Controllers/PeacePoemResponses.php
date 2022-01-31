@@ -19,7 +19,6 @@ class PeacePoemResponses
 
         return view('peacePoemResponses', [
             'responses' => filled($space) ? $this->responses->approvedForSpace($space, 100) : collect(),
-            // 'responses' => filled($space) ? $this->responses->approved($space) : collect(),
             'space' => optional($space),
         ]);
     }

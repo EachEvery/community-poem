@@ -22,7 +22,7 @@ class SpaceSlideshowController
 
         return view('spaceSlideshow', [
             'space' => $space,
-            'responses' => $this->responses->approved($space),
+            'responses' => $this->responses->approvedForSlideshow($space),
             'autoplay' => 'true',
         ]);
     }
