@@ -46,6 +46,7 @@
             </div>
 
             <div class="loading-indicator w-full text-center opacity-0 py-8" style="transition: opacity .35s ease-in-out;">Loading more responses...</div>
+            <div class="done-loading-message w-full text-center opacity-0 py-8" style="transition: opacity .35s ease-in-out;">All responses have been loaded.</div>
 
         </div>
 
@@ -87,7 +88,7 @@
 
 <script type="text/javascript">
     (function() {
-         setTimeout(() => {
+        setTimeout(() => {
             var $grid = $('.grid').isotope({
                 itemSelector: '.response',
                     layoutMode: 'masonry',
@@ -101,8 +102,18 @@
                     window.infiniteScrollTimeout = setTimeout(function() {
                         $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
                             var $offsetResults = $(res);
-                            $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
                             $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
+                            // all responses have been loaded
+                            if(res == ''){
+                                $('.done-loading-message').removeClass('opacity-0').addClass('opacity-100');
+                                let timer;
+                                clearTimeout(timer);
+                                timer = setTimeout(() => {
+                                    $('.done-loading-message').removeClass('opacity-100').addClass('opacity-0');
+                                }, 5000);
+                            } else {
+                                $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
+                            }
                         });
                     }, 500);   
                 }
