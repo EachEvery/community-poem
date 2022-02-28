@@ -45,10 +45,10 @@
         </div>
 
         <div class="absolute inset-x-0 bottom-0 pb-5 flex flex-col text-green-900">
-          <a
+          <!-- <a
             href="/contest"
             class="font-display text-3xl font-semibold uppercase self-center mb-5"
-          >Contest</a>
+          >Contest</a> -->
 
           <div class="flex justify-center">
             <ts-logo class="w-16 h-16 mr-5"></ts-logo>

@@ -60,10 +60,10 @@
                   >Get in Touch</a>
             </div>
 
-            <a
+            <!-- <a
                 href="/contest"
                 class="font-display text-3xl font-semibold uppercase self-center {{$path === 'contest' ? '': 'text-outline'}}"
-            >Contest</a>
+            >Contest</a> -->
         </div>
 
             
