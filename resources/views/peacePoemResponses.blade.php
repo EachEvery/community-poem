@@ -206,4 +206,7 @@
     })();
         
 </script>
+
+@include('partials.responseScript');
+
 @endsection

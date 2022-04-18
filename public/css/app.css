@@ -43931,3 +43931,7 @@ video {
     transform: rotate(360deg);
   }
 }
+
+.response .content:hover .language-switcher, .response.selected .language-switcher {
+  opacity: 1;
+}

@@ -2,12 +2,12 @@
     <div class="p-4 xl:px-6">
         @unless(empty($response->prompt))
             <div class="flex flex-col justify-center items-center">
-                <h3 class="block bg-black text-white px-3 pb-3 font-display text-base uppercase font-semibold leading-none">{{$response->prompt}}</h3>
+                <h3 class="response-prompt block bg-black text-white px-3 pb-3 font-display text-base uppercase font-semibold leading-none">{{$response->prompt}}</h3>
             </div>
         @endunless
         
-        <h1 class="font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
-        <span class="uppercase font-bold mt-5 inline-block leading-normal">{{$response->name}}<br /> {{$response->city ?? ''}}</span>
+        <h1 class="response-content font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
+        <div class="uppercase font-bold mt-5 inline-block leading-normal"><span class="response-name">{{$response->name}}</span><br /> <span class="response-city">{{$response->city ?? ''}}</span></div>
     </div>
     {{-- <div class="mx-auto w-1/4 px-4 flex justify-center items-center mt-8 mb-4">
         <img

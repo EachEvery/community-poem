@@ -95,3 +95,12 @@
         transform: rotate(360deg);
     }
 }
+
+.response {
+    .content:hover,
+    &.selected {
+        .language-switcher {
+            opacity: 1;
+        }
+    }
+}

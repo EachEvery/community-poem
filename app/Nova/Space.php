@@ -55,7 +55,8 @@ class Space extends Resource
         return [
             Text::make('Name'),
             Text::make('Admin Emails')->hideFromIndex(),
-            Text::make('Typeform Id')->hideFromIndex(),
+            // Text::make('Typeform Id')->hideFromIndex(),
+            HasMany::make('TypeformIds')->hideFromIndex(),
             // Text::make('List Domain')->help('Domain to automatically launch the response list. Do not include propocol or forward slashes (e.g. https://).')->hideFromIndex(),
             Text::make('View Responses', function () {
                 $url = route('thread', ['slug' => $this->resource->slug]);

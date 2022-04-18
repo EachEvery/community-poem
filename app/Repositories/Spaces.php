@@ -3,13 +3,15 @@
 namespace CommunityPoem\Repositories;
 
 use CommunityPoem\Space;
+use CommunityPoem\TypeformId;
 use CommunityPoem\Response;
 
 class Spaces
 {
     public function matchingTypeformId($id)
     {
-        return Space::whereTypeformId($id)->first();
+        $space_id = TypeformId::select('space_id')->whereTypeformId($id)->get();
+        return Space::find($space_id)->first();
     }
 
     public function matchingSlug($slug)

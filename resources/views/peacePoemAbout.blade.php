@@ -8,12 +8,10 @@
 
     <div class="mx-auto container relative xl:static ">
 
-        
-
         <!-- Logos & Attribution -->
-        <div class="flex mb-5   xl:scale-up md:absolute top-0 right-0 xl:mt-24 xl:mr-56 justify-end" style="transform-origin: left">
+        <div class="flex mb-5 xl:scale-up md:absolute top-0 right-0 xl:mt-24 xl:mr-56 justify-end" style="transform-origin: left">
             <div class="flex flex-row-reverse md:mr-12 opacity-50">
-                @component('attribution')            
+                @component('attribution')    
                 @endcomponent
             </div>
 
@@ -40,12 +38,12 @@
 <div class="bg-yellow-900 p-8 pt-32 pb-48 text-green-900 xl:px-32">
 
     <div class="container md:mx-auto relative mt-24 md:mt-24 flex flex-col lg:mt-48">
-        <span class="font-display text-9xl text-left uppercase text-outline leading-none    static |    md:text-10xl md:absolute right-0 top-0 md:text-left xl:scale-up md:mt-24">
+        <span class="font-display text-9xl text-left uppercase text-outline leading-none static | md:text-10xl md:absolute right-0 top-0 md:text-left xl:scale-up md:mt-24">
             &ldquo;My<br />Voice&rdquo;
         </span>
 
 
-        <div class="bg-white  p-10 -mt-10 relative pt-16 pb-32   |  xl:mt-0  md:max-w-sm  xl:ml-24 xl:scale-up">
+        <div class="bg-white p-10 -mt-10 relative pt-16 pb-32   |  xl:mt-0  md:max-w-sm  xl:ml-24 xl:scale-up">
             <span class="text-lg uppercase text-3xl text-center block mb-3 font-display  |  ">What is it?</span>
             <p class="text-2xl mt-8 text-center leading-normal font-light">
                 A global community poem in commemoration of the 50th anniversary of Kent State University’s May 4 shootings.
@@ -55,7 +53,7 @@
 
 
         <div class="flex flex-col mt-3 md:mt-32">        
-            <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end md:self-start lg:self-end text-lg     md:text-2xl  md:mr-56 ">
+            <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end md:self-start lg:self-end text-lg md:text-2xl  md:mr-56 ">
             my voice is 
             a fall leaf 
             changing 

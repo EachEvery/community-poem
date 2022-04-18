@@ -31,13 +31,41 @@
 
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-center md:text-2xl text-center text-sm">responses</span>
         @endif      
-
-            <div class="container mx-auto grid mt-24 text-center ">
             
+            <div class="container mx-auto mt-24 mb-4 flex justify-end">
+                {{-- @php
+                    $languages = [
+                        [
+                            'label' => 'English',
+                            'value' => 'en'
+                        ],
+                        [
+                            'label' => 'Russia',
+                            'value' => 'ru'
+                        ],
+                        [
+                            'label' => 'Ukrainian',
+                            'value' => 'uk'
+                        ]
+                    ]
+                @endphp
+                @if($space->id == '20')
+                <select class="language-switcher">
+                    @foreach ($languages as $language)
+                        <option value="{{ $language['value'] }}" {{ ($lang == $language['value']) ? 'selected' : '' }}>{{ $language['label'] }}</option>
+                    @endforeach
+                </select>
+                @endif --}}
+            </div>
+
+            <div class="container mx-auto grid text-center ">
                 @foreach($space->approved_responses()->latest()->limit(100)->get() as $index => $response)
                     @php
                         $isHighlighted = request('highlight') == strval($response->id);
                         $delay = $index > 15 ? 0 : $loop->index * 40; //ms
+                        if($space->id == '20' && $lang != 'en' && $index == 0) {
+                            $response = $response->translateText($response, $lang);
+                        }
                     @endphp
 
                     @include('partials.responseCard', ['response' => $response, 'delay' => $delay, 'space' => $space, 'isHighlighted' => $isHighlighted])
@@ -100,7 +128,7 @@
                     $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
                     clearTimeout(window.infiniteScrollTimeout);
                     window.infiniteScrollTimeout = setTimeout(function() {
-                        $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
+                        $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length + '&lang=' + $('.language-switcher').val(), function(res) {
                             var $offsetResults = $(res);
                             $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
                             // all responses have been loaded
@@ -256,6 +284,7 @@
         
 </script>
 
+@include('partials.responseScript');
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->

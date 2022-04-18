@@ -29,7 +29,12 @@ class RetreiveMissingResponses extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         $models->each(function ($space) {
-            $items = $this->submissions->formSubmissions($space->typeform_id);
+            $typeform_ids = $space->typeformids;
+            
+            $items = [];
+            foreach ($typeform_ids as $typeform_id) {
+                $items = array_merge($items, $this->submissions->formSubmissions($typeform_id));
+            }
 
             collect($items)->map(function ($entry) use ($space) {
                 if (empty($entry->answers)) {

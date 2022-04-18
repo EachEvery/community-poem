@@ -21,6 +21,11 @@ class Space extends Model
         return $this->hasMany(Response::class);
     }
 
+    public function typeformids()
+    {
+        return $this->hasMany(TypeformId::class);
+    }
+
     public function unapproved_responses()
     {
         return $this->responses()->whereNull('approved_at');
