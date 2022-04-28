@@ -13,6 +13,8 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Timothyasp\Color\Color;
+use OptimistDigital\MultiselectField\Multiselect;
+use CommunityPoem\Language;
 
 class Space extends Resource
 {
@@ -51,6 +53,13 @@ class Space extends Resource
         $keys = $keys->mapWithKeys(function ($item) {
             return [$item => $item];
         });
+
+        $language_options = [];
+        foreach(Language::all() as $lang) {
+            foreach( json_decode($lang['fonts']) as $font ) {
+                $language_options[ $lang['code'] . '/' . $font ] = $lang['language'] . ' / ' . $font;
+            }
+        }
 
         return [
             Text::make('Name'),
@@ -92,7 +101,8 @@ class Space extends Resource
             HasMany::make('Responses'),
             Text::make('Embedded Url')->help('If you are embedding the web responses page in an iframe, enter the URL of the iframe page here so that share links will have the proper URL.')->hideFromIndex(),
             Boolean::make('Allow Printing'),
-            Textarea::make('Print Footer')
+            Textarea::make('Print Footer'),
+            Multiselect::make('languages')->options($language_options)->hideFromIndex()
         ];
     }
 

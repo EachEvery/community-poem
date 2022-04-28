@@ -1,51 +1,32 @@
-<div id="{{ $response->id }}" class="response cursor-pointer text-primary w-full md:w-1/2 lg:w-1/3 {{$isHighlighted ? 'highlight' : 'transition'}} md:p-4 mb-8" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$delay ?? 40}}ms">
-    <div class="content border-2 border-transparent p-4 xl:px-6 hover:border-primary">
-        @unless(empty($response->prompt))
-            <div class="flex justify-center mb-3">
-                <h3 class="response-prompt bg-white p-3 font-display text-base uppercase font-semibold leading-none">{{$response->prompt}}</h3>
-            </div>
-        @endunless
-        
-        <h1 class="response-content content-text font-display font-light text-xl xl:text-3xl leading-normal">{{$response->content}}</h1>
-        <div class="uppercase font-bold mt-5 inline-block leading-normal"><span class="response-name">{{$response->name}}</span><br /> <span class="response-city">{{$response->city ?? ''}}</span></div>
-        <div class="language-switcher opacity-0 center">
-            <div class="inner relative inline-block">
-                <div class="text flex items-center bg-primary p-1 text-white rounded-full uppercase text-xs font-bold">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                    <span class="block mx-1" style="font-size:0.5rem;">Language</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-2 w-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                    </svg>
+<div id="{{ $response->id }}" class="response cursor-pointer text-primary w-full md:w-1/2 lg:w-1/3 {{$isHighlighted ? 'highlight' : 'transition'}} px-2 pb-4" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$delay ?? 40}}ms">
+    <div class="content p-4 xl:px-6 border border-primary">
+        <div class="flex justify-between items-center mb-4">
+            @unless(empty($response->prompt))
+                <h3 class="response-prompt bg-primary text-white px-3 py-1 text-xs leading-3 font-medium rounded-full">{{$response->prompt}}</h3>
+            @endunless
+            @if (null != $space->languages)
+                <div class="language-switcher">
+                    <div class="inner relative inline-block">
+                        <div class="text flex items-center bg-transparent border border-primary px-3 py-1 text-primary rounded-full text-xs rounded-full">
+                            <span class="block mr-1">Language</span>
+                            <svg width="7" height="3" viewBox="0 0 7 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3.67586 2.82594C3.57844 2.92236 3.42156 2.92236 3.32414 2.82594L0.901029 0.427686C0.742286 0.270571 0.853544 -6.05032e-08 1.07689 -4.09775e-08L5.92311 3.82692e-07C6.14646 4.02218e-07 6.25771 0.270571 6.09897 0.427686L3.67586 2.82594Z" fill="currentColor"/>
+                            </svg>                                
+                        </div>
+                        <select class="h-full w-full absolute opacity-0" style="left:0;top:0;">
+                            <option value="original">Original</option>
+                            @foreach (json_decode($space->languages) as $lang)
+                                @php $lang = explode("/", $lang) @endphp
+                                <option value="{{ $lang[0] }}">{{ $languages[$lang[0]]['language'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <select class="h-full w-full absolute opacity-0" style="left:0;top:0;">
-                    @php
-                        $languages = [
-                            [
-                                'label' => 'Original',
-                                'value' => 'original'
-                            ],
-                            [
-                                'label' => 'English',
-                                'value' => 'en'
-                            ],
-                            [
-                                'label' => 'Russian',
-                                'value' => 'ru'
-                            ],
-                            [
-                                'label' => 'Ukrainian',
-                                'value' => 'uk'
-                            ]
-                        ];
-                    @endphp
-                    @foreach ($languages as $language)
-                        <option value="{{ $language['value'] }}">{{ $language['label'] }}</option>
-                    @endforeach
-                </select>
-            </div>
+            @endif
         </div>
+        
+        <h1 class="response-content content-text text-xl leading-normal font-normal" style="letter-spacing: -0.02rem;">{{$response->content}}</h1>
+        <div class="uppercase font-medium text-xxs mt-4 inline-block leading-normal"><span class="response-name">{{$response->name}}</span><br /> <span class="response-city">{{$response->city ?? ''}}</span></div>
     </div>
 
     <div class="controls hidden w-12 h-10 absolute" style="transform: rotate(-45deg)">

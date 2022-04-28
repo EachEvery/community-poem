@@ -2,7 +2,7 @@
 @section('title', 'Responses')
 @section('page')
 
-<div class="bg-secondary text-primary p-8 pt-32 flex flex-col" style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};">
+<div class="responses-container bg-secondary text-primary p-8 pt-32 flex flex-col" style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};">
     <h1 class="uppercase font-display text-center text-5xl text-outline md:text-8xl">Responses</h1>
 
      <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end  md:self-center md:text-2xl md:ml-56 text-sm">personal experiences, 
@@ -11,14 +11,14 @@
         writers
     </span>
 
-    <div class="container mx-auto grid mt-24 text-center ">
+    <div class="container mx-auto grid mt-24">
         @foreach($responses as $index => $response)
             @php
                 $isHighlighted = request('highlight') == strval($response->id);
                 $delay = $index > 15 ? 0 : $loop->index * 40; //ms
             @endphp
 
-            @include('partials.responseCard', ['response' => $response, 'delay' => $delay, 'space' => $space, 'isHighlighted' => $isHighlighted])
+            @include('partials.responseCard', ['response' => $response, 'delay' => $delay, 'space' => $space, 'isHighlighted' => $isHighlighted, 'languages' => $languages])
             @include('partials.responsePrint', ['response' => $response])
         @endforeach
     </div>
@@ -116,11 +116,12 @@
     (function() {
          function resetSelected(parent, event) {
             event.stopPropagation();
+            $(".response.selected .content").css('opacity', '1');
             $(".response.selected").removeClass("selected");
             $('.controls', parent).removeClass('rotate');
             $('.controls .copy.success').removeClass("success");
             $('.controls .share.success').removeClass("success");
-            $('.content.border-primary').removeClass('border-primary')
+            // $('.content.border-primary').removeClass('border-primary')
         }
     
         $(window).click(function(event) {
@@ -131,7 +132,10 @@
             resetSelected(this, event);
             event.stopPropagation();
             
-            $('.content', this).css('transition', '125ms ease-in all 0ms')
+            $('.content', this).css({
+                'transition': '125ms ease-in all 0ms',
+                'opacity'   : '0.3'
+            });
     
             var offset = $(this).offset(); 
             var responseControls = $('.controls', this);

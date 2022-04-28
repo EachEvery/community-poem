@@ -6,7 +6,9 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Boolean;
 use GuzzleHttp\Client as Guzzle;
+use OptimistDigital\MultiselectField\Multiselect;
 
 class Language extends Resource
 {
@@ -52,7 +54,8 @@ class Language extends Resource
             ID::make()->sortable(),
             Text::make('language'),
             Text::make('code'),
-            MultiSelect::make('fonts')->options($font_options),
+            Multiselect::make('fonts')->options($font_options),
+            Boolean::make('right_align')->help('Leave unchecked for left alignment.')->hideFromIndex(),
         ];
     }
 

@@ -1,6 +1,10 @@
 @import "./tailwind.css";
 @import "~shepherd.js/dist/css/shepherd.css";
 
+body {
+    font-family: "Inter", sans-serif;
+}
+
 .transition {
     transition: 300ms all ease;
 }
@@ -96,11 +100,8 @@
     }
 }
 
-.response {
-    .content:hover,
-    &.selected {
-        .language-switcher {
-            opacity: 1;
-        }
+.responses-container {
+    @media (min-width: 1280px) {
+        margin-left: 93px;
     }
 }

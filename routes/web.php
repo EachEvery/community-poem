@@ -7,7 +7,7 @@ use CommunityPoem\Language;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client as Guzzle;
+use Illuminate\Support\Arr;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,16 +77,16 @@ Route::get('/paged/responses/translate/{response}/', function (Request $request,
 
     $response = $response->translateText($response, $lang);
 
-    // $space = Space::where('id', $space_id)->firstOrFail();
+    $space = Space::where('id', $response->space_id)->firstOrFail();
 
-    // $q = $responses->approvedForSpace($space, $total, 0);
-
-    // $dataList = $q->map(function ($r, $key) use ($lang) {
-    //     if ($key == 0) {
-    //         return $r->translateText($r, $lang);
-    //     }
-    //     return $r;
-    // });
+    if ('original' != $lang) {
+        $language = Arr::first(json_decode($space->languages), function($value) use ($lang) {
+            return str_starts_with($value, $lang . '/');
+        });
+        $language = explode('/', $language);
+        $response->font = $language[1];
+        $response->alignment = Language::where('code', $language[0])->firstOrFail()->right_align == 1 ? 'right' : 'left';
+    }
 
     return $response->toJson();
 });
@@ -121,21 +121,8 @@ Route::prefix('/spaces/{space}')->group(function ($router) {
 });
 
 Route::get('/{slug}', function (Request $request, Responses $responses, $slug) {
-
-    $guzzle = new Guzzle;
-
-    $response = $guzzle->request('get', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' . env('GOOGLE_FONTS_KEY'));
-
-    $font_options = [];
-    $options = json_decode($response->getBody()->getContents())->items;
-    foreach($options as $font) {
-        $font_options[ $font->family ] = $font->family;
-    }
-
-    dd( $font_options );
-
     return view('webResponses', [
-        'languages' => Language::all()->toArray(),
+        'languages' => Language::select('code', 'language')->get()->keyBy('code'),
         'space' => Space::where('slug', $slug)->firstOrFail(),
         'lang' => 'original', // $request->has('lang') ? $request->input('lang') : 'original' // Set Language to the submitted text by default
     ]);
