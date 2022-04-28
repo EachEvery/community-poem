@@ -22,7 +22,13 @@ class AddPromptsToExistingResponses extends Migration
             });
 
             if (filled($spaceData)) {
-                $typeformResponses = $this->getTypeformResponses($spaceData->typeform_id);
+
+                $items = $spaceData->typeformids;
+                $typeformResponses = collect([]);
+
+                foreach($items as $typeform_id) {
+                    $typeformResponses = $typeformResponses->merge($this->getTypeformResponses($typeform_id));
+                }
 
                 $match = $typeformResponses->first(function ($res) use ($rowResponse) {
                     $time = Carbon::parse($rowResponse->created_at);

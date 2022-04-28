@@ -2,9 +2,12 @@
 
 use CommunityPoem\Repositories\Responses;
 use CommunityPoem\Space;
+use CommunityPoem\Response;
+use CommunityPoem\Language;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,24 +45,50 @@ Route::get('/responses', 'PeacePoemResponses')->name('responses');
 
 Route::get('/paged/responses', function (Request $request, Responses $responses) {
 
-    abort_unless($request->has(['offset', 'spaceId']), 403);
+    abort_unless($request->has(['offset', 'spaceId', 'lang']), 403);
 
 
+    // $lang = $request->input('lang');
     $offset = $request->input('offset');
     $space_id = $request->input('spaceId');
 
     $space = Space::where('id', $space_id)->firstOrFail();
 
-
     $responses = $responses->approvedForSpace($space, 100, $offset);
 
-
-    $htmlList = $responses->map(function ($r) use ($space, $request) {
+    $htmlList = $responses->map(function ($r, $key) use ($space, $request) {
+        // if ($key == 0) {
+        //     $r = $r->translateText($r, $lang);
+        // }
         $isHighlighted = $request->input('highlight') == strval($r->id);
         return view('partials.responseCard', ['response' => $r, 'delay' => 40, 'space' => $space, 'isHighlighted' => $isHighlighted])->render() . view('partials.responsePrint', ['response' => $r])->render();
     });
 
     return $htmlList->join(' ');
+});
+
+Route::get('/paged/responses/translate/{response}/', function (Request $request, Response $response) {
+
+    abort_unless($request->has(['lang']), 403);
+
+    $lang = $request->input('lang');
+    // $response_id = $request->input('responseId');
+    // $total = $request->input('total');
+
+    $response = $response->translateText($response, $lang);
+
+    $space = Space::where('id', $response->space_id)->firstOrFail();
+
+    if ('original' != $lang) {
+        $language = Arr::first(json_decode($space->languages), function($value) use ($lang) {
+            return str_starts_with($value, $lang . '/');
+        });
+        $language = explode('/', $language);
+        $response->font = $language[1];
+        $response->alignment = Language::where('code', $language[0])->firstOrFail()->right_align == 1 ? 'right' : 'left';
+    }
+
+    return $response->toJson();
 });
 
 Route::get('/moderate', function () {
@@ -91,8 +120,10 @@ Route::prefix('/spaces/{space}')->group(function ($router) {
     $router->patch('/responses/{response}/slideshow', 'ApproveResponseController@update');
 });
 
-Route::get('/{slug}', function ($slug) {
+Route::get('/{slug}', function (Request $request, Responses $responses, $slug) {
     return view('webResponses', [
-        'space' => Space::where('slug', $slug)->firstOrFail()
+        'languages' => Language::select('code', 'language')->get()->keyBy('code'),
+        'space' => Space::where('slug', $slug)->firstOrFail(),
+        'lang' => 'original', // $request->has('lang') ? $request->input('lang') : 'original' // Set Language to the submitted text by default
     ]);
 })->name('thread');

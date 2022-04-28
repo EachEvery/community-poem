@@ -1,6 +1,10 @@
 @import "./tailwind.css";
 @import "~shepherd.js/dist/css/shepherd.css";
 
+body {
+    font-family: "Inter", sans-serif;
+}
+
 .transition {
     transition: 300ms all ease;
 }
@@ -93,5 +97,11 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+
+.responses-container {
+    @media (min-width: 1280px) {
+        margin-left: 93px;
     }
 }

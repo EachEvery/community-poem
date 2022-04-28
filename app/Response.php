@@ -3,12 +3,21 @@
 namespace CommunityPoem;
 
 use Illuminate\Database\Eloquent\Model;
+use Google\Cloud\Translate\V2\TranslateClient;
 
 class Response extends Model
 {
     protected $guarded = ['id'];
     protected $appends = ['status'];
     protected $dates = ['approved_at'];
+
+    /**
+     * Get translations for the response.
+     */
+    public function translations()
+    {
+        return $this->hasMany(Translation::class);
+    }
 
     public function space()
     {
@@ -44,5 +53,36 @@ class Response extends Model
         }
 
         return route('thread', ['slug' => $this->space->slug]) . '?highlight=' . $this->id;
+    }
+
+    public function translateText($response, $lang = 'original')
+    {
+
+        if ($lang != 'original') {
+
+            if ( $translation = $response->translations()->where('lang', $lang)->first() ) {
+                $response->content = $translation->content;
+            } else {
+                $translate = new TranslateClient([
+                    'key' => env('GOOGLE_TRANSLATION_KEY')
+                ]);
+
+                // Translate text from english to new language.
+                $content = $translate->translate($response->content, ['target' => $lang]);
+
+                $translation = new Translation;
+                $translation->response_id = $response->id;
+                $translation->content = $content['text'];
+                $translation->lang = $lang;
+                $translation->save();
+
+                $response->content = $translation->content;
+                $response->name = 'no cache'; // $translation->name;
+
+            }
+
+        }
+
+        return $response;
     }
 }

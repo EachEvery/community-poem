@@ -9,9 +9,13 @@
 
 <meta name="apple-mobile-web-app-capable" content="yes">
 
-<link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Work+Sans:300,400,500,600&display=swap" rel="stylesheet">
+{{-- <link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Work+Sans:300,400,500,600&display=swap" rel="stylesheet"> --}}
 
-<link rel="stylesheet" href="https://use.typekit.net/gow0spk.css">
+{{-- <link rel="stylesheet" href="https://use.typekit.net/gow0spk.css"> --}}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400,500&display=swap" rel="stylesheet">
 
 <body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
     <div id="app" class="overflow-x-hidden max-w-full">    
@@ -32,15 +36,14 @@
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-center md:text-2xl text-center text-sm">responses</span>
         @endif      
 
-            <div class="container mx-auto grid mt-24 text-center ">
-            
+            <div class="container mx-auto mt-24 grid">
                 @foreach($space->approved_responses()->latest()->limit(100)->get() as $index => $response)
                     @php
                         $isHighlighted = request('highlight') == strval($response->id);
                         $delay = $index > 15 ? 0 : $loop->index * 40; //ms
                     @endphp
 
-                    @include('partials.responseCard', ['response' => $response, 'delay' => $delay, 'space' => $space, 'isHighlighted' => $isHighlighted])
+                    @include('partials.responseCard', ['response' => $response, 'delay' => $delay, 'space' => $space, 'isHighlighted' => $isHighlighted, 'languages' => $languages])
                     @include('partials.responsePrint', ['response' => $response])
                 @endforeach
             </div>
@@ -64,17 +67,10 @@
         </footer>
         @endif
 
-
-
         <portal-target name="end-of-body"></portal-target>
-
-        
-
-        
             @php
                 $path = request()->path();    
             @endphp
-            
         </div>
     </div>
 
@@ -82,9 +78,10 @@
     
 <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
-<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
 {{-- SYNC WITH PEACE POEM RESPONSES --}}
+
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
 
 <script type="text/javascript">
     (function() {
@@ -100,7 +97,7 @@
                     $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
                     clearTimeout(window.infiniteScrollTimeout);
                     window.infiniteScrollTimeout = setTimeout(function() {
-                        $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length, function(res) {
+                        $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length + '&lang=' + $('.language-switcher').val(), function(res) {
                             var $offsetResults = $(res);
                             $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
                             // all responses have been loaded
@@ -165,11 +162,12 @@
     (function() {
          function resetSelected(parent, event) {
             event.stopPropagation();
+            $(".response.selected .content").css('opacity', '1');
             $(".response.selected").removeClass("selected");
             $('.controls', parent).removeClass('rotate');
             $('.controls .copy.success').removeClass("success");
             $('.controls .share.success').removeClass("success");
-            $('.content.border-primary').removeClass('border-primary')
+            // $('.content.border-primary').removeClass('border-primary')
         }
     
         $(window).click(function(event) {
@@ -180,7 +178,10 @@
             resetSelected(this, event);
             event.stopPropagation();
             
-            $('.content', this).css('transition', '125ms ease-in all 0ms')
+            $('.content', this).css({
+                'transition': '125ms ease-in all 0ms',
+                'opacity'   : '0.3'
+            });
     
             var offset = $(this).offset(); 
             var responseControls = $('.controls', this);
@@ -256,15 +257,16 @@
         
 </script>
 
+@include('partials.responseScript');
 
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150862045-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'UA-150862045-1');
-    </script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-150862045-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-150862045-1');
+</script>
 
 </body> 

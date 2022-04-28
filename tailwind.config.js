@@ -27,9 +27,11 @@ module.exports = {
                 "50vw": "50vw",
                 "15vh": "15vh",
                 "22vh": "22vh",
-                "100vh": "100vh"
+                "100vh": "100vh",
+                "28": "7rem"
             },
             fontSize: {
+                xxs: "0.625rem",
                 "8xl": "6rem",
                 "9xl": "7rem",
                 "10xl": "11rem"
