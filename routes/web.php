@@ -86,6 +86,7 @@ Route::get('/paged/responses/translate/{response}/', function (Request $request,
         });
         $language = explode('/', $language);
         $response->font = $language[1];
+        $response->size = ( $size = Font::where('font', $language[1])->firstOrFail()->size ) ? $size : '16px';
         $response->weight = ( $weight = Font::where('font', $language[1])->firstOrFail()->weight ) ? $weight : '400';
         $response->alignment = Language::where('code', $language[0])->firstOrFail()->right_align == 1 ? 'right' : 'left';
     }

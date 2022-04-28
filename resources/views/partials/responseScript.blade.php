@@ -19,6 +19,9 @@
             if ( data.hasOwnProperty('weight') ) {
                 $response.find('.response-content').css('font-weight', data.weight);
             }
+            if ( data.hasOwnProperty('size') ) {
+                $response.find('.response-content').css('font-size', data.size);
+            }
             setTimeout(() => {
                 var $grid = $('.grid').isotope({ itemSelector: '.response', layoutMode: 'masonry' });
             }, 200);
