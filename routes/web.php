@@ -4,6 +4,7 @@ use CommunityPoem\Repositories\Responses;
 use CommunityPoem\Space;
 use CommunityPoem\Response;
 use CommunityPoem\Language;
+use CommunityPoem\Font;
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
@@ -85,6 +86,7 @@ Route::get('/paged/responses/translate/{response}/', function (Request $request,
         });
         $language = explode('/', $language);
         $response->font = $language[1];
+        $response->weight = ( $weight = Font::where('font', $language[1])->firstOrFail()->weight ) ? $weight : '400';
         $response->alignment = Language::where('code', $language[0])->firstOrFail()->right_align == 1 ? 'right' : 'left';
     }
 

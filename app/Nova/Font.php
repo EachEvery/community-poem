@@ -6,19 +6,17 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Select;
 use GuzzleHttp\Client as Guzzle;
-use OptimistDigital\MultiselectField\Multiselect;
-use CommunityPoem\Font;
 
-class Language extends Resource
+class Font extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'CommunityPoem\Language';
+    public static $model = 'CommunityPoem\Font';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -32,9 +30,7 @@ class Language extends Resource
      *
      * @var array
      */
-    public static $search = [
-        'id',
-    ];
+    public static $search = [ 'id', 'font' ];
 
     /**
      * Get the fields displayed by the resource.
@@ -44,17 +40,28 @@ class Language extends Resource
      */
     public function fields(Request $request)
     {
+        $guzzle = new Guzzle;
+        $response = $guzzle->request('get', 'https://www.googleapis.com/webfonts/v1/webfonts?key=' . env('GOOGLE_FONTS_KEY'));
         $font_options = [];
-        foreach(Font::all() as $font) {
-            $font_options[ $font['font'] ] = $font['font'];
+        foreach(json_decode($response->getBody()->getContents())->items as $font) {
+            $font_options[ $font->family ] = $font->family;
         }
 
         return [
             ID::make()->sortable(),
-            Text::make('language'),
-            Text::make('code'),
-            Multiselect::make('fonts')->options($font_options),
-            Boolean::make('right_align')->help('Leave unchecked for left alignment.')->hideFromIndex(),
+            Select::make('font')->options($font_options)->rules('required'),
+            Text::make('size')->rules('required'),
+            Select::make('weight')->options([
+                '100' => 'Thin',
+                '200' => 'Extra Light',
+                '300' => 'Light',
+                '400' => 'Normal (Regular)',
+                '500' => 'Medium',
+                '600' => 'Semi Bold',
+                '700' => 'Bold',
+                '800' => 'Extra Bold',
+                '900' => 'Black'
+            ])->rules('required')
         ];
     }
 

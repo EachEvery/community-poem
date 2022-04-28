@@ -16,6 +16,9 @@
             if ( data.hasOwnProperty('alignment') ) {
                 $response.find('.response-content').css('text-align', data.alignment);
             }
+            if ( data.hasOwnProperty('weight') ) {
+                $response.find('.response-content').css('font-weight', data.weight);
+            }
             setTimeout(() => {
                 var $grid = $('.grid').isotope({ itemSelector: '.response', layoutMode: 'masonry' });
             }, 200);
@@ -24,7 +27,7 @@
         var loadFont = function(data, $response) {
             WebFont.load({
                 google: {
-                    families: [data.font]
+                    families: [data.font + ':' + data.weight]
                 },
                 active: function() {
                     reflow(data, $response);
