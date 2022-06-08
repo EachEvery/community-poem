@@ -47,6 +47,7 @@
                 var data = JSON.parse(res);
 
                 // Set translated content
+                $response.find('.response-prompt').text(data.prompt);
                 $response.find('.response-content').text(data.content); // Replace the card response content
                 $response.parent().find('#print-' + response_id + ' .response-content').text(data.content); // Replace the print response content
 
@@ -67,7 +68,7 @@
 
         // Events
         $('.container').on('click', '.response .inner', _stopPropagationInner);
-        $('.language-switcher select').on('change', _updateLanguage)
+        $('.language-switcher select').on('change', _updateLanguage);
 
     })();
 </script>

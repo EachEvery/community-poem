@@ -34,6 +34,10 @@ body {
     -ms-user-select: none;
 }
 
+.response {
+    font-family: "Inter", sans-serif;
+}
+
 .response.selected {
     .controls {
         display: block;
