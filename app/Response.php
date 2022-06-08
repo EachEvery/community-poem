@@ -84,11 +84,13 @@ class Response extends Model
                 $translation = new Translation;
                 $translation->response_id = $response->id;
                 $translation->content = $content['text'];
+                $translation->lang = $lang;
                 $translation->prompt = $prompt['text'];
                 $translation->save();
 
                 $response->content = $translation->content;
                 $response->prompt = $translation->prompt;
+                $response->lang = $translation->lang;
                 $response->name = 'no cache'; // $translation->name;
 
             }
