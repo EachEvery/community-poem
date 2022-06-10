@@ -3,7 +3,7 @@
         class="transition"
         :style="{
             backgroundColor: theme.background_color,
-            '--stroke-color': theme.secondary_text_color,
+            '--stroke-color': theme.secondary_text_color
         }"
         @click="emit"
     >
@@ -16,7 +16,7 @@
                 :style="{
                     transform: `translateY(${
                         isLoading || switching ? '3px' : '0'
-                    })`,
+                    })`
                 }"
                 :class="{ 'opacity-0': isLoading || switching }"
             />
@@ -31,11 +31,26 @@
                         color: theme.primary_text_color,
                         fontSize: `${fontSize}vw`,
                         transition: '300ms transform ease, 300ms color ease',
-                        ...switchingStyles,
+                        ...switchingStyles
                     }"
                     style="width: 75vw; padding: 4vw; padding-top: 10vw"
                 />
             </div>
+
+            <div
+                class="absolute bg-white font-bold uppercase"
+                style="
+                    padding: 1vw;
+                    transition-delay: 100ms;
+                    font-size: 1vw;
+                    top: 2vw;
+                    left: 4vw;
+                "
+                :style="{
+                    color: theme.secondary_text_color
+                }"
+                v-html="response.prompt"
+            />
 
             <h3
                 class="absolute font-sans font-bold transition"
@@ -48,7 +63,7 @@
                 "
                 :style="{
                     color: theme.secondary_text_color,
-                    ...switchingStyles,
+                    ...switchingStyles
                 }"
             >
                 {{ response.name }}
@@ -79,7 +94,7 @@
 export default {
     data() {
         return {
-            state: "loading",
+            state: "loading"
         };
     },
     methods: {
@@ -91,7 +106,7 @@ export default {
         },
         emit(e) {
             this.$emit("click", e, this.response);
-        },
+        }
     },
     computed: {
         isLoading({ state }) {
@@ -100,14 +115,14 @@ export default {
         switchingStyles({ switching }) {
             return {
                 transform: `translateY(${switching ? 5 : 0}px)`,
-                opacity: switching ? 0 : 1,
+                opacity: switching ? 0 : 1
             };
-        },
+        }
     },
     watch: {
-        theme: function () {
+        theme: function() {
             this.state = "loading";
-        },
+        }
     },
     props: {
         editable: Boolean,
@@ -117,8 +132,8 @@ export default {
         fontSize: Number,
         switching: {
             type: Boolean,
-            default: false,
-        },
-    },
+            default: false
+        }
+    }
 };
 </script>

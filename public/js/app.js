@@ -2128,6 +2128,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -54832,6 +54847,21 @@ var render = function() {
               domProps: { innerHTML: _vm._s(_vm.response.content) }
             })
           ]),
+          _vm._v(" "),
+          _c("div", {
+            staticClass: "absolute bg-white font-bold uppercase",
+            staticStyle: {
+              padding: "1vw",
+              "transition-delay": "100ms",
+              "font-size": "1vw",
+              top: "2vw",
+              left: "4vw"
+            },
+            style: {
+              color: _vm.theme.secondary_text_color
+            },
+            domProps: { innerHTML: _vm._s(_vm.response.prompt) }
+          }),
           _vm._v(" "),
           _c(
             "h3",
