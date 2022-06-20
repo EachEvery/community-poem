@@ -46,8 +46,7 @@ Route::get('/responses', 'PeacePoemResponses')->name('responses');
 
 Route::get('/paged/responses', function (Request $request, Responses $responses) {
 
-    abort_unless($request->has(['offset', 'spaceId', 'lang']), 403);
-
+    abort_unless($request->has(['offset', 'spaceId']), 403);
 
     // $lang = $request->input('lang');
     $offset = $request->input('offset');
@@ -57,12 +56,11 @@ Route::get('/paged/responses', function (Request $request, Responses $responses)
 
     $responses = $responses->approvedForSpace($space, 100, $offset);
 
-    $htmlList = $responses->map(function ($r, $key) use ($space, $request) {
-        // if ($key == 0) {
-        //     $r = $r->translateText($r, $lang);
-        // }
+    $languages = Language::select('code', 'language')->get()->keyBy('code');
+
+    $htmlList = $responses->map(function ($r, $key) use ($space, $languages, $request) {
         $isHighlighted = $request->input('highlight') == strval($r->id);
-        return view('partials.responseCard', ['response' => $r, 'delay' => 40, 'space' => $space, 'isHighlighted' => $isHighlighted])->render() . view('partials.responsePrint', ['response' => $r])->render();
+        return view('partials.responseCard', ['response' => $r, 'delay' => 40, 'space' => $space, 'languages' => $languages, 'isHighlighted' => $isHighlighted])->render() . view('partials.responsePrint', ['response' => $r])->render();
     });
 
     return $htmlList->join(' ');
