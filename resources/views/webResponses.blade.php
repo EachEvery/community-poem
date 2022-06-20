@@ -92,7 +92,8 @@
                 });
     
                 $(window).on('scroll', function() {
-                var isAtBottom = $(window).scrollTop() + $(window).height() >= $(document).height();
+                // 5 Pixel Offset
+                var isAtBottom = $(window).scrollTop() + $(window).height() + 5 >= $(document).height();
                 if(isAtBottom) {
                     $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
                     clearTimeout(window.infiniteScrollTimeout);
@@ -257,7 +258,7 @@
         
 </script>
 
-@include('partials.responseScript');
+@include('partials.responseScript')
 
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
