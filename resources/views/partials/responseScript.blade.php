@@ -58,6 +58,9 @@
                 } else {
                     reflow(data, $response);
                 }
+
+                // Track Translation
+                dataLayer.push({'event':'translate_response', 'language':lang});
                 
             });
         };

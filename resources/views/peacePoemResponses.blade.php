@@ -2,6 +2,11 @@
 @section('title', 'Responses')
 @section('page')
 
+{{-- Google Tag Manager Script --}}
+{{-- Added here due to avoid crossing Thread data with site data --}}
+@include('partials.googleTagManagerHead')
+@include('partials.googleTagManagerBody')
+
 <div class="responses-container bg-secondary text-primary p-8 pt-32 flex flex-col" style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};">
     <h1 class="uppercase font-display text-center text-5xl text-outline md:text-8xl">Responses</h1>
 
@@ -66,6 +71,8 @@
                             } else {
                                 $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
                             }
+                            // Track Infinite Scroll
+                            dataLayer.push({'event':'more_responses'});
                         });
                     }, 500);   
                 }
@@ -163,6 +170,9 @@
             var responseToPrint = $('#print-'+responseId);
             responseToPrint.show();
 
+            // Track How Many People Start The Printing Process
+            dataLayer.push({'event':'start_print_response'});
+
             setTimeout(() => {
                 html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
                     var imageToPrint = canvas.toDataURL("image/png", 1.0);
@@ -176,6 +186,8 @@
                             window.alert("Success! Printing Now...");
                             responseToPrint.hide();
                             $(this).removeClass('loading');
+                            // Track Print Response
+                            dataLayer.push({'event':'print_response'});
                         })
                         .catch((error) => {
                             window.alert(error.response.data);
@@ -199,6 +211,8 @@
             event.stopPropagation();
             copyToClipboard($(this).closest('.response').find('.content .content-text').text());
             $(this).addClass('success');
+            // Track Responses Copied
+            dataLayer.push({'event':'copy_response'});
         });
     
         $('.container').on('click', '.controls .share', function(event){
@@ -207,6 +221,8 @@
             event.stopPropagation();
             copyToClipboard($(this).attr('data-share-link'));
             $(this).addClass('success');
+            // Track Responses Shared
+            dataLayer.push({'event':'share_response'});
         });
     })();
         

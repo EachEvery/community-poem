@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <title>{{$space->name}} | Community Poem</title>
 
-<link type="text/css" href="{{mix('css/app.css')}}" rel="stylesheet">
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{csrf_token()}}">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
 
+@include('partials.googleTagManagerHead')
+
+<link type="text/css" href="{{mix('css/app.css')}}" rel="stylesheet">
 {{-- <link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Work+Sans:300,400,500,600&display=swap" rel="stylesheet"> --}}
-
 {{-- <link rel="stylesheet" href="https://use.typekit.net/gow0spk.css"> --}}
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
 <body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
+    
+    @include('partials.googleTagManagerBody')
+
     <div id="app" class="overflow-x-hidden max-w-full">    
         <div class="bg-secondary text-primary p-8  @if($space->show_header_footer) md:pt-32 @endif flex flex-col">
 
@@ -112,6 +113,8 @@
                             } else {
                                 $grid.append( $offsetResults ).isotope( 'appended', $offsetResults );
                             }
+                            // Track Infinite Scroll
+                            dataLayer.push({'event':'more_responses'});
                         });
                     }, 500);   
                 }
@@ -209,6 +212,9 @@
             var responseToPrint = $('#print-'+responseId);
             responseToPrint.show();
 
+            // Track How Many People Start The Printing Process
+            dataLayer.push({'event':'start_print_response'});
+
             setTimeout(() => {
                 html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
                     var imageToPrint = canvas.toDataURL("image/png", 1.0);
@@ -222,6 +228,8 @@
                             window.alert("Success! Printing Now...");
                             responseToPrint.hide();
                             $(this).removeClass('loading');
+                            // Track Print Response
+                            dataLayer.push({'event':'print_response'});
                         })
                         .catch((error) => {
                             window.alert(error.response.data);
@@ -245,6 +253,8 @@
             event.stopPropagation();
             copyToClipboard($(this).closest('.response').find('.content .content-text').text());
             $(this).addClass('success');
+            // Track Responses Copied
+            dataLayer.push({'event':'copy_response'});
         });
     
         $('.container').on('click', '.controls .share', function(event){
@@ -253,6 +263,8 @@
             event.stopPropagation();
             copyToClipboard($(this).attr('data-share-link'));
             $(this).addClass('success');
+            // Track Responses Shared
+            dataLayer.push({'event':'share_response'});
         });
     })();
         
