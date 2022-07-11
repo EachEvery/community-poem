@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ResourceCommand extends GeneratorCommand
 {
+    use ResolvesStubPath;
+
     /**
      * The console command name.
      *
@@ -73,12 +75,14 @@ class ResourceCommand extends GeneratorCommand
     {
         $model = $this->option('model');
 
+        $modelNamespace = $this->getModelNamespace();
+
         if (is_null($model)) {
-            $model = $this->laravel->getNamespace().$this->argument('name');
+            $model = $modelNamespace.str_replace('/', '\\', $this->argument('name'));
         } elseif (! Str::startsWith($model, [
-            $this->laravel->getNamespace(), '\\',
+            $modelNamespace, '\\',
         ])) {
-            $model = $this->laravel->getNamespace().$model;
+            $model = $modelNamespace.$model;
         }
 
         $resourceName = $this->argument('name');
@@ -87,8 +91,14 @@ class ResourceCommand extends GeneratorCommand
             $this->warn("You *must* override the uriKey method for your {$resourceName} resource.");
         }
 
+        $replace = [
+            'DummyFullModel' => $model,
+            '{{ namespacedModel }}' => $model,
+            '{{namespacedModel}}' => $model,
+        ];
+
         return str_replace(
-            'DummyFullModel', $model, parent::buildClass($name)
+            array_keys($replace), array_values($replace), parent::buildClass($name)
         );
     }
 
@@ -99,7 +109,7 @@ class ResourceCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/resource.stub';
+        return $this->resolveStubPath('/stubs/nova/resource.stub');
     }
 
     /**
@@ -111,6 +121,19 @@ class ResourceCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Nova';
+    }
+
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     * @return string
+     */
+    protected function getModelNamespace()
+    {
+        $rootNamespace = $this->laravel->getNamespace();
+
+        return is_dir(app_path('Models')) ? $rootNamespace.'Models\\' : $rootNamespace;
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace Laravel\Nova\Metrics;
 
+use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\DB;
 
 abstract class Partition extends Metric
@@ -15,12 +17,26 @@ abstract class Partition extends Metric
     public $component = 'partition-metric';
 
     /**
+     * Rounding precision.
+     *
+     * @var int
+     */
+    public $roundingPrecision = 0;
+
+    /**
+     * Rounding mode.
+     *
+     * @var int
+     */
+    public $roundingMode = PHP_ROUND_HALF_UP;
+
+    /**
      * Return a partition result showing the segments of a count aggregate.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $groupBy
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
     public function count($request, $model, $groupBy, $column = null)
@@ -33,7 +49,7 @@ abstract class Partition extends Metric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string  $groupBy
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
@@ -47,7 +63,7 @@ abstract class Partition extends Metric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string  $groupBy
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
@@ -61,7 +77,7 @@ abstract class Partition extends Metric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string  $groupBy
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
@@ -75,7 +91,7 @@ abstract class Partition extends Metric
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
-     * @param  string|null  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string  $groupBy
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
@@ -90,7 +106,7 @@ abstract class Partition extends Metric
      * @param  \Illuminate\Http\Request  $request
      * @param  \Illuminate\Database\Eloquent\Builder|string  $model
      * @param  string  $function
-     * @param  string  $column
+     * @param  \Illuminate\Database\Query\Expression|string|null  $column
      * @param  string  $groupBy
      * @return \Laravel\Nova\Metrics\PartitionResult
      */
@@ -98,9 +114,11 @@ abstract class Partition extends Metric
     {
         $query = $model instanceof Builder ? $model : (new $model)->newQuery();
 
-        $wrappedColumn = $query->getQuery()->getGrammar()->wrap(
-            $column = $column ?? $query->getModel()->getQualifiedKeyName()
-        );
+        $wrappedColumn = $column instanceof Expression
+                ? (string) $column
+                : $query->getQuery()->getGrammar()->wrap(
+                    $column ?? $query->getModel()->getQualifiedKeyName()
+                );
 
         $results = $query->select(
             $groupBy, DB::raw("{$function}({$wrappedColumn}) as aggregate")
@@ -120,9 +138,15 @@ abstract class Partition extends Metric
      */
     protected function formatAggregateResult($result, $groupBy)
     {
-        $key = $result->{last(explode('.', $groupBy))};
+        $key = with($result->{last(explode('.', $groupBy))}, function ($key) {
+            if ($key instanceof BackedEnum) {
+                return $key->value;
+            }
 
-        return [$key => round($result->aggregate, 0)];
+            return $key;
+        });
+
+        return [$key => $result->aggregate];
     }
 
     /**
@@ -133,6 +157,8 @@ abstract class Partition extends Metric
      */
     public function result(array $value)
     {
-        return new PartitionResult($value);
+        return new PartitionResult(collect($value)->map(function ($number) {
+            return round($number, $this->roundingPrecision, $this->roundingMode);
+        })->toArray());
     }
 }

@@ -4,7 +4,7 @@
 
 @tailwind utilities;
 
-@responsive {
+@layer utilities {
     .order-1 {
         order: 1;
     }

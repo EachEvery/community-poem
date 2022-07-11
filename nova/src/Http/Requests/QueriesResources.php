@@ -32,6 +32,8 @@ trait QueriesResources
             return $this->model()->newQuery();
         }
 
+        abort_unless($this->newViaResource()->hasRelatableField($this, $this->viaRelationship), 409);
+
         return forward_static_call([$this->viaResource(), 'newModel'])
                         ->newQueryWithoutScopes()->findOrFail(
                             $this->viaResourceId
@@ -49,6 +51,8 @@ trait QueriesResources
             return $this->model()->newQueryWithoutScopes();
         }
 
+        abort_unless($this->newViaResource()->hasRelatableField($this, $this->viaRelationship), 409);
+
         return forward_static_call([$this->viaResource(), 'newModel'])
                     ->newQueryWithoutScopes()->findOrFail(
                         $this->viaResourceId
@@ -63,7 +67,7 @@ trait QueriesResources
     public function orderings()
     {
         return ! empty($this->orderBy)
-                        ? [$this->orderBy => $this->orderByDirection ?? 'asc']
+                        ? [$this->orderBy => $this->orderByDirection]
                         : [];
     }
 

@@ -2,11 +2,20 @@
 
 namespace Laravel\Nova\Http\Requests;
 
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Collection;
+use Laravel\Nova\Contracts\RelatableField;
 
 class LensRequest extends NovaRequest
 {
     use DecodesFilters, InteractsWithLenses;
+
+    /**
+     * Whether to include the table order prefix.
+     *
+     * @var bool
+     */
+    protected $tableOrderPrefix = true;
 
     /**
      * Apply the specified filters to the given query.
@@ -44,14 +53,38 @@ class LensRequest extends NovaRequest
             return $query;
         }
 
-        if ($this->lens()->resolveFields($this)->findFieldByAttribute($this->orderBy)) {
+        $model = $this->model();
+
+        $fieldExists = $this->lens()->availableFields($this)
+            ->transform(function ($field) use ($model) {
+                return $field instanceof RelatableField
+                    ? $this->getRelationForeignKeyName($model->{$field->attribute}())
+                    : $field->attribute ?? null;
+            })->filter()
+            ->first(function ($attribute) {
+                return $attribute == $this->orderBy;
+            });
+
+        if ($fieldExists) {
             return $query->orderBy(
-                $query->getModel()->getTable().'.'.$this->orderBy,
+                ($this->tableOrderPrefix ? $query->getModel()->getTable().'.' : '').$this->orderBy,
                 $this->orderByDirection === 'asc' ? 'asc' : 'desc'
             );
         }
 
         return $query;
+    }
+
+    /**
+     * Disable prepending of the table order.
+     *
+     * @return $this
+     */
+    public function withoutTableOrderPrefix()
+    {
+        $this->tableOrderPrefix = false;
+
+        return $this;
     }
 
     /**
@@ -77,9 +110,59 @@ class LensRequest extends NovaRequest
         $lens = get_class($this->lens());
 
         return $models->map(function ($model) use ($resource, $lens) {
-            return (new $resource($model))->serializeForIndex(
-                $this, (new $lens($model))->resolveFields($this)
-            );
+            $lenResource = new $lens($model);
+
+            return transform((new $resource($model))->serializeForIndex(
+                $this, $lenResource->resolveFields($this)
+            ), function ($payload) use ($lenResource) {
+                $payload['actions'] = collect(array_values($lenResource->actions($this)))
+                        ->filter(function ($action) {
+                            return $action->shownOnIndex() || $action->shownOnTableRow();
+                        })->filter->authorizedToSee($this)->values();
+
+                return $payload;
+            });
         });
+    }
+
+    /**
+     * Get foreign key name for relation.
+     *
+     * @param  \Illuminate\Database\Eloquent\Relations\Relation  $relation
+     * @return string
+     */
+    protected function getRelationForeignKeyName(Relation $relation)
+    {
+        return method_exists($relation, 'getForeignKeyName')
+            ? $relation->getForeignKeyName()
+            : $relation->getForeignKey();
+    }
+
+    /**
+     * Get per page.
+     *
+     * @return int
+     */
+    public function perPage()
+    {
+        $resource = $this->resource();
+
+        $perPageOptions = $resource::perPageOptions();
+
+        if (empty($perPageOptions)) {
+            $perPageOptions = [$resource::newModel()->getPerPage()];
+        }
+
+        return (int) in_array($this->perPage, $perPageOptions) ? $this->perPage : $perPageOptions[0];
+    }
+
+    /**
+     * Determine if this request is an action request.
+     *
+     * @return bool
+     */
+    public function isActionRequest()
+    {
+        return $this->segment(5) == 'actions';
     }
 }
