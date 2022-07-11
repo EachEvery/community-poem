@@ -35,7 +35,7 @@ Vue.use(PortalVue);
 
 import $ from "jquery";
 
-$(document).ready(() => {
+$(() => {
     $("[open-typeform]").on("click", e => {
         e.preventDefault();
 

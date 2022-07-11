@@ -55,7 +55,9 @@ trait ResolvesReverseRelation
                             return false;
                         }
 
-                        if ($field instanceof BelongsToMany || $field instanceof MorphToMany) {
+                        if (! $field instanceof HasMany
+                            && ! $field instanceof MorphMany
+                            && ! $field instanceof HasOne) {
                             return false;
                         }
 
@@ -73,7 +75,7 @@ trait ResolvesReverseRelation
     /**
      * Get foreign key name for relation.
      *
-     * @param  \Illuminate\Database\Eloquent\Relations\Relation $relation
+     * @param  \Illuminate\Database\Eloquent\Relations\Relation  $relation
      * @return string
      */
     protected function getRelationForeignKeyName(Relation $relation)

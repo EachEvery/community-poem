@@ -11,13 +11,13 @@ class ResourceIndexController extends Controller
      * List the resources for administration.
      *
      * @param  \Laravel\Nova\Http\Requests\ResourceIndexRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function handle(ResourceIndexRequest $request)
     {
-        $paginator = $this->paginator(
-            $request, $resource = $request->resource()
-        );
+        $resource = $request->resource();
+
+        [$paginator, $total, $sortable] = $request->searchIndex();
 
         return response()->json([
             'label' => $resource::label(),
@@ -26,23 +26,9 @@ class ResourceIndexController extends Controller
             'next_page_url' => $paginator->nextPageUrl(),
             'per_page' => $paginator->perPage(),
             'per_page_options' => $resource::perPageOptions(),
+            'total' => $total,
             'softDeletes' => $resource::softDeletes(),
+            'sortable' => $sortable ?? true,
         ]);
-    }
-
-    /**
-     * Get the paginator instance for the index request.
-     *
-     * @param  \Laravel\Nova\Http\Requests\ResourceIndexRequest  $request
-     * @param  string  $resource
-     * @return \Illuminate\Pagination\Paginator
-     */
-    protected function paginator(ResourceIndexRequest $request, $resource)
-    {
-        return $request->toQuery()->simplePaginate(
-            $request->viaRelationship()
-                        ? $resource::$perPageViaRelationship
-                        : ($request->perPage ?? $resource::perPageOptions()[0])
-        );
     }
 }

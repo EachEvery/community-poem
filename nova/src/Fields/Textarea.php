@@ -30,7 +30,7 @@ class Textarea extends Field
     /**
      * Set the number of rows used for the textarea.
      *
-     * @param  int $rows
+     * @param  int  $rows
      * @return $this
      */
     public function rows($rows)
@@ -41,10 +41,25 @@ class Textarea extends Field
     }
 
     /**
+     * Resolve the field's value for display.
+     *
+     * @param  mixed  $resource
+     * @param  string|null  $attribute
+     * @return void
+     */
+    public function resolveForDisplay($resource, $attribute = null)
+    {
+        parent::resolveForDisplay($resource, $attribute);
+
+        return $this->value = e($this->value);
+    }
+
+    /**
      * Prepare the element for JSON serialization.
      *
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [

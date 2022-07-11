@@ -25,17 +25,13 @@ class ResourceManager extends Tool
     /**
      * Build the view that renders the navigation links for the tool.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Contracts\View\View
      */
     public function renderNavigation()
     {
         $request = request();
         $groups = Nova::groups($request);
-        $navigation = collect(Nova::groupedResources($request))
-            ->map->filter(function ($resource) {
-                return $resource::$displayInNavigation;
-            })
-            ->filter->count();
+        $navigation = Nova::groupedResourcesForNavigation($request);
 
         return view('nova::resources.navigation', [
             'navigation' => $navigation,
