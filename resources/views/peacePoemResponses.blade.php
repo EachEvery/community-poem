@@ -4,8 +4,8 @@
 
 {{-- Google Tag Manager Script --}}
 {{-- Added here due to avoid crossing Thread data with site data --}}
-@include('partials.googleTagManagerHead')
-@include('partials.googleTagManagerBody')
+{{-- @include('partials.googleTagManagerHead') --}}
+{{-- @include('partials.googleTagManagerBody') --}}
 
 <div class="responses-container bg-secondary text-primary p-8 pt-32 flex flex-col" style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};">
     <h1 class="uppercase font-display text-center text-5xl text-outline md:text-8xl">Responses</h1>

@@ -29,11 +29,11 @@ class DeleteAttachments
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $model
-     * @return void
+     * @return array
      */
     public function __invoke(Request $request, $model)
     {
-        Attachment::where('attachable_type', get_class($model))
+        Attachment::where('attachable_type', $model->getMorphClass())
                 ->where('attachable_id', $model->getKey())
                 ->get()
                 ->each

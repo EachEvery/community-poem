@@ -2,6 +2,9 @@
 
 namespace Laravel\Nova\Fields;
 
+/**
+ * @deprecated Places API will stop functioning on May 31st, 2022
+ */
 class Place extends Text
 {
     /**
@@ -144,6 +147,17 @@ class Place extends Text
     public function latitude($field)
     {
         return $this->withMeta([__FUNCTION__ => $field]);
+    }
+
+    /**
+     * Specify the language that places.js should use.
+     *
+     * @param  string  $language
+     * @return $this
+     */
+    public function language($language)
+    {
+        return $this->withMeta([__FUNCTION__ => $language]);
     }
 
     /**

@@ -46,7 +46,15 @@ class Relatable implements Rule
      */
     public function passes($attribute, $value)
     {
-        $model = $this->query->select('*')->whereKey($value)->first();
+        $model = $this->query->tap(function ($query) {
+            tap($query->getQuery(), function ($builder) {
+                $builder->orders = [];
+
+                $builder->select(
+                    ! empty($builder->joins) ? $builder->from.'.*' : '*'
+                );
+            });
+        })->whereKey($value)->first();
 
         if (! $model) {
             return false;
@@ -80,6 +88,10 @@ class Relatable implements Rule
 
         if ($inverseRelation && $this->request->resourceId) {
             $modelBeingUpdated = $this->request->findModelOrFail();
+
+            if (is_null($modelBeingUpdated->{$attribute})) {
+                return false;
+            }
 
             if ($modelBeingUpdated->{$attribute}->getKey() == $value) {
                 return false;

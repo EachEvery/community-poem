@@ -2,9 +2,8 @@
 
 namespace {{ namespace }};
 
-use Laravel\Nova\Nova;
-use Laravel\Nova\Events\ServingNova;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Nova;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -15,7 +14,9 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Nova::theme(asset('/{{ vendor }}/theme.css'));
+        Nova::booted(function () {
+            Nova::theme(asset('/{{ vendor }}/theme.css'));
+        });
 
         $this->publishes([
             __DIR__.'/../resources/css' => public_path('{{ vendor }}'),

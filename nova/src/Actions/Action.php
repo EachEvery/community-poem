@@ -4,12 +4,16 @@ namespace Laravel\Nova\Actions;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Traits\Macroable;
 use JsonSerializable;
 use Laravel\Nova\AuthorizedToSee;
 use Laravel\Nova\Exceptions\MissingActionHandlerException;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\ActionRequest;
+use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Makeable;
 use Laravel\Nova\Metable;
 use Laravel\Nova\Nova;
 use Laravel\Nova\ProxiesCanSeeToGate;
@@ -17,9 +21,11 @@ use ReflectionClass;
 
 class Action implements JsonSerializable
 {
-    use Metable;
-    use AuthorizedToSee;
-    use ProxiesCanSeeToGate;
+    use AuthorizedToSee,
+        Macroable,
+        Makeable,
+        Metable,
+        ProxiesCanSeeToGate;
 
     /**
      * The displayable name of the action.
@@ -57,7 +63,7 @@ class Action implements JsonSerializable
     public $withoutConfirmation = false;
 
     /**
-     * Indicates if this action is only available on the resource detail view.
+     * Indicates if this action is only available on the resource index view.
      *
      * @var bool
      */
@@ -69,6 +75,27 @@ class Action implements JsonSerializable
      * @var bool
      */
     public $onlyOnDetail = false;
+
+    /**
+     * Indicates if this action is available on the resource index view.
+     *
+     * @var bool
+     */
+    public $showOnIndex = true;
+
+    /**
+     * Indicates if this action is available on the resource detail view.
+     *
+     * @var bool
+     */
+    public $showOnDetail = true;
+
+    /**
+     * Indicates if this action is available on the resource's table row.
+     *
+     * @var bool
+     */
+    public $showOnTableRow = false;
 
     /**
      * The current batch ID being handled by the action.
@@ -90,6 +117,34 @@ class Action implements JsonSerializable
      * @var int
      */
     public static $chunkCount = 200;
+
+    /**
+     * The text to be used for the action's confirm button.
+     *
+     * @var string
+     */
+    public $confirmButtonText = 'Run Action';
+
+    /**
+     * The text to be used for the action's cancel button.
+     *
+     * @var string
+     */
+    public $cancelButtonText = 'Cancel';
+
+    /**
+     * The text to be used for the action's confirmation text.
+     *
+     * @var string
+     */
+    public $confirmText = 'Are you sure you want to run this action?';
+
+    /**
+     * Indicates if the action can be run without any models.
+     *
+     * @var bool
+     */
+    public $standalone = false;
 
     /**
      * Determine if the action is executable for the given request.
@@ -150,7 +205,7 @@ class Action implements JsonSerializable
      * Return a Vue router response from the action.
      *
      * @param  string  $path
-     * @param  array   $query
+     * @param  array  $query
      * @return array
      */
     public static function push($path, $query = [])
@@ -187,10 +242,23 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Return an action modal response from the action.
+     *
+     * @param  string  $modal
+     * @param  array  $data
+     * @return array
+     */
+    public static function modal($modal, $data)
+    {
+        return array_merge(['modal' => $modal], $data);
+    }
+
+    /**
      * Execute the action for the given request.
      *
      * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
      * @return mixed
+     *
      * @throws MissingActionHandlerException
      */
     public function handleRequest(ActionRequest $request)
@@ -205,19 +273,29 @@ class Action implements JsonSerializable
 
         $fields = $request->resolveFields();
 
-        $results = $request->chunks(
-            static::$chunkCount, function ($models) use ($fields, $request, $method, &$wasExecuted) {
-                $models = $models->filterForExecution($request);
+        if ($this->standalone) {
+            $wasExecuted = true;
 
-                if (count($models) > 0) {
-                    $wasExecuted = true;
+            $results = [
+                DispatchAction::forModels(
+                    $request, $this, $method, $results = collect([]), $fields
+                ),
+            ];
+        } else {
+            $results = $request->chunks(
+                static::$chunkCount, function ($models) use ($fields, $request, $method, &$wasExecuted) {
+                    $models = $models->filterForExecution($request);
+
+                    if (count($models) > 0) {
+                        $wasExecuted = true;
+                    }
+
+                    return DispatchAction::forModels(
+                        $request, $this, $method, $models, $fields
+                    );
                 }
-
-                return DispatchAction::forModels(
-                    $request, $this, $method, $models, $fields
-                );
-            }
-        );
+            );
+        }
 
         if (! $wasExecuted) {
             return static::danger(__('Sorry! You are not authorized to perform this action.'));
@@ -229,14 +307,25 @@ class Action implements JsonSerializable
     /**
      * Handle chunk results.
      *
-     * @param  \Laravel\Nova\Fields\ActionFields $fields
-     * @param  array $results
-     *
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
+     * @param  array  $results
      * @return mixed
      */
     public function handleResult(ActionFields $fields, $results)
     {
         return count($results) ? end($results) : null;
+    }
+
+    /**
+     * Handle any post-validation processing.
+     *
+     * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
+     * @param  \Illuminate\Contracts\Validation\Validator  $validator
+     * @return void
+     */
+    protected function afterValidation(NovaRequest $request, $validator)
+    {
+        //
     }
 
     /**
@@ -247,7 +336,7 @@ class Action implements JsonSerializable
      */
     protected function markAsFinished($model)
     {
-        return $this->batchId ? ActionEvent::markAsFinished($this->batchId, $model) : 0;
+        return $this->batchId ? Nova::actionEvent()->markAsFinished($this->batchId, $model) : 0;
     }
 
     /**
@@ -259,7 +348,7 @@ class Action implements JsonSerializable
      */
     protected function markAsFailed($model, $e = null)
     {
-        return $this->batchId ? ActionEvent::markAsFailed($this->batchId, $model, $e) : 0;
+        return $this->batchId ? Nova::actionEvent()->markAsFailed($this->batchId, $model, $e) : 0;
     }
 
     /**
@@ -273,10 +362,40 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Validate the given request.
+     *
+     * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
+     * @return array
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function validateFields(ActionRequest $request)
+    {
+        $fields = collect($this->fields());
+
+        return Validator::make(
+            $request->all(),
+            $fields->mapWithKeys(function ($field) use ($request) {
+                return $field->getCreationRules($request);
+            })->all(),
+            [],
+            $fields->reject(function ($field) {
+                return empty($field->name);
+            })->mapWithKeys(function ($field) {
+                return [$field->attribute => $field->name];
+            })->all()
+        )->after(function ($validator) use ($request) {
+            $this->afterValidation($request, $validator);
+        })->validate();
+    }
+
+    /**
      * Indicate that this action can be run for the entire resource at once.
      *
      * @param  bool  $value
      * @return $this
+     *
+     * @deprecated
      */
     public function availableForEntireResource($value = true)
     {
@@ -294,7 +413,23 @@ class Action implements JsonSerializable
     public function onlyOnIndex($value = true)
     {
         $this->onlyOnIndex = $value;
-        $this->onlyOnDetail = ! $value;
+        $this->showOnIndex = $value;
+        $this->showOnDetail = ! $value;
+        $this->showOnTableRow = ! $value;
+
+        return $this;
+    }
+
+    /**
+     * Indicate that this action is available except on the resource index view.
+     *
+     * @return $this
+     */
+    public function exceptOnIndex()
+    {
+        $this->showOnDetail = true;
+        $this->showOnTableRow = true;
+        $this->showOnIndex = false;
 
         return $this;
     }
@@ -308,7 +443,88 @@ class Action implements JsonSerializable
     public function onlyOnDetail($value = true)
     {
         $this->onlyOnDetail = $value;
-        $this->onlyOnIndex = ! $value;
+        $this->showOnDetail = $value;
+        $this->showOnIndex = ! $value;
+        $this->showOnTableRow = ! $value;
+
+        return $this;
+    }
+
+    /**
+     * Indicate that this action is available except on the resource detail view.
+     *
+     * @return $this
+     */
+    public function exceptOnDetail()
+    {
+        $this->showOnIndex = true;
+        $this->showOnDetail = false;
+        $this->showOnTableRow = true;
+
+        return $this;
+    }
+
+    /**
+     * Indicate that this action is only available on the resource's table row.
+     *
+     * @param  bool  $value
+     * @return $this
+     */
+    public function onlyOnTableRow($value = true)
+    {
+        $this->showOnTableRow = $value;
+        $this->showOnIndex = ! $value;
+        $this->showOnDetail = ! $value;
+
+        return $this;
+    }
+
+    /**
+     * Indicate that this action is available except on the resource's table row.
+     *
+     * @return $this
+     */
+    public function exceptOnTableRow()
+    {
+        $this->showOnTableRow = false;
+        $this->showOnIndex = true;
+        $this->showOnDetail = true;
+
+        return $this;
+    }
+
+    /**
+     * Show the action on the index view.
+     *
+     * @return $this
+     */
+    public function showOnIndex()
+    {
+        $this->showOnIndex = true;
+
+        return $this;
+    }
+
+    /**
+     * Show the action on the detail view.
+     *
+     * @return $this
+     */
+    public function showOnDetail()
+    {
+        $this->showOnDetail = true;
+
+        return $this;
+    }
+
+    /**
+     * Show the action on the table row.
+     *
+     * @return $this
+     */
+    public function showOnTableRow()
+    {
+        $this->showOnTableRow = true;
 
         return $this;
     }
@@ -366,13 +582,13 @@ class Action implements JsonSerializable
      */
     public function uriKey()
     {
-        return Str::slug($this->name());
+        return Str::slug($this->name(), '-', null);
     }
 
     /**
      * Set the action to execute instantly.
      *
-     * @return string
+     * @return $this
      */
     public function withoutConfirmation()
     {
@@ -394,22 +610,149 @@ class Action implements JsonSerializable
     }
 
     /**
+     * Determine if the action is to be shown on the index view.
+     *
+     * @return bool
+     */
+    public function shownOnIndex()
+    {
+        if ($this->onlyOnIndex == true) {
+            return true;
+        }
+
+        if ($this->onlyOnDetail) {
+            return false;
+        }
+
+        return $this->showOnIndex;
+    }
+
+    /**
+     * Determine if the action is to be shown on the detail view.
+     *
+     * @return bool
+     */
+    public function shownOnDetail()
+    {
+        if ($this->onlyOnDetail) {
+            return true;
+        }
+
+        if ($this->onlyOnIndex) {
+            return false;
+        }
+
+        return $this->showOnDetail;
+    }
+
+    /**
+     * Determine if the action is to be sown on the table row.
+     *
+     * @return bool
+     */
+    public function shownOnTableRow()
+    {
+        return $this->showOnTableRow;
+    }
+
+    /**
+     * Set the text for the action's confirmation button.
+     *
+     * @param  string  $text
+     * @return $this
+     */
+    public function confirmButtonText($text)
+    {
+        $this->confirmButtonText = $text;
+
+        return $this;
+    }
+
+    /**
+     * Set the text for the action's cancel button.
+     *
+     * @param  string  $text
+     * @return $this
+     */
+    public function cancelButtonText($text)
+    {
+        $this->cancelButtonText = $text;
+
+        return $this;
+    }
+
+    /**
+     * Set the text for the action's confirmation message.
+     *
+     * @param  string  $text
+     * @return $this
+     */
+    public function confirmText($text)
+    {
+        $this->confirmText = $text;
+
+        return $this;
+    }
+
+    /**
+     * Return the CSS classes for the Action.
+     *
+     * @return string
+     */
+    public function actionClass()
+    {
+        return $this instanceof DestructiveAction
+            ? 'btn-danger'
+            : 'btn-primary';
+    }
+
+    /**
+     * Mark the action as a standalone action.
+     *
+     * @return $this
+     */
+    public function standalone()
+    {
+        $this->standalone = true;
+
+        return $this;
+    }
+
+    /**
+     * Determine if the action is a standalone action.
+     *
+     * @return bool
+     */
+    public function isStandalone()
+    {
+        return $this->standalone;
+    }
+
+    /**
      * Prepare the action for JSON serialization.
      *
      * @return array
      */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
+        $request = app(NovaRequest::class);
+
         return array_merge([
+            'cancelButtonText' => __($this->cancelButtonText),
             'component' => $this->component(),
+            'confirmButtonText' => __($this->confirmButtonText),
+            'class' => $this->actionClass(),
+            'confirmText' => __($this->confirmText),
             'destructive' => $this instanceof DestructiveAction,
             'name' => $this->name(),
             'uriKey' => $this->uriKey(),
-            'fields' => collect($this->fields())->each->resolve(new class {
-            })->all(),
+            'fields' => collect($this->fields())->each->resolveForAction($request)->all(),
             'availableForEntireResource' => $this->availableForEntireResource,
-            'onlyOnDetail' => $this->onlyOnDetail,
-            'onlyOnIndex' => $this->onlyOnIndex,
+            'showOnDetail' => $this->shownOnDetail(),
+            'showOnIndex' => $this->shownOnIndex(),
+            'showOnTableRow' => $this->shownOnTableRow(),
+            'standalone' => $this->isStandalone(),
             'withoutConfirmation' => $this->withoutConfirmation,
         ], $this->meta());
     }

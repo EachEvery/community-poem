@@ -17,7 +17,7 @@ class LensActionController extends Controller
     public function index(LensRequest $request)
     {
         return response()->json([
-            'actions' => $request->lens()->availableActions($request),
+            'actions' => $request->lens()->availableActionsOnIndex($request),
             'pivotActions' => [
                 'name' => $request->pivotName(),
                 'actions' => $request->lens()->availablePivotActions($request),
@@ -33,6 +33,8 @@ class LensActionController extends Controller
      */
     public function store(LensActionRequest $request)
     {
+        $request->validateFields();
+
         return $request->action()->handleRequest($request);
     }
 }

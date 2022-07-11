@@ -6,14 +6,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Laravel\Nova\Contracts\Deletable as DeletableContract;
 use Laravel\Nova\Contracts\ListableField;
+use Laravel\Nova\Contracts\PivotableField;
+use Laravel\Nova\Contracts\QueryBuilder;
+use Laravel\Nova\Contracts\RelatableField;
 use Laravel\Nova\Http\Requests\NovaRequest;
-use Laravel\Nova\Rules\NotAttached;
 use Laravel\Nova\Rules\RelatableAttachment;
 use Laravel\Nova\TrashedStatus;
 
-class BelongsToMany extends Field implements DeletableContract, ListableField
+class BelongsToMany extends Field implements DeletableContract, ListableField, PivotableField, RelatableField
 {
-    use Deletable, DetachesPivotModels, FormatsRelatableDisplayValues;
+    use Deletable,
+        DetachesPivotModels,
+        FormatsRelatableDisplayValues,
+        ManyToManyCreationRules,
+        Searchable;
 
     /**
      * The field's component.
@@ -72,13 +78,6 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     public $pivotName;
 
     /**
-     * Indicates if this relationship is searchable.
-     *
-     * @var bool
-     */
-    public $searchable = false;
-
-    /**
      * The displayable singular label of the relation.
      *
      * @var string
@@ -111,6 +110,8 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
         $this->actionsCallback = function () {
             return [];
         };
+
+        $this->noDuplicateRelations();
     }
 
     /**
@@ -148,7 +149,7 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     {
         $query = $this->buildAttachableQuery(
             $request, $request->{$this->attribute.'_trashed'} === 'true'
-        );
+        )->toBase();
 
         return array_merge_recursive(parent::getRules($request), [
             $this->attribute => ['required', new RelatableAttachment($request, $query)],
@@ -164,9 +165,7 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     public function getCreationRules(NovaRequest $request)
     {
         return array_merge_recursive(parent::getCreationRules($request), [
-            $this->attribute => [
-                new NotAttached($request, $request->findModelOrFail()),
-            ],
+            $this->attribute => array_filter($this->getManyToManyCreationRules($request)),
         ]);
     }
 
@@ -175,21 +174,23 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @param  bool  $withTrashed
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @return \Laravel\Nova\Contracts\QueryBuilder
      */
     public function buildAttachableQuery(NovaRequest $request, $withTrashed = false)
     {
         $model = forward_static_call([$resourceClass = $this->resourceClass, 'newModel']);
 
-        $query = $request->first === 'true'
-                            ? $model->newQueryWithoutScopes()->whereKey($request->current)
-                            : $resourceClass::buildIndexQuery(
-                                    $request, $model->newQuery(), $request->search,
-                                    [], [], TrashedStatus::fromBoolean($withTrashed)
-                              );
+        $query = app()->make(QueryBuilder::class, [$resourceClass]);
+
+        $request->first === 'true'
+                        ? $query->whereKey($model->newQueryWithoutScopes(), $request->current)
+                        : $query->search(
+                                $request, $model->newQuery(), $request->search,
+                                [], [], TrashedStatus::fromBoolean($withTrashed)
+                          );
 
         return $query->tap(function ($query) use ($request, $model) {
-            forward_static_call($this->attachableQueryCallable($request, $model), $request, $query);
+            forward_static_call($this->attachableQueryCallable($request, $model), $request, $query, $this);
         });
     }
 
@@ -235,6 +236,7 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
         return array_filter([
             'avatar' => $resource->resolveAvatarUrl($request),
             'display' => $this->formatDisplayValue($resource),
+            'subtitle' => $resource->subtitle(),
             'value' => $resource->getKey(),
         ]);
     }
@@ -279,22 +281,9 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     }
 
     /**
-     * Specify if the relationship should be searchable.
-     *
-     * @param  bool  $value
-     * @return $this
-     */
-    public function searchable($value = true)
-    {
-        $this->searchable = $value;
-
-        return $this;
-    }
-
-    /**
      * Set the displayable singular label of the resource.
      *
-     * @return string
+     * @return $this
      */
     public function singularLabel($singularLabel)
     {
@@ -304,19 +293,35 @@ class BelongsToMany extends Field implements DeletableContract, ListableField
     }
 
     /**
-     * Get additional meta information to merge with the field payload.
+     * Return the validation key for the field.
+     *
+     * @return string
+     */
+    public function validationKey()
+    {
+        return $this->attribute != $this->resourceName
+            ? $this->resourceName
+            : $this->attribute;
+    }
+
+    /**
+     * Prepare the field for JSON serialization.
      *
      * @return array
      */
-    public function meta()
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize()
     {
         return array_merge([
-            'resourceName' => $this->resourceName,
             'belongsToManyRelationship' => $this->manyToManyRelationship,
-            'searchable' => $this->searchable,
+            'debounce' => $this->debounce,
             'listable' => true,
-            'singularLabel' => $this->singularLabel ?? Str::singular($this->name),
             'perPage'=> $this->resourceClass::$perPageViaRelationship,
-        ], $this->meta);
+            'validationKey' => $this->validationKey(),
+            'resourceName' => $this->resourceName,
+            'searchable' => $this->searchable,
+            'withSubtitles' => $this->withSubtitles,
+            'singularLabel' => $this->singularLabel ?? $this->resourceClass::singularLabel(),
+        ], parent::jsonSerialize());
     }
 }

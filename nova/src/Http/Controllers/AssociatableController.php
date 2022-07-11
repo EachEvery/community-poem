@@ -3,6 +3,7 @@
 namespace Laravel\Nova\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Laravel\Nova\Contracts\RelatableField;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class AssociatableController extends Controller
@@ -17,19 +18,30 @@ class AssociatableController extends Controller
     {
         $field = $request->newResource()
                     ->availableFields($request)
-                    ->firstWhere('attribute', $request->field);
+                    ->whereInstanceOf(RelatableField::class)
+                    ->findFieldByAttribute($request->field, function () {
+                        abort(404);
+                    });
 
         $withTrashed = $this->shouldIncludeTrashed(
             $request, $associatedResource = $field->resourceClass
         );
 
+        $limit = $associatedResource::usesScout()
+                    ? $associatedResource::$scoutSearchResults
+                    : $associatedResource::$relatableSearchResults;
+
         return [
-            'resources' => $field->buildAssociatableQuery($request, $withTrashed)->get()
+            'resources' => $field->buildAssociatableQuery($request, $withTrashed)
+                        ->take($limit)
+                        ->get()
                         ->mapInto($field->resourceClass)
                         ->filter->authorizedToAdd($request, $request->model())
                         ->map(function ($resource) use ($request, $field) {
                             return $field->formatAssociatableResource($request, $resource);
-                        })->sortBy('display')->values(),
+                        })->when(optional($field)->shouldReorderAssociatableValues($request) ?? true, function ($collection) {
+                            return $collection->sortBy('display');
+                        })->values(),
             'softDeletes' => $associatedResource::softDeletes(),
             'withTrashed' => $withTrashed,
         ];

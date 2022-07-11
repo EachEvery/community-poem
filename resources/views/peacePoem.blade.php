@@ -6,16 +6,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="csrf-token" content="{{csrf_token()}}">
-
 <meta name="apple-mobile-web-app-capable" content="yes">
+
+@include('partials.googleTagManagerHead')
 
 <link href="https://fonts.googleapis.com/css?family=Homemade+Apple|Work+Sans:300,400,500,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://use.typekit.net/gow0spk.css">
 
 <body class="text-gray-600 " style="@yield('body_style')">
+    @include('partials.googleTagManagerBody')
     <div id="app" class="overflow-x-hidden max-w-full">
         
-
         @yield('page')        
 
         <footer class="p-8 pt-32 pb-48 bg-green-900 text-white xl:px-32">
@@ -75,8 +76,6 @@
     <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
     @yield('scripts')
-
-
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-150862045-1"></script>

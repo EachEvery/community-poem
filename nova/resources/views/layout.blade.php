@@ -15,22 +15,26 @@
 
     <!-- Tool Styles -->
     @foreach(\Laravel\Nova\Nova::availableStyles(request()) as $name => $path)
-        <link rel="stylesheet" href="/nova-api/styles/{{ $name }}">
+        @if (\Illuminate\Support\Str::startsWith($path, ['http://', 'https://']))
+            <link rel="stylesheet" href="{!! $path !!}">
+        @else
+            <link rel="stylesheet" href="/nova-api/styles/{{ $name }}">
+        @endif
     @endforeach
 
     <!-- Custom Meta Data -->
     @include('nova::partials.meta')
 
     <!-- Theme Styles -->
-    @foreach(Nova::themeStyles() as $publicPath)
+    @foreach(\Laravel\Nova\Nova::themeStyles() as $publicPath)
         <link rel="stylesheet" href="{{ $publicPath }}">
     @endforeach
 </head>
-<body class="min-w-site bg-40 text-black min-h-full">
+<body class="min-w-site bg-40 text-90 font-medium min-h-full">
     <div id="nova">
         <div v-cloak class="flex min-h-screen">
             <!-- Sidebar -->
-            <div class="min-h-screen flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6">
+            <div class="flex-none pt-header min-h-screen w-sidebar bg-grad-sidebar px-6">
                 <a href="{{ \Laravel\Nova\Nova::path() }}">
                     <div class="absolute pin-t pin-l pin-r bg-logo flex items-center w-sidebar h-header px-6 text-white">
                        @include('nova::partials.logo')
@@ -44,13 +48,13 @@
 
             <!-- Content -->
             <div class="content">
-                <div class="flex items-center relative shadow h-header bg-white z-20 px-6">
-                    <a v-if="'{{ \Laravel\Nova\Nova::name() }}'" href="{{ \Illuminate\Support\Facades\Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
+                <div class="flex items-center relative shadow h-header bg-white z-20 px-view">
+                    <a v-if="@json(\Laravel\Nova\Nova::name() !== null)" href="{{ \Illuminate\Support\Facades\Config::get('nova.url') }}" class="no-underline dim font-bold text-90 mr-6">
                         {{ \Laravel\Nova\Nova::name() }}
                     </a>
 
                     @if (count(\Laravel\Nova\Nova::globallySearchableResources(request())) > 0)
-                        <global-search></global-search>
+                        <global-search dusk="global-search-component"></global-search>
                     @endif
 
                     <dropdown class="ml-auto h-9 flex items-center dropdown-right">

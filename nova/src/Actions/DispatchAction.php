@@ -7,18 +7,21 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Queue;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\ActionRequest;
+use Laravel\Nova\Nova;
 
 class DispatchAction
 {
     /**
      * Dispatch the given action.
      *
-     * @param  \Laravel\Nova\Http\Requests\ActionRequest $request
-     * @param  \Laravel\Nova\Actions\Action $action
-     * @param  string $method
-     * @param  \Illuminate\Support\Collection $models
-     * @param  \Laravel\Nova\Fields\ActionFields $fields
+     * @param  \Laravel\Nova\Http\Requests\ActionRequest  $request
+     * @param  \Laravel\Nova\Actions\Action  $action
+     * @param  string  $method
+     * @param  \Illuminate\Support\Collection  $models
+     * @param  \Laravel\Nova\Fields\ActionFields  $fields
      * @return mixed
+     *
+     * @throws \Throwable
      */
     public static function forModels(
         ActionRequest $request,
@@ -27,7 +30,7 @@ class DispatchAction
         Collection $models,
         ActionFields $fields
     ) {
-        if ($models->isEmpty()) {
+        if (! $action->isStandalone() && $models->isEmpty()) {
             return;
         }
 
@@ -37,12 +40,12 @@ class DispatchAction
 
         return Transaction::run(function ($batchId) use ($fields, $request, $action, $method, $models) {
             if (! $action->withoutActionEvents) {
-                ActionEvent::createForModels($request, $action, $batchId, $models);
+                Nova::actionEvent()->createForModels($request, $action, $batchId, $models);
             }
 
             return $action->withBatchId($batchId)->{$method}($fields, $models);
         }, function ($batchId) {
-            ActionEvent::markBatchAsFinished($batchId);
+            Nova::actionEvent()->markBatchAsFinished($batchId);
         });
     }
 
@@ -54,12 +57,14 @@ class DispatchAction
      * @param  string  $method
      * @param  \Illuminate\Support\Collection  $models
      * @return void
+     *
+     * @throws \Throwable
      */
     protected static function queueForModels(ActionRequest $request, Action $action, $method, Collection $models)
     {
         return Transaction::run(function ($batchId) use ($request, $action, $method, $models) {
             if (! $action->withoutActionEvents) {
-                ActionEvent::createForModels($request, $action, $batchId, $models, 'waiting');
+                Nova::actionEvent()->createForModels($request, $action, $batchId, $models, 'waiting');
             }
 
             Queue::connection(static::connection($action))->pushOn(
