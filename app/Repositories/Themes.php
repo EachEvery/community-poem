@@ -158,21 +158,27 @@ class Themes
             'dear-ukraine' => [
                 [
                     'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/DU-BG-1.jpg',
-                    'primary_text_color' => '#f5c36c',
-                    'secondary_text_color' => '#f5c36c',
-                    'background_color' => '#ebdac0'
+                    'primary_text_color' => '#000000',
+                    'secondary_text_color' => '#000000',
+                    'background_color' => '#ebdac0',
+                    'block_color' => '#000000',
+                    'block_text_color' => '#ebdac0'
                 ],
                 [
                     'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/DU-BG-2.jpg',
-                    'primary_text_color' => '#f5c36c',
-                    'secondary_text_color' => '#f5c36c',
-                    'background_color' => '#ebdac0'
+                    'primary_text_color' => '#000000',
+                    'secondary_text_color' => '#000000',
+                    'background_color' => '#ebdac0',
+                    'block_color' => '#000000',
+                    'block_text_color' => '#ebdac0'
                 ],
                 [
                     'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/DU-BG-3.jpg',
-                    'primary_text_color' => '#f5c36c',
-                    'secondary_text_color' => '#f5c36c',
-                    'background_color' => '#ebdac0'
+                    'primary_text_color' => '#000000',
+                    'secondary_text_color' => '#000000',
+                    'background_color' => '#ebdac0',
+                    'block_color' => '#000000',
+                    'block_text_color' => '#ebdac0'
                 ]
             ]
         ];

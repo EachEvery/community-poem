@@ -38,7 +38,7 @@
             </div>
 
             <div
-                class="absolute bg-white font-bold uppercase"
+                class="absolute font-bold uppercase"
                 style="
                     padding: 1vw;
                     transition-delay: 100ms;
@@ -47,7 +47,8 @@
                     left: 4vw;
                 "
                 :style="{
-                    color: theme.secondary_text_color
+                    color: isset(theme.block_text_color) ? theme.block_text_color : theme.secondary_text_color,
+                    backgroundColor: isset(theme.block_color) ? block_color : '#ffffff'
                 }"
                 v-html="response.prompt"
             />
