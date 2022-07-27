@@ -47,8 +47,8 @@
                     left: 4vw;
                 "
                 :style="{
-                    color: isset(theme.block_text_color) ? theme.block_text_color : theme.secondary_text_color,
-                    backgroundColor: isset(theme.block_color) ? block_color : '#ffffff'
+                    color: theme.hasOwnProperty('block_text_color') ? theme.block_text_color : theme.secondary_text_color,
+                    backgroundColor: theme.hasOwnProperty('block_color') ? theme.block_color : '#ffffff'
                 }"
                 v-html="response.prompt"
             />
