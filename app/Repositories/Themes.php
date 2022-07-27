@@ -155,6 +155,26 @@ class Themes
                     'background_color' => '',
                 ],
             ],
+            'dear-ukraine' => [
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/DU-BG-1.jpg',
+                    'primary_text_color' => '#f5c36c',
+                    'secondary_text_color' => '#f5c36c',
+                    'background_color' => '#ebdac0'
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/DU-BG-2.jpg',
+                    'primary_text_color' => '#f5c36c',
+                    'secondary_text_color' => '#f5c36c',
+                    'background_color' => '#ebdac0'
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/DU-BG-3.jpg',
+                    'primary_text_color' => '#f5c36c',
+                    'secondary_text_color' => '#f5c36c',
+                    'background_color' => '#ebdac0'
+                ]
+            ]
         ];
     }
 }
