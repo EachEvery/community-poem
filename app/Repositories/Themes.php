@@ -180,6 +180,40 @@ class Themes
                     'block_color' => '#000000',
                     'block_text_color' => '#ebdac0'
                 ]
+            ],
+            'healing-stanzas' => [
+                [
+                    'photo' => 'https://eachevery.s3.amazonaws.com/ts-thread/HS-BG1.jpg',
+                    'primary_text_color' => '#414042',
+                    'secondary_text_color' => '#414042',
+                    'background_color' => '#e6f4f7',
+                    'block_color' => '#000000',
+                    'block_text_color' => '#e6f4f7'
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/HS-BG2.jpg',
+                    'primary_text_color' => '#414042',
+                    'secondary_text_color' => '#414042',
+                    'background_color' => '#faf6eb',
+                    'block_color' => '#414042',
+                    'block_text_color' => '#faf6eb'
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/HS-BG3.jpg',
+                    'primary_text_color' => '#414042',
+                    'secondary_text_color' => '#414042',
+                    'background_color' => '#fce8e5',
+                    'block_color' => '#414042',
+                    'block_text_color' => '#fce8e5'
+                ],
+                [
+                    'photo' => 'http://eachevery.s3.amazonaws.com/ts-thread/HS-BG4.jpg',
+                    'primary_text_color' => '#414042',
+                    'secondary_text_color' => '#414042',
+                    'background_color' => '#f8e7ce',
+                    'block_color' => '#414042',
+                    'block_text_color' => '#f8e7ce'
+                ]
             ]
         ];
     }
