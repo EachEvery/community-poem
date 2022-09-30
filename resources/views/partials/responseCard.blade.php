@@ -1,5 +1,6 @@
+<?php $artMattersBorderColors = ['#E691BD', '#F47C4E', '#F05036', '#1F8CC7', '#44B757', '#B5912F', '#FFD334', '#CCDBE8', '#124A24']; ?>
 <div id="{{ $response->id }}" class="response cursor-pointer text-primary w-full md:w-1/2 lg:w-1/3 {{$isHighlighted ? 'highlight' : 'transition'}} px-2 pb-4" style="opacity: 0; transform: translateY(.5rem); transition-delay: {{$delay ?? 40}}ms">
-    <div class="content p-4 xl:px-6 border border-primary">
+    <div class="content p-4 xl:px-6 border {{ $space->id == 35 ? '' : 'border-primary' }}" style="{{ $space->id == 35 ? 'border-color:'.$artMattersBorderColors[array_rand($artMattersBorderColors)].';' : '' }}">
         <div class="flex justify-between items-center mb-4">
             @unless(empty($response->prompt))
                 <h3 class="response-prompt bg-primary text-white px-3 py-1 text-xs leading-3 font-medium rounded-full">{{$response->prompt}}</h3>
