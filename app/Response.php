@@ -65,9 +65,9 @@ class Response extends Model
             ]);
 
             if ( $translation = $response->translations()->where('lang', $lang)->first() ) {
-                
+
                 // Added for backwards compatability
-                if ( ! filled($translation->prompt) ) {
+                if ( filled($response->prompt) && ! filled($translation->prompt) ) {
                     $prompt = $translate->translate($response->prompt, ['target' => $lang]);
                     $translation->prompt = $prompt['text'];
                     $translation->save();
@@ -79,13 +79,13 @@ class Response extends Model
 
                 // Translate text from english to new language.
                 $content = $translate->translate($response->content, ['target' => $lang]);
-                $prompt = $translate->translate($response->prompt, ['target' => $lang]);
+                $prompt = filled($response->prompt) ? $translate->translate($response->prompt, ['target' => $lang])['text'] : NULL;
 
                 $translation = new Translation;
                 $translation->response_id = $response->id;
                 $translation->content = $content['text'];
                 $translation->lang = $lang;
-                $translation->prompt = $prompt['text'];
+                $translation->prompt = $prompt;
                 $translation->save();
 
                 $response->content = $translation->content;
