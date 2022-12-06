@@ -272,8 +272,8 @@ This action cannot be undone.`);
             }
         },
         ensureFontSize() {
-            if (this.fontSize < 1) {
-                this.fontSize = 1;
+            if (this.fontSize < 0.06) { // Previously 1
+                this.fontSize = 0.06; // Previously 1
             }
 
             if (this.fontSize > 5) {
