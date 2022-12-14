@@ -16,26 +16,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
 <body class="text-gray-600 " style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};" >
-    
+
     @include('partials.googleTagManagerBody')
 
-    <div id="app" class="overflow-x-hidden max-w-full">    
+    <div id="app" class="overflow-x-hidden max-w-full">
         <div class="bg-secondary text-primary p-8  @if($space->show_header_footer) md:pt-32 @endif flex flex-col">
 
         @if($space->show_header_footer)
             <div class="flex xl:scale-up md:absolute top-0 right-0 md:p-4 xl:p-0 xl:mt-24 xl:mr-56 justify-between md:justify-end" style="transform-origin: left">
                 <div class="flex flex-row-reverse md:mr-12 opacity-50">
-                    @component('attribution')            
+                    @component('attribution')
                     @endcomponent
                 </div>
 
                 <a href="#" class="font-display text-lg border-2 px-10 py-3 uppercase font-bold self-center border-primary  bg-white" open-typeform>RESPOND</a>
-            </div>    
+            </div>
 
-            <h1 class="uppercase font-display text-center text-4xl text-outline md:text-6xl mt-24">{{$space->name}}</h1>            
+            <h1 class="uppercase font-display text-center text-4xl text-outline md:text-6xl mt-24">{{$space->name}}</h1>
 
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-center md:text-2xl text-center text-sm">responses</span>
-        @endif      
+        @endif
 
             <div class="container mx-auto mt-24 grid">
                 @foreach($space->approved_responses()->latest()->limit(100)->get() as $index => $response)
@@ -55,10 +55,10 @@
         </div>
 
         <div class="hidden space-id">{{ $space->id }}</div>
-        
+
         @if($space->show_header_footer)
         <footer class="p-8 pt-32 pb-48 bg-primary text-white xl:px-32">
-            <div class="md:flex container mx-auto">                            
+            <div class="md:flex container mx-auto">
                 <div class="flex flex-grow md:flex-row-reverse self-center xl:scale-up" style="transform-origin: top right">
                     @component('attribution')
                         @slot('class', 'text-white md:scale-up md:mx-5')
@@ -70,13 +70,13 @@
 
         <portal-target name="end-of-body"></portal-target>
             @php
-                $path = request()->path();    
+                $path = request()->path();
             @endphp
         </div>
     </div>
 
     {!!$space->embed_code!!}
-    
+
 <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 
 
@@ -91,7 +91,7 @@
                 itemSelector: '.response',
                     layoutMode: 'masonry',
                 });
-    
+
                 $(window).on('scroll', function() {
                 // 5 Pixel Offset
                 var isAtBottom = $(window).scrollTop() + $(window).height() + 5 >= $(document).height();
@@ -116,17 +116,17 @@
                             // Track Infinite Scroll
                             dataLayer.push({'event':'more_responses'});
                         });
-                    }, 500);   
+                    }, 500);
                 }
             });
-    
+
             $('.response').css({'opacity': 1, 'transform': 'none'});
-    
+
             if(!$('.highlight').length) return;
-            
+
             const tour = new Shepherd.Tour({
                     useModalOverlay: true,
-                    
+
                     defaultStepOptions: {
                         classes: ['font-display'],
                         modalOverlayOpeningPadding: 20,
@@ -138,7 +138,7 @@
                         scrollTo: { behavior: 'smooth', block: 'center' }
                     }
                 });
-    
+
                 tour.addStep({
                     title: 'Here\'s Your Poem!',
                     text: `Thanks for creating a poem for {{$space->name}}.`,
@@ -154,15 +154,15 @@
                         classes: 'shepherd-button-secondary',
                         text: 'Dismiss'
                         },
-                        
+
                     ],
                     id: 'creating'
                 });
-    
+
                 tour.start();
          }, 150);
     })();
-    
+
     (function() {
          function resetSelected(parent, event) {
             event.stopPropagation();
@@ -173,38 +173,38 @@
             $('.controls .share.success').removeClass("success");
             // $('.content.border-primary').removeClass('border-primary')
         }
-    
+
         $(window).click(function(event) {
             resetSelected(this, event)
         });
-    
+
         $('.container').on('click', '.response', function(event){
             resetSelected(this, event);
             event.stopPropagation();
-            
+
             $('.content', this).css({
                 'transition': '125ms ease-in all 0ms',
                 'opacity'   : '0.3'
             });
-    
-            var offset = $(this).offset(); 
+
+            var offset = $(this).offset();
             var responseControls = $('.controls', this);
             var relX = event.pageX - offset.left - (responseControls.width() / 2);
             var relY = event.pageY - offset.top - (responseControls.height() / 2);
             responseControls.css({"top": relY, "left": relX})
-    
+
             setTimeout(() => {
                 $('.controls', this).addClass('rotate')
             }, 50);
-    
+
             $(this).addClass('selected');
             $('.content', this).addClass('border-primary')
         });
-    
+
         $('.container').on('click', '.controls .close', function(event){
             resetSelected(this, event)
         });
-    
+
         $('.container').on('click', '.controls .print', function(event){
             event.stopPropagation();
             $(this).addClass('loading');
@@ -238,7 +238,7 @@
                 })
             }, 15);
         });
-    
+
         const copyToClipboard = (textToCopy) => {
             var $temp = $("<input>");
             $("body").append($temp);
@@ -246,7 +246,7 @@
             document.execCommand("copy");
             $temp.remove();
         };
-        
+
         $('.container').on('click', '.controls .copy', function(event){
             // if a check is displayed on the other copy option, clear it
             $('.controls .share.success').removeClass("success");
@@ -256,7 +256,7 @@
             // Track Responses Copied
             dataLayer.push({'event':'copy_response'});
         });
-    
+
         $('.container').on('click', '.controls .share', function(event){
             // if a check is displayed on the other copy option, clear it
             $('.controls .copy.success').removeClass("success");
@@ -266,8 +266,20 @@
             // Track Responses Shared
             dataLayer.push({'event':'share_response'});
         });
+
+        @if ($auto_resize)
+        if (window.location !== window.parent.location) {
+
+            const resizeObserver = new ResizeObserver((entries) => {
+                window.parent.postMessage(newHeight, $('#app').height());
+            });
+            const divElem = document.querySelector('#app');
+            resizeObserver.observe(divElem);
+
+        }
+        @endif
     })();
-        
+
 </script>
 
 @include('partials.responseScript')
@@ -282,4 +294,4 @@ gtag('js', new Date());
 gtag('config', 'UA-150862045-1');
 </script>
 
-</body> 
+</body>

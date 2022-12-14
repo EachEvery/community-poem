@@ -126,5 +126,6 @@ Route::get('/{slug}', function (Request $request, Responses $responses, $slug) {
         'languages' => Language::select('code', 'language')->get()->keyBy('code'),
         'space' => Space::where('slug', $slug)->firstOrFail(),
         'lang' => 'original', // $request->has('lang') ? $request->input('lang') : 'original' // Set Language to the submitted text by default
+        'auto_resize' => isset($_GET['auto-resize']) ? true : false
     ]);
 })->name('thread');
