@@ -271,7 +271,7 @@
         if (window.location !== window.parent.location) {
 
             const resizeObserver = new ResizeObserver((entries) => {
-                window.parent.postMessage(newHeight, $('#app').height());
+                window.parent.postMessage($('#app').height(), '*');
             });
             const divElem = document.querySelector('#app');
             resizeObserver.observe(divElem);
