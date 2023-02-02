@@ -8,15 +8,33 @@
 @include('partials.googleTagManagerBody')
 
 <div class="responses-container bg-secondary text-primary p-8 pt-32 flex flex-col" style="@yield('body_style') --secondary: {{$space->secondary_color ?? '#FFFDD5'}}; --primary:  {{$space->primary_color ?? '#1E6043'}};">
+
     <h1 class="uppercase font-display text-center text-5xl text-outline md:text-8xl">Responses</h1>
 
-     <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end  md:self-center md:text-2xl md:ml-56 text-sm">personal experiences, 
-        thoughts, and expressions 
-        of a global community of 
+     <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end  md:self-center md:text-2xl md:ml-56 text-sm">personal experiences,
+        thoughts, and expressions
+        of a global community of
         writers
     </span>
 
     <div class="container mx-auto grid mt-24">
+
+        <div class="print-prompt-overlay fixed hidden h-screen w-screen left-0 top-0 bg-black opacity-25" style="z-index: 9999;"></div>
+        <div class="print-prompt fixed hidden left-1/2 -translate-x-1/2 top-0 w-screen bg-white border border-primary" style="max-width: 400px; z-index: 9999;">
+            <form class="p-5" method="post">
+                <div class="mb-4">
+                    <label for="print-prompt-input" class="block text-primary mb-2 text-base">Enter Print Code</label>
+                    <input type="number" class="print-prompt-input block bg-transparent appearance-none border border-primary rounded w-full py-2 px-4 text-primary leading-tight focus:outline-none focus:border-blue-500" name="print-prompt-input" value="" />
+                </div>
+                <div class="flex gap-2 justify-end">
+                    <input type="hidden" name="response-id" value="" />
+                    <a href="#" style="width:76px;" class="close block rounded border border-gray-700 py-1.5 text-xs text-primary font-semibold text-center">Cancel</a>
+                    <button style="width:76px;" class="submit block rounded border border-primary bg-primary py-1.5 text-xs font-semibold text-white text-center hover:opacity-80">OK</button>
+                </div>
+            </form>
+        </div>
+        <div class="print-prompt-response fixed hidden left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-screen p-5 bg-white border border-primary text-base text-primary" style="max-width: 400px; z-index: 9999;"></div>
+
         @foreach($responses as $index => $response)
             @php
                 $isHighlighted = request('highlight') == strval($response->id);
@@ -49,7 +67,7 @@
                 itemSelector: '.response',
                     layoutMode: 'masonry',
                 });
-    
+
                 $(window).on('scroll', function() {
                 // 5 Pixel Offset
                 var isAtBottom = $(window).scrollTop() + $(window).height() + 5 >= $(document).height();
@@ -74,17 +92,17 @@
                             // Track Infinite Scroll
                             dataLayer.push({'event':'more_responses'});
                         });
-                    }, 500);   
+                    }, 500);
                 }
             });
-    
+
             $('.response').css({'opacity': 1, 'transform': 'none'});
-    
+
             if(!$('.highlight').length) return;
-            
+
             const tour = new Shepherd.Tour({
                     useModalOverlay: true,
-                    
+
                     defaultStepOptions: {
                         classes: ['font-display'],
                         modalOverlayOpeningPadding: 20,
@@ -96,7 +114,7 @@
                         scrollTo: { behavior: 'smooth', block: 'center' }
                     }
                 });
-    
+
                 tour.addStep({
                     title: 'Here\'s Your Poem!',
                     text: `Thanks for creating a poem for {{$space->name}}.`,
@@ -112,15 +130,15 @@
                         classes: 'shepherd-button-secondary',
                         text: 'Dismiss'
                         },
-                        
+
                     ],
                     id: 'creating'
                 });
-    
+
                 tour.start();
          }, 150);
     })();
-    
+
     (function() {
          function resetSelected(parent, event) {
             event.stopPropagation();
@@ -131,72 +149,137 @@
             $('.controls .share.success').removeClass("success");
             // $('.content.border-primary').removeClass('border-primary')
         }
-    
+
         $(window).click(function(event) {
             resetSelected(this, event)
         });
-    
+
         $('.container').on('click', '.response', function(event){
             resetSelected(this, event);
             event.stopPropagation();
-            
+
             $('.content', this).css({
                 'transition': '125ms ease-in all 0ms',
                 'opacity'   : '0.3'
             });
-    
-            var offset = $(this).offset(); 
+
+            var offset = $(this).offset();
             var responseControls = $('.controls', this);
             var relX = event.pageX - offset.left - (responseControls.width() / 2);
             var relY = event.pageY - offset.top - (responseControls.height() / 2);
             responseControls.css({"top": relY, "left": relX})
-    
+
             setTimeout(() => {
                 $('.controls', this).addClass('rotate')
             }, 50);
-    
+
             $(this).addClass('selected');
             $('.content', this).addClass('border-primary')
         });
-    
+
         $('.container').on('click', '.controls .close', function(event){
             resetSelected(this, event)
         });
-    
+
+        // $('.container').on('click', '.controls .print', function(event){
+        //     event.stopPropagation();
+        //     $(this).addClass('loading');
+        //     var responseId = $(this).closest('.response').attr('id');
+        //     var responseToPrint = $('#print-'+responseId);
+        //     responseToPrint.show();
+
+        //     // Track How Many People Start The Printing Process
+        //     dataLayer.push({'event':'start_print_response'});
+
+        //     setTimeout(() => {
+        //         html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
+        //             var imageToPrint = canvas.toDataURL("image/png", 1.0);
+        //             var inputCode = window.prompt("Enter Print Code");
+        //             axios.post("https://ts-print.eachevery.dev/job", {
+        //                 content: imageToPrint,
+        //                 code: inputCode,
+        //                 origin: window.location.origin,
+        //             })
+        //                 .then(() => {
+        //                     window.alert("Success! Printing Now...");
+        //                     responseToPrint.hide();
+        //                     $(this).removeClass('loading');
+        //                     // Track Print Response
+        //                     dataLayer.push({'event':'print_response'});
+        //                 })
+        //                 .catch((error) => {
+        //                     window.alert(error.response.data);
+        //                     $(this).removeClass('loading');
+        //                 });
+        //         })
+        //     }, 15);
+        // });
+
         $('.container').on('click', '.controls .print', function(event){
             event.stopPropagation();
             $(this).addClass('loading');
-            var responseId = $(this).closest('.response').attr('id');
-            var responseToPrint = $('#print-'+responseId);
-            responseToPrint.show();
 
             // Track How Many People Start The Printing Process
             dataLayer.push({'event':'start_print_response'});
 
+            $('.print-prompt').show();
+            $('.print-prompt-overlay').show();
+            var responseId = $(this).closest('.response').attr('id');
+            $('.print-prompt input[name="response-id"]').val(responseId);
+            $('.print-prompt-input').focus();
+        });
+
+        $('.print-prompt .close, .print-prompt-overlay').on('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.print-prompt').hide();
+            $('.print-prompt-overlay').hide();
+            $('.print-prompt .print-prompt-input').val('');
+            $('.print-prompt input[name="response-id"]').val('');
+            $('.controls .print').removeClass('loading');
+        });
+
+        $('.print-prompt form').on('submit', function(e) {
+            e.preventDefault();
+            var inputCode = $(this).find('.print-prompt-input').val();
+            $('.print-prompt').hide();
+            var responseId = $(this).find('input[name="response-id"]').val();
+            var responseToPrint = $('#print-'+responseId);
+            responseToPrint.show();
             setTimeout(() => {
                 html2canvas(responseToPrint[ 0 ], { scale: 2, useCORS: true }).then((canvas) => {
                     var imageToPrint = canvas.toDataURL("image/png", 1.0);
-                    var inputCode = window.prompt("Enter Print Code");
+                    // var inputCode = window.prompt("Enter Print Code");
                     axios.post("https://ts-print.eachevery.dev/job", {
                         content: imageToPrint,
                         code: inputCode,
                         origin: window.location.origin,
                     })
                         .then(() => {
-                            window.alert("Success! Printing Now...");
+                            // window.alert("Success! Printing Now...");
+                            $('.print-prompt-response').show().text('Success! Printing Now...');
                             responseToPrint.hide();
-                            $(this).removeClass('loading');
+                            $('.controls .print').removeClass('loading');
                             // Track Print Response
                             dataLayer.push({'event':'print_response'});
+                            setTimeout(function() {
+                                $('.print-prompt-response').hide().text('');
+                                $('.print-prompt-overlay').hide();
+                            }, 3000);
                         })
                         .catch((error) => {
-                            window.alert(error.response.data);
-                            $(this).removeClass('loading');
+                            // window.alert(error.response.data);
+                            $('.print-prompt-response').show().text(error.response.data);
+                            $('.controls .print').removeClass('loading');
+                            setTimeout(function() {
+                                $('.print-prompt-response').hide().text('');
+                                $('.print-prompt-overlay').hide();
+                            }, 3000);
                         });
                 })
             }, 15);
         });
-    
+
         const copyToClipboard = (textToCopy) => {
             var $temp = $("<input>");
             $("body").append($temp);
@@ -204,7 +287,7 @@
             document.execCommand("copy");
             $temp.remove();
         };
-        
+
         $('.container').on('click', '.controls .copy', function(event){
             // if a check is displayed on the other copy option, clear it
             $('.controls .share.success').removeClass("success");
@@ -214,7 +297,7 @@
             // Track Responses Copied
             dataLayer.push({'event':'copy_response'});
         });
-    
+
         $('.container').on('click', '.controls .share', function(event){
             // if a check is displayed on the other copy option, clear it
             $('.controls .copy.success').removeClass("success");
@@ -225,7 +308,7 @@
             dataLayer.push({'event':'share_response'});
         });
     })();
-        
+
 </script>
 
 @include('partials.responseScript')
