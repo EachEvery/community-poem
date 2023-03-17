@@ -41,7 +41,7 @@ class Themes
             'earth' => [
                 [
                     'photo' => 'https://nhmisc.s3.amazonaws.com/ts-random/earth-teal1.png',
-                    'primary_text_color' => '#044d6f',
+                    'primary_text_color' => '#ffffff',
                     'secondary_text_color' => '#ffffff',
                     'background_color' => '#00b8bc',
                     'block_color' => '#ffffff',
