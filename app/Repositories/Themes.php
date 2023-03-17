@@ -44,18 +44,24 @@ class Themes
                     'primary_text_color' => '#044d6f',
                     'secondary_text_color' => 'rgba(255, 255, 255, .6)',
                     'background_color' => '#00b8bc',
+                    'block_color' => 'rgba(255, 255, 255, .6)',
+                    'block_text_color' => '#00b8bc'
                 ],
                 [
                     'photo' => 'https://nhmisc.s3.amazonaws.com/ts-random/earth-orange2.png',
                     'primary_text_color' => '#ffffff',
                     'secondary_text_color' => 'rgba(255, 255, 255, .6)',
                     'background_color' => '#f15f46',
+                    'block_color' => 'rgba(255, 255, 255, .6)',
+                    'block_text_color' => '#f15f46'
                 ],
                 [
                     'photo' => 'https://nhmisc.s3.amazonaws.com/ts-random/earth-navy3.png',
                     'primary_text_color' => '#ffffff',
                     'secondary_text_color' => 'rgba(255, 255, 255, .6)',
                     'background_color' => '#044d6f',
+                    'block_color' => 'rgba(255, 255, 255, .6)',
+                    'block_text_color' => '#044d6f'
                 ],
             ],
 
