@@ -66,14 +66,18 @@ class Responses
         return $space->responses()->get();
     }
 
-    public function approvedForSpace(Space $space, $limit = null, $offset = 0, $lang = 'en')
+    public function approvedForSpace(Space $space, $limit = null, $offset = 0, $lang = 'en', $highlighted = null)
     {
         $q = $space->approved_responses()->latest();
 
         if ($limit != null) {
             $q->limit($limit);
         }
-        
+
+        if ($highlighted != null && $highlighted != false && $highlighted != 0) {
+            $q->whereNot('id', $highlighted );
+        }
+
         return $q->offset($offset)->get();
 
     }

@@ -55,7 +55,17 @@
         @endif
 
             <div class="container mx-auto mt-24 grid">
-                @foreach($space->approved_responses()->latest()->limit(100)->get() as $index => $response)
+                <?php
+                    if ($highlightedResponseID = request('highlight')) {
+                        $highlightedResponse = $space->approved_responses()->find($highlightedResponseID);
+                        $responses = $space->approved_responses()->latest()->whereNot('id', $highlightedResponseID)->limit(99)->get();
+                        $responses->prepend($highlightedResponse);
+                    } else {
+                        $responses = $space->approved_responses()->latest()->limit(100)->get();
+                    }
+                ?>
+
+                @foreach($responses as $index => $response)
                     @php
                         $isHighlighted = request('highlight') == strval($response->id);
                         $delay = $index > 15 ? 0 : $loop->index * 40; //ms
@@ -116,7 +126,7 @@
                     $('.loading-indicator').removeClass('opacity-0').addClass('opacity-100');
                     clearTimeout(window.infiniteScrollTimeout);
                     window.infiniteScrollTimeout = setTimeout(function() {
-                        $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length + '&lang=' + $('.language-switcher').val(), function(res) {
+                        $.get('/paged/responses?spaceId=' + $('.space-id').text() + '&offset=' + $('.response').length + '<?php echo request("highlight") ? "&highlight=".request("highlight") : "" ?>' + '&lang=' + $('.language-switcher').val(), function(res) {
                             var $offsetResults = $(res);
                             $('.loading-indicator').removeClass('opacity-100').addClass('opacity-0');
                             // all responses have been loaded

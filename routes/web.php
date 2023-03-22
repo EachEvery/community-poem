@@ -51,10 +51,11 @@ Route::get('/paged/responses', function (Request $request, Responses $responses)
     // $lang = $request->input('lang');
     $offset = $request->input('offset');
     $space_id = $request->input('spaceId');
+    $highlightedID = $request->input('highlight');
 
     $space = Space::where('id', $space_id)->firstOrFail();
 
-    $responses = $responses->approvedForSpace($space, 100, $offset);
+    $responses = $responses->approvedForSpace($space, 100, $offset, 'en', $highlightedID);
 
     $languages = Language::select('code', 'language')->get()->keyBy('code');
 
