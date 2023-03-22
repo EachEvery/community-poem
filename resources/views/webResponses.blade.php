@@ -58,7 +58,7 @@
                 <?php
                     if ($highlightedResponseID = request('highlight')) {
                         $highlightedResponse = $space->approved_responses()->find($highlightedResponseID);
-                        $responses = $space->approved_responses()->latest()->whereNot('id', $highlightedResponseID)->limit(99)->get();
+                        $responses = $space->approved_responses()->latest()->where('id', '!=', $highlightedResponse)->limit(99)->get();
                         $responses->prepend($highlightedResponse);
                     } else {
                         $responses = $space->approved_responses()->latest()->limit(100)->get();

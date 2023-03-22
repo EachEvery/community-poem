@@ -75,7 +75,7 @@ class Responses
         }
 
         if ($highlighted != null && $highlighted != false && $highlighted != 0) {
-            $q->whereNot('id', $highlighted );
+            $q->where('id', '!=', $highlighted );
         }
 
         return $q->offset($offset)->get();
