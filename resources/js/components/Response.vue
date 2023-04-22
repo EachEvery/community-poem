@@ -32,26 +32,26 @@
                     :contenteditable="editable"
                     :style="{
                         color: theme.primary_text_color,
-                        fontSize: calcValue(`${fontSize}vw`),
+                        fontSize: calcValue(fontSize),
+                        padding: calcValue(4),
+                        paddingTop: calcValue(10),
                         transition: '300ms transform ease, 300ms color ease',
                         ...switchingStyles
                     }"
-                    style="width: 75vw; padding: 4vw; padding-top: 10vw"
+                    style="width: 75vw;"
                 />
             </div>
 
             <div
                 class="absolute font-bold uppercase"
-                style="
-                    padding: 1vw;
-                    transition-delay: 100ms;
-                    top: 2vw;
-                    left: 4vw;
-                "
+                style="transition-delay: 100ms;"
                 :style="{
                     color: theme.hasOwnProperty('block_text_color') ? theme.block_text_color : theme.secondary_text_color,
                     backgroundColor: theme.hasOwnProperty('block_color') ? theme.block_color : '#ffffff',
-                    fontSize : calcValue('1vw')
+                    fontSize : calcValue(1),
+                    padding: calcValue(1),
+                    top: calcValue(2),
+                    left: calcValue(4)
                 }"
                 v-html="response.prompt"
             />
@@ -60,13 +60,13 @@
                 class="absolute font-sans font-bold transition"
                 style="
                     bottom: 0;
-                    padding: 4vw;
                     transition-delay: 100ms;
                     overflow-wrap: anywhere;
                 "
                 :style="{
                     color: theme.secondary_text_color,
-                    fontSize: calcValue('2vw'),
+                    fontSize: calcValue(2),
+                    padding: calcValue(4),
                     ...switchingStyles
                 }"
             >
@@ -74,7 +74,15 @@
                 <br />
                 {{ response.city }}
             </h3>
-            <h1 class="uppercase space__name">{{ space.name }}</h1>
+            <h1
+                class="uppercase space__name"
+                style=""
+                :style="{
+                    fontSize: calcValue(3),
+                    letterSpacing: calcValue(0.375),
+                    '-webkit-text-stroke': `${calcValue(0.1)} var(--stroke-color)`
+                }"
+            >{{ space.name }}</h1>
         </div>
     </div>
 </template>
@@ -84,13 +92,10 @@
     position: absolute;
     left: 96%;
     bottom: 0;
-    -webkit-text-stroke: 0.1vw var(--stroke-color);
     color: var(--stroke-color);
-    font-size: 3vw;
     font-weight: 800;
     transform-origin: left center;
     width: 51vw;
-    letter-spacing: 0.375vw;
     text-align: center;
 }
 </style>
@@ -112,7 +117,7 @@ export default {
             this.$emit("click", e, this.response);
         },
         calcValue(o) {
-            return this.orientation && this.orientation == 'portait' ? parseInt(o) + 'svh' : o;
+            return this.orientation && this.orientation == 'portait' ? `${o}vh` : `${o}vw`;
         }
     },
     computed: {
