@@ -9,7 +9,7 @@
     >
         <div
             class="relative w-full"
-            :style="{ height: calcValue('56vw') }"
+            :style="{ height: (orientation && orientation == 'portait' ? ((100/9) * 16) + 'vw' : '56vw')  }"
         >
             <img
                 class="inset-0 absolute h-full w-full object-cover"
@@ -112,7 +112,7 @@ export default {
             this.$emit("click", e, this.response);
         },
         calcValue(o) {
-            return this.orientation && this.orientation == 'portait' ? ((parseInt(o) / 9) * 16) + 'vw' : o;
+            return this.orientation && this.orientation == 'portait' ? parseInt(o) + 'svh' : o;
         }
     },
     computed: {
