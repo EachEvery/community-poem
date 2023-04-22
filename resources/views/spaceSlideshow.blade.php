@@ -6,6 +6,6 @@
         No responses have been approved for the {{ $space->name }} slideshow.
     </div>
     @else
-    <slideshow :responses="{{$responses}}" :space="{{$space}}" :autoplay="{{$autoplay}}" :interval="{{empty($space->slideshow_interval) ? 10 : $space->slideshow_interval}}" :orientation="{{$orientation}}" />
+    <slideshow :responses="{{$responses}}" :space="{{$space}}" :autoplay="{{$autoplay}}" :interval="{{empty($space->slideshow_interval) ? 10 : $space->slideshow_interval}}" orientation="{{$orientation}}" />
     @endif
 @endsection
