@@ -36,10 +36,11 @@
                         padding: calcValue(4),
                         paddingTop: calcValue(10),
                         transition: '300ms transform ease, 300ms color ease',
-                        width: `calc(100vw - ${calcValue(25)})`,
                         ...switchingStyles
                     }"
+                    style="width: 75vw"
                 />
+                {{ /* width: `calc(100vw - ${calcValue(25)})`, */ }}
             </div>
 
             <div
