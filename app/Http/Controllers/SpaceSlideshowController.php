@@ -24,6 +24,7 @@ class SpaceSlideshowController
             'space' => $space,
             'responses' => $this->responses->approvedForSlideshow($space),
             'autoplay' => 'true',
+            'orientation' => $req->has('orientation') ? $req->orientation : 'landscape'
         ]);
     }
 }

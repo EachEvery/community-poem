@@ -7,7 +7,10 @@
         }"
         @click="emit"
     >
-        <div class="relative w-full" style="height: 56vw">
+        <div
+            class="relative w-full"
+            :style="{ height: calcValue('56vw') }"
+        >
             <img
                 class="inset-0 absolute h-full w-full object-cover"
                 :src="theme.photo"
@@ -29,7 +32,7 @@
                     :contenteditable="editable"
                     :style="{
                         color: theme.primary_text_color,
-                        fontSize: `${fontSize}vw`,
+                        fontSize: calcValue(`${fontSize}vw`),
                         transition: '300ms transform ease, 300ms color ease',
                         ...switchingStyles
                     }"
@@ -42,13 +45,13 @@
                 style="
                     padding: 1vw;
                     transition-delay: 100ms;
-                    font-size: 1vw;
                     top: 2vw;
                     left: 4vw;
                 "
                 :style="{
                     color: theme.hasOwnProperty('block_text_color') ? theme.block_text_color : theme.secondary_text_color,
-                    backgroundColor: theme.hasOwnProperty('block_color') ? theme.block_color : '#ffffff'
+                    backgroundColor: theme.hasOwnProperty('block_color') ? theme.block_color : '#ffffff',
+                    fontSize : calcValue('1vw')
                 }"
                 v-html="response.prompt"
             />
@@ -57,13 +60,13 @@
                 class="absolute font-sans font-bold transition"
                 style="
                     bottom: 0;
-                    font-size: 2vw;
                     padding: 4vw;
                     transition-delay: 100ms;
                     overflow-wrap: anywhere;
                 "
                 :style="{
                     color: theme.secondary_text_color,
+                    fontSize: calcValue('2vw'),
                     ...switchingStyles
                 }"
             >
@@ -107,6 +110,9 @@ export default {
         },
         emit(e) {
             this.$emit("click", e, this.response);
+        },
+        calcValue(o) {
+            return this.orientation && this.orientation == 'portait' ? ((parseInt(o) / 9) * 16) + 'vw' : o;
         }
     },
     computed: {
@@ -118,7 +124,8 @@ export default {
                 transform: `translateY(${switching ? 5 : 0}px)`,
                 opacity: switching ? 0 : 1
             };
-        }
+        },
+
     },
     watch: {
         theme: function() {
@@ -134,6 +141,10 @@ export default {
         switching: {
             type: Boolean,
             default: false
+        },
+        orientation: {
+            type: String,
+            required: false
         }
     }
 };

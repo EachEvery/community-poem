@@ -11,6 +11,7 @@
             :theme="theme"
             :space="space"
             :switching="state === 'switching'"
+            :orientation="orientation"
         />
     </div>
 </template>
@@ -32,6 +33,7 @@ export default {
             type: Number,
             default: 8,
         },
+        orientation: String
     },
     methods: {
         prevIndex(arr, prop) {
