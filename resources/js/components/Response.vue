@@ -36,9 +36,9 @@
                         padding: calcValue(4),
                         paddingTop: calcValue(10),
                         transition: '300ms transform ease, 300ms color ease',
+                        width: `calc(100vw - ${calcValue(25)})`,
                         ...switchingStyles
                     }"
-                    style="width: 75vw;"
                 />
             </div>
 
@@ -78,9 +78,11 @@
                 class="uppercase space__name"
                 style=""
                 :style="{
+                    left: `calc(100vw - ${calcValue(4)})`,
                     fontSize: calcValue(3),
                     letterSpacing: calcValue(0.375),
-                    '-webkit-text-stroke': `${calcValue(0.1)} var(--stroke-color)`
+                    '-webkit-text-stroke': `${calcValue(0.1)} var(--stroke-color)`,
+                    width: calcValue(51)
                 }"
             >{{ space.name }}</h1>
         </div>
@@ -90,12 +92,10 @@
 .space__name {
     transform: rotate(-90deg);
     position: absolute;
-    left: 96%;
     bottom: 0;
     color: var(--stroke-color);
     font-weight: 800;
     transform-origin: left center;
-    width: 51vw;
     text-align: center;
 }
 </style>
