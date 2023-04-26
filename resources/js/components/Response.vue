@@ -8,11 +8,11 @@
         @click="emit"
     >
         <div
-            class="relative h-full w-full object-cover inset-0"
+            class="relative w-full"
             :style="{ height: (orientation && orientation == 'portait' ? ((100/9) * 16) + 'vw' : '56vw')  }"
         >
             <img
-                class="absolute w-full"
+                class="absolute h-full w-full object-cover inset-0"
                 :src="theme.photo"
                 @load="handleLoad"
                 style="transition: 300ms all ease"
