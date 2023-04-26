@@ -12,7 +12,7 @@
             :style="{ height: (orientation && orientation == 'portait' ? ((100/9) * 16) + 'vw' : '56vw')  }"
         >
             <img
-                class="inset-0 absolute h-full w-full object-cover"
+                class="absolute h-full w-full"
                 :src="theme.photo"
                 @load="handleLoad"
                 style="transition: 300ms all ease"
@@ -21,7 +21,14 @@
                         isLoading || switching ? '3px' : '0'
                     })`
                 }"
-                :class="{ 'opacity-0': isLoading || switching }"
+                :class="{
+                    'opacity-0': isLoading || switching,
+                    'object-cover': (orientation != 'portait'),
+                    'inset-0': (orientation != 'portait'),
+                    'object-contain': (orientation && orientation == 'portait'),
+                    'bottom-0': (orientation && orientation == 'portait'),
+                    'right-0': (orientation && orientation == 'portait'),
+                }"
             />
 
             <div class="relative">
