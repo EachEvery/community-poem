@@ -8,7 +8,7 @@
         @click="emit"
     >
         <div
-            class="relative w-full"
+            class="relative h-full w-full object-cover inset-0"
             :style="{ height: (orientation && orientation == 'portait' ? ((100/9) * 16) + 'vw' : '56vw')  }"
         >
             <img
@@ -23,13 +23,7 @@
                 }"
                 :class="{
                     'opacity-0': isLoading || switching,
-                    'h-full': (orientation != 'portait'),
-                    'object-cover': (orientation != 'portait'),
-                    'inset-0': (orientation != 'portait'),
-                    'h-auto': (orientation && orientation == 'portait'),
-                    'object-contain': (orientation && orientation == 'portait'),
-                    'bottom-0': (orientation && orientation == 'portait'),
-                    'right-0': (orientation && orientation == 'portait'),
+                    'object-right': (orientation && orientation == 'portait')
                 }"
             />
 
