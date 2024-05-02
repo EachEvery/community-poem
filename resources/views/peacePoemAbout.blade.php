@@ -11,7 +11,7 @@
         <!-- Logos & Attribution -->
         <div class="flex mb-5 xl:scale-up md:absolute top-0 right-0 xl:mt-24 xl:mr-56 justify-end" style="transform-origin: left">
             <div class="flex flex-row-reverse md:mr-12 opacity-50">
-                @component('attribution')    
+                @component('attribution')
                 @endcomponent
             </div>
 
@@ -46,17 +46,17 @@
         <div class="bg-white p-10 -mt-10 relative pt-16 pb-32   |  xl:mt-0  md:max-w-sm  xl:ml-24 xl:scale-up">
             <span class="text-lg uppercase text-3xl text-center block mb-3 font-display  |  ">What is it?</span>
             <p class="text-2xl mt-8 text-center leading-normal font-light">
-                A global community poem in commemoration of the 50th anniversary of Kent State University’s May 4 shootings.
+                A global community poem in commemoration of Kent State University’s May 4 shootings.
             </p>
         </div>
 
 
 
-        <div class="flex flex-col mt-3 md:mt-32">        
+        <div class="flex flex-col mt-3 md:mt-32">
             <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end md:self-start lg:self-end text-lg md:text-2xl  md:mr-56 ">
-            my voice is 
-            a fall leaf 
-            changing 
+            my voice is
+            a fall leaf
+            changing
             colors
             </span>
 
@@ -67,7 +67,9 @@
             <h5 class="font-display font-bold leading-tight text-lg uppercase text-3xl mb-5">contribute a<br />
             line or stanza</h5>
 
-            <p class="text-base leading">The Wick Poetry Center invites people from around the world to contribute a line or stanza to a global community peace poem titled “My Voice.” As Kent State University approaches the 50th anniversary of the May 4 shootings, the themes of the poem will reflect peace, conflict transformation, and advocacy. </p>
+            <p class="text-base leading">The Wick Poetry Center invites people from around the world to contribute a line or stanza to a global community peace poem titled “My Voice.”</p>
+
+            <p class="text-base leading">As Kent State University commemorates the anniversary of the May 4 shootings, the themes of the poem will reflect peace, conflict transformation, and advocacy.</p>
         </div>
 
 
@@ -79,7 +81,7 @@
 
                 <span class="whitespace-pre-line font-cursive lowercase leading-loose self-end text-ms">
                 My voice is a two-
-                belled trumpet in 
+                belled trumpet in
                 harmony for peace
                 </span>
 
@@ -102,7 +104,7 @@
             <span class="font-display text-5xl  uppercase text-center  text-outline leading-none text-center block">
                     Respond
                 </span>
-                
+
                 <p class="text-xl mt-8 text-center leading-normal">The Wick Poetry Center invites people from around the world to contribute a line or stanza to a global community peace poem titled “My Voice.”</p>
 
                 <a href="#" class="font-display text-lg border-2 border-green-900 px-10 py-3 uppercase font-bold self-center mt-10" open-typeform>RESPOND</a>
